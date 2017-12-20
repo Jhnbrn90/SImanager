@@ -23,5 +23,15 @@ class CompoundTest extends TestCase
         $this->assertInstanceOf('App\User', $this->compound->creator);
     }
 
+    /** @test **/
+    public function a_compound_can_generate_its_path()
+    {
+        $compound = create('App\Compound');
+
+        $this->assertEquals(
+            "/compounds/{$compound->id}",
+            $compound->path());
+    }
+
 
 }

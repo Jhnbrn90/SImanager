@@ -19,7 +19,6 @@ $factory->define(App\Compound::class, function (Faker $faker) {
         'user_id' => function() {
             return auth()->id() ?: factory('App\User')->create()->id;
         },
-        'mol_id'                => 1,
         'label'                 => 'jbn478',
         'formula'               => 'C6H12O6',
         'molweight'             => 180.16,

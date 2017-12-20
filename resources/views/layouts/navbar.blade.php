@@ -20,6 +20,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        <li><a href="/">Overview</a></li>
+                        <li><a href="/compounds/new">Add new Compound</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
