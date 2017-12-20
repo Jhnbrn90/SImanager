@@ -37,6 +37,12 @@ class Compound extends Model
 
     public function toMolfile($contents)
     {
+        // if(file($this->file)[0][0] == " " || file($this->file)[0][0] == "J") {
+        //     // if the first character of the first line is a space or J (from JSDRAW)
+        //     // then insert a newline
+        //     file_put_contents($this->file, "\r\n".$this->molfile);
+        // }
+
         Storage::put("molfiles/{$this->id}.mol", $contents);
 
         return $this;
@@ -46,12 +52,12 @@ class Compound extends Model
     {
         $mol2svg_path = "/usr/local/bin/mol2svg";
         $options = "--bgcolor=white" . " " . "--color=storage/app/colors.conf";
+
         $command = "{$mol2svg_path} {$options} {$this->pathToMolfile} > {$this->pathToSVG}";
 
-        $pipe = open($command);
+        $pipe = popen($command, "r");
 
         return $this;
-
     }
 
 }
