@@ -12,6 +12,46 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .add {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .new-btn {
+            background: white;
+            display: inline-block;
+            position: relative;
+            border: 1px solid #8C8C8CFF;
+            border-radius: 10px;
+            float: left;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .compound {
+            display: inline-block;
+            background: white;
+            border: 1px solid #494949FF;
+            border-radius: 10px;
+            margin: 12px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        span.label {
+            display: block;
+            text-align: center;
+            color: black;
+            font-family: arial;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+    </style>
+
 </head>
 <body>
     <div id="app">

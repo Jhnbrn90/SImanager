@@ -74,7 +74,7 @@ $$$$
 
         $compound->toMolfile($structure);
 
-        $this->assertFileExists(storage_path() . "/app/molfiles/{$compound->id}.mol");
+        $this->assertFileExists(storage_path() . "/app/public/molfiles/{$compound->id}.mol");
     }
 
     /** @test **/
@@ -84,7 +84,7 @@ $$$$
 
         $compound->toSVG();
 
-        $this->assertFileExists(storage_path() . "/app/svg/{$compound->id}.svg");
+        $this->assertFileExists(storage_path() . "/app/public/svg/{$compound->id}.svg");
     }
 
 }

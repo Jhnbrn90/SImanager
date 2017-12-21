@@ -27,12 +27,12 @@ class Compound extends Model
 
     public function getpathToMolfileAttribute()
     {
-        return storage_path() . "/app/molfiles/{$this->id}.mol";
+        return storage_path() . "/app/public/molfiles/{$this->id}.mol";
     }
 
     public function getpathToSVGAttribute()
     {
-        return storage_path() . "/app/svg/{$this->id}.svg";
+        return storage_path() . "/app/public/svg/{$this->id}.svg";
     }
 
     public function toMolfile($contents)
@@ -43,7 +43,7 @@ class Compound extends Model
         //     file_put_contents($this->file, "\r\n".$this->molfile);
         // }
 
-        Storage::put("molfiles/{$this->id}.mol", $contents);
+        Storage::put("public/molfiles/{$this->id}.mol", $contents);
 
         return $this;
     }
