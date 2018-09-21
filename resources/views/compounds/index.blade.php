@@ -60,7 +60,7 @@
                         </td>
 
                         <td class="{{ $compound->infrared ? 'bg-success' : '' }}">
-                            {{ $compound->infrared }}
+                            <ir-field data="{{ $compound->infrared }}"></ir-field>
                         </td>
 
                         @if ($compound->melting_point == "@")

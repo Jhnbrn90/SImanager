@@ -18,6 +18,7 @@ window.Vue = require('vue');
 Vue.component('melting-point', require('./components/MeltingPoint.vue'));
 Vue.component('hrms-data', require('./components/HRMSData.vue'));
 Vue.component('rotation-data', require('./components/RotationData.vue'));
+Vue.component('ir-field', require('./components/IRfield.vue'));
 
 const app = new Vue({
     el: '#app'

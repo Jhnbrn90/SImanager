@@ -1099,6 +1099,7 @@ window.Vue = __webpack_require__(36);
 Vue.component('melting-point', __webpack_require__(39));
 Vue.component('hrms-data', __webpack_require__(42));
 Vue.component('rotation-data', __webpack_require__(45));
+Vue.component('ir-field', __webpack_require__(59));
 
 var app = new Vue({
   el: '#app'
@@ -44158,6 +44159,168 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(60)
+/* template */
+var __vue_template__ = __webpack_require__(61)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/IRfield.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-43f985ac", Component.options)
+  } else {
+    hotAPI.reload("data-v-43f985ac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['data'],
+
+    data: function data() {
+        return {
+            showEdit: false
+        };
+    },
+
+
+    methods: {
+        submit: function submit() {
+            this.showEdit = false;
+        },
+        toggleEdit: function toggleEdit() {
+            var _this = this;
+
+            this.showEdit = true;
+
+            setTimeout(function () {
+                _this.$refs.IR.focus();
+            }, 1);
+        }
+    }
+});
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    !_vm.showEdit
+      ? _c("span", { on: { click: _vm.toggleEdit } }, [
+          _vm._v(_vm._s(_vm.data))
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.showEdit
+      ? _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.data,
+                expression: "data"
+              }
+            ],
+            ref: "IR",
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.data },
+            on: {
+              blur: _vm.submit,
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.submit($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.data = $event.target.value
+              }
+            }
+          })
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-43f985ac", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
