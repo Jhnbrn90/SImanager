@@ -35,15 +35,18 @@ class Compound extends Model
         return storage_path() . "/app/public/svg/{$this->id}.svg";
     }
 
-    public function toMolfile($contents)
+    public function toMolfile()
     {
-        // if(file($this->file)[0][0] == " " || file($this->file)[0][0] == "J") {
-        //     // if the first character of the first line is a space or J (from JSDRAW)
-        //     // then insert a newline
-        //     file_put_contents($this->file, "\r\n".$this->molfile);
-        // }
+        if($this->molfile[0] == " " || $this->molfile[0] == "J") {
+            // if the first character of the first line is a space or J (from JSDRAW)
+            // then insert a newline
+            
+            Storage::put("public/molfiles/{$this->id}.mol", "\r\n" . $this->molfile);
+            
+            return $this;
+        }
 
-        Storage::put("public/molfiles/{$this->id}.mol", $contents);
+        Storage::put("public/molfiles/{$this->id}.mol", $this->molfile);
 
         return $this;
     }
@@ -51,7 +54,7 @@ class Compound extends Model
     public function toSVG()
     {
         $mol2svg_path = "/usr/local/bin/mol2svg";
-        $options = "--bgcolor=white" . " " . "--color=storage/app/colors.conf";
+        $options = "--bgcolor=white" . " " . "--color=colors.conf";
 
         $command = "{$mol2svg_path} {$options} {$this->pathToMolfile} > {$this->pathToSVG}";
 

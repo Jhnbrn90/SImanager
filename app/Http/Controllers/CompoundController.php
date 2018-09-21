@@ -29,34 +29,45 @@ class CompoundController extends Controller
 
     public function create()
     {
-        //
+        return view('compounds.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'label' => 'required|unique:compounds|max:8',
-        ]);
+        // $request->validate([
+        //     'label' => 'required|unique:compounds|max:8',
+        // ]);
+
+        $proton_NMR = false;
+        $carbon_NMR = false;
+
+        if($request->NMR) {
+            $proton_NMR = in_array('H_NMR', $request->NMR);
+            $carbon_NMR = in_array('C_NMR', $request->NMR);
+        }
 
         $compound = Compound::create([
             'user_id'               => auth()->id(),
             'label'                 => $request->label,
-            'proton_nmr'            => $request->proton,
-            'carbon_nmr'            => $request->carbon,
-            'retention'             => $request->retention,
-            'melting_point'         => $request->melting_point,
-            'infrared'              => $request->infrared,
-            'mass_adduct'           => $request->mass_adduct,
-            'mass_measured'         => $request->mass_mesaured,
-            'alpha_sign'            => $request->alpha_sign,
-            'alpha_value'           => $request->alpha_value,
-            'alpha_concentration'   => $request->alpha_concentration,
-            'alpha_solvent'         => $request->alpha_solvent,
+            'proton_nmr'            => $proton_NMR,
+            'carbon_nmr'            => $carbon_NMR,
+            'retention'             => $request->Rf,
+            'melting_point'         => $request->MP,
+            'infrared'              => $request->IR,
+            'mass_adduct'           => $request->mass_ion,
+            'mass_measured'         => $request->mass_found,
+            'mass_calculated'       => $request->mass_calculated,
+            'alpha_sign'            => $request->rotation_sign,
+            'alpha_value'           => $request->rotation_value,
+            'alpha_concentration'   => $request->rotation_concentration,
+            'alpha_solvent'         => $request->rotation_solvent,
             'notes'                 => $request->notes,
+            'molfile'               => $request->molfile
         ]);
 
-        // make a new molfile and svg for the molecule
-            // takes the $compound->id as filename.
+        $compound->toMolfile()->toSVG();
+
+        return redirect('/');
     }
 
     public function destroy(Compound $compound)

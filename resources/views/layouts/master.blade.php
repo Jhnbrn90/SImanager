@@ -13,7 +13,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+
     <style>
+        #app {
+            background-color: white;
+        }
         .add {
             font-size: 30px;
             font-weight: 800;
@@ -28,6 +32,8 @@
             float: left;
             padding: 35px;
             margin-top: 20px;
+            max-width: 150px;
+            max-height: 150px;
         }
 
         .compound {
@@ -35,7 +41,9 @@
             background: white;
             border: 1px solid #494949FF;
             border-radius: 10px;
-            margin: 12px;
+            margin: 5px;
+            max-width: 150px;
+            max-height: 150px;
             overflow: hidden;
             text-align: center;
         }
@@ -49,8 +57,9 @@
             font-weight: 800;
             margin-bottom: 5px;
         }
-
     </style>
+
+    @yield('head')
 
 </head>
 <body>

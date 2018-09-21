@@ -26,12 +26,14 @@ class CreateCompoundsTable extends Migration
             $table->string('melting_point')->nullable();
             $table->string('infrared')->nullable();
             $table->float('mass_measured')->nullable();
+            $table->float('mass_calculated')->nullable();
             $table->string('mass_adduct')->nullable();
             $table->string('alpha_sign')->nullable();
             $table->unsignedInteger('alpha_value')->nullable();
             $table->string('alpha_concentration')->nullable();
             $table->string('alpha_solvent')->nullable();
             $table->mediumText('notes')->nullable();
+            $table->mediumText('molfile')->nullable();
 
             $table->timestamps();
         });
