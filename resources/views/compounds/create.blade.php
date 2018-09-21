@@ -66,68 +66,11 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="MP" class="col-sm-2 control-label">Melting Point (&deg; C.)</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="MP" name="MP" placeholder="102 - 108" tabindex="6">
-    </div>
-  </div>
+  <melting-point></melting-point>
 
-  <div class="form-group">
-    <label for="mass_ion" class="col-sm-2 control-label">Mass Ion</label>
-    <div class="col-sm-10">
-        <select name="mass_ion" id="mass_ion" class="form-control">
-          <option value="H+">H+</option>
-          <option value="Na+">Na+</option>
-          <option value="H-">Negative mode (H-)</option>
-        </select>
-    </div>
-  </div>
+  <hrms-data></hrms-data>
 
-  <div class="form-group">
-    <label for="mass_found" class="col-sm-2 control-label">Found mass</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="mass_found" name="mass_found" placeholder="221.0291">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="mass_calculated" class="col-sm-2 control-label">Calculated mass</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="mass_calculated" name="mass_calculated" placeholder="221.0290">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="rotation_sign" class="col-sm-2 control-label">Specific Rotation</label>
-    <div class="col-sm-1">
-        <select name="rotation_sign" id="rotation_sign" class="form-control">
-          <option value="+">&plus;</option>
-          <option value="-">&minus;</option>
-        </select>
-    </div>
-    
-    <div class="col-sm-2">
-        <div class="input-group">
-            <div class="input-group-addon">[&alpha;]<sup>20</sup><sub>D</sub> = </div>
-            <input type="text" class="form-control" name="rotation_value" placeholder="19.65">
-        </div>
-    </div>
-
-    <div class="col-sm-2">
-        <div class="input-group">
-            <div class="input-group-addon">c = </div>
-            <input type="text" class="form-control" name="rotation_concentration" placeholder="1.05">
-        </div>
-    </div>
-
-    <div class="col-sm-3">
-        <div class="input-group">
-            <div class="input-group-addon">solvent</div>
-            <input type="text" class="form-control" id="rotation_solvent" name="rotation_solvent" placeholder="CHCl3">
-        </div>
-    </div>
-  </div>
+  <rotation-data></rotation-data>
 
   <div class="form-group">
         <div class="col-sm-2 control-label">
@@ -143,6 +86,9 @@
             ></div>
         </div>
         <input type="hidden" name="molfile" id="molfile">
+        <input type="hidden" name="molweight" id="molweight">
+        <input type="hidden" name="formula" id="formula">
+        <input type="hidden" name="exact_mass" id="exact_mass">
     </div>
 
     <div class="form-group">
@@ -164,7 +110,9 @@
 <br><br>
 
 </div>
+@endsection
 
+@section('scripts')
 <script type="text/javascript">
     dojo.addOnLoad(function() {
         var jsd2 = new JSDraw("large-editor");
@@ -173,8 +121,10 @@
 
     function molchange(jsdraw) {
         document.getElementById("molfile").value = JSDraw.get("mobile-editor").getMolfile();
+        document.getElementById("molweight").value = JSDraw.get("mobile-editor").getMolWeight();
+        document.getElementById("formula").value = JSDraw.get("mobile-editor").getFormula();
+        document.getElementById("exact_mass").value = JSDraw.get("mobile-editor").getExactMass();
     }
 </script>
-
-
 @endsection
+

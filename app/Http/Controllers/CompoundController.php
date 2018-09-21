@@ -21,10 +21,11 @@ class CompoundController extends Controller
 
     public function show(Compound $compound)
     {
-        // /compounds/1102
-        $compound = Compound::findOrFail($compound)->first();
+        if(auth()->id() !== $compound->user_id) {
+            return redirect('/');
+        }
 
-        return view('compounds.show', compact('compound'));
+        return view('compounds.show', compact('compound'));    
     }
 
     public function create()
@@ -34,10 +35,6 @@ class CompoundController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'label' => 'required|unique:compounds|max:8',
-        // ]);
-
         $proton_NMR = false;
         $carbon_NMR = false;
 
@@ -62,7 +59,10 @@ class CompoundController extends Controller
             'alpha_concentration'   => $request->rotation_concentration,
             'alpha_solvent'         => $request->rotation_solvent,
             'notes'                 => $request->notes,
-            'molfile'               => $request->molfile
+            'molfile'               => $request->molfile,
+            'molweight'             => $request->molweight,
+            'formula'               => $request->formula,
+            'exact_mass'            => $request->exact_mass,
         ]);
 
         $compound->toMolfile()->toSVG();

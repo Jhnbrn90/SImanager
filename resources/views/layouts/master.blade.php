@@ -57,6 +57,11 @@
             font-weight: 800;
             margin-bottom: 5px;
         }
+
+        .container-mx-auto {
+            margin-right: 17px;
+            margin-left: 17px;
+        }
     </style>
 
     @yield('head')
@@ -69,5 +74,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>

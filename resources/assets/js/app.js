@@ -15,8 +15,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('Compound', require('./components/Compound.vue'));
+Vue.component('melting-point', require('./components/MeltingPoint.vue'));
+Vue.component('hrms-data', require('./components/HRMSData.vue'));
+Vue.component('rotation-data', require('./components/RotationData.vue'));
 
 const app = new Vue({
     el: '#app'

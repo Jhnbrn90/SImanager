@@ -4,13 +4,13 @@
 
 @include ('layouts.navbar')
 
-<div class="container">
+<div class="container-mx-auto">
     <div class="title">
         <h1> Compounds </h1>
     </div>
 
     <div class="table-responsive">
-        <table class="table" style="text-align: center;">
+        <table class="table">
             <thead>
                 <tr>
                     <th></th>
@@ -20,7 +20,7 @@
                     <th>IR</th>
                     <th>MP</th>
                     <th colspan="2">HRMS</th>
-                    <th colspan="4">Specific Rotation</th>
+                    <th colspan="3">Specific Rotation</th>
                     <th>Notes</th>
                 </tr>
                 <tr>
@@ -33,7 +33,6 @@
                     <td> °C </td>
                     <td>Adduct</td>
                     <td>Found Mass</td>
-                    <td>Chiral</td>
                     <td>[α]</td>
                     <td>c</td>
                     <td>Solvent</td>
@@ -44,20 +43,71 @@
 
                 @forelse ($compounds as $compound)
                     <tr>
-                        <td><img src="/svg/{{ $compound->id }}.svg" height="70" style="margin-top:-10px;"></td>
-                        <td><a href="/compounds/{{ $compound->id }}/edit">{{ $compound->label }}</a></td>
-                        <td><input type="checkbox" {{ $compound->proton_nmr ? 'checked' : '' }} disabled></td>
-                        <td><input type="checkbox" {{ $compound->carbon_nmr ? 'checked' : '' }} disabled></td>
-                        <td>{{ $compound->retention }}</td>
-                        <td><input type="text" disabled value="{{ $compound->infrared }}"></td>
-                        <td>{{ $compound->melting_point }}</td>
-                        <td>{{ $compound->mass_adduct }}</td>
-                        <td>{{ $compound->mass_measured }}</td>
-                        <td><input type="checkbox" checked disabled></td>
-                        <td>{{ $compound->alpha_sign }} {{ $compound->alpha_value }}</td>
-                        <td>{{ $compound->alpha_concentration }} </td>
-                        <td>{{ $compound->alpha_solvent }}</td>
-                        <td>{{ $compound->notes }}</td>
+                        <td><img src="{{ $compound->SVGPath }}" height="70" style="margin-top:-10px;"></td>
+                        
+                        <td><a href="/compounds/{{ $compound->id }}">{{ $compound->label }}</a></td>
+                        
+                        <td class="{{ $compound->proton_nmr ? 'bg-success' : '' }}">
+                            <input type="checkbox" {{ $compound->proton_nmr ? 'checked' : '' }} disabled>
+                        </td>
+                        
+                        <td class="{{ $compound->proton_nmr ? 'bg-success' : '' }}">
+                            <input type="checkbox" {{ $compound->carbon_nmr ? 'checked' : '' }} disabled>
+                        </td>
+
+                        <td class="{{ $compound->retention ? 'bg-success' : '' }}">
+                            {{ $compound->retention }}
+                        </td>
+
+                        <td class="{{ $compound->infrared ? 'bg-success' : '' }}">
+                            {{ $compound->infrared }}
+                        </td>
+
+                        @if ($compound->melting_point == "@")
+                            <td style="background-color: #F8F8F8"></td>
+                        @else
+                            <td class="{{ $compound->melting_point ? 'bg-success' : '' }}">
+                                {{ $compound->melting_point  }}
+                            </td>
+                        @endif
+
+                        @if ($compound->mass_adduct == "@")
+                             <td style="background-color: #F8F8F8"></td>
+                        @else
+                             <td class="{{ $compound->mass_adduct ? 'bg-success' : '' }}">
+                                {{ $compound->mass_adduct }}
+                            </td>
+                        @endif
+
+                        @if ($compound->mass_measured == "@")
+                            <td style="background-color: #F8F8F8"></td>
+                        @else 
+                            <td class="{{ $compound->mass_measured ? 'bg-success' : ''}}">
+                                {{ $compound->mass_measured }}
+                            </td>
+                        @endif
+                        
+                        @if ($compound->alpha_value == "@")
+                            <td style="background-color: #F8F8F8"></td>
+                            <td style="background-color: #F8F8F8"></td>
+                            <td style="background-color: #F8F8F8"></td>
+                        @else
+                            <td class="{{ $compound->alpha_sign ? 'bg-success' : '' }}">
+                                {{ $compound->alpha_sign }} {{ $compound->alpha_value }}
+                            </td>
+
+                            <td class="{{ $compound->alpha_concentration ? 'bg-success' : '' }}">
+                                {{ $compound->alpha_concentration }} 
+                            </td>
+
+                            <td class="{{ $compound->alpha_solvent ? 'bg-success' : '' }}">
+                                {{ $compound->alpha_solvent }}
+                            </td>
+                        @endif
+
+                        <td>
+                            {{ $compound->notes }}
+                        </td>
                     </tr>
                 @empty
                     <tr>

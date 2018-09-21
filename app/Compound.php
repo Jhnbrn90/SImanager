@@ -35,6 +35,15 @@ class Compound extends Model
         return storage_path() . "/app/public/svg/{$this->id}.svg";
     }
 
+    public function getSVGPathAttribute()
+    {
+        if (!$this->molfile) {
+            return "svg/unknown.svg";
+        }
+        
+        return "svg/{$this->id}.svg";
+    }
+
     public function toMolfile()
     {
         if($this->molfile[0] == " " || $this->molfile[0] == "J") {
@@ -61,6 +70,83 @@ class Compound extends Model
         $pipe = popen($command, "r");
 
         return $this;
+    }
+
+    public function formattedAlphaSolvent()
+    {
+        $formula = '';
+
+        preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->alpha_solvent, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
+        }
+
+        return $formula;
+    }
+
+    public function getFormattedFormulaAttribute()
+    {
+        $formula = '';
+
+        preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
+        }
+
+        return $formula;
+    }
+
+    public function formattedFormulaForHRMS()
+    {
+        // C12H5SO3
+        $formula = '';
+
+        switch ($this->mass_adduct) {
+            case 'Na+':
+                preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
+                
+                foreach ($matches as $match) {
+                    $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
+                }
+
+                $formula .= 'Na';
+
+                $formula .= ' [M+Na]<sup>+</sup>';
+            break;
+
+            case 'H+':
+                preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
+                foreach ($matches as $match) {
+                    if ($match[1] == "H") {
+                        $formula .= $match[1] . '<sub>' . ($match[2] + 1) . '</sub>';                       
+                    } else {
+                        $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
+                    }
+                }
+
+                $formula .= ' [M+H]<sup>+</sup>';
+            break;
+
+            case 'H-':
+                preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
+                foreach ($matches as $match) {
+                    if ($match[1] == "H") {
+                        $formula .= $match[1] . '<sub>' . ($match[2] - 1) . '</sub>';                       
+                    } else {
+                        $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
+                    }
+                }
+
+                $formula .= '[M-H]<sup>+</sup>';
+            break;
+            default:
+                $formula = $this->formula;
+            break;
+        }
+
+        return $formula;
     }
 
 }
