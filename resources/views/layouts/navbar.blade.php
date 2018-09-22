@@ -57,15 +57,16 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
-                                    <hr>
-                                    @if ($students = Auth::user()->students)
-                                        @foreach($students as $student)
+                                    
+                                    
+                                        @forelse(Auth::user()->students as $student)
                                             <li>
                                                 <a href="/students/view/data/{{ $student->id }}"> {{ $student->name }}</a>
                                             </li>
-                                        @endforeach
-                                    @endif
-
+                                        @empty
+                                            <li></li>
+                                        @endforelse
+                                
                                 </ul>
                             </li>
                         @endguest

@@ -13,7 +13,9 @@
                 {{ csrf_field() }}
                 <select name="supervisor" class="form-control">
                     @foreach ($users as $user)
-                        <option value="{{ $user->id }}"> {{ $user->name }}</option>
+                        @if ($user->id !== Auth::user()->id)
+                            <option value="{{ $user->id }}"> {{ $user->name }}</option>
+                        @endif
                     @endforeach
                 </select>
 
@@ -26,7 +28,7 @@
         <h3>Current supervisors:</h3>
         <ul>
             @forelse ($supervisors as $supervisor)
-                <li>{{ $supervisor->name }}</li>
+                    <li>{{ $supervisor->name }}</li>
             @empty
                 <li>No supervisors</li>
             @endforelse
