@@ -62,7 +62,9 @@
     var clipboard = new ClipboardJS('.copy-btn');
 
     clipboard.on('success', function(e) {
-        alert('Copied to clipboard!');
+        setTimeout(() => {
+            alert('Copied to clipboard!');
+        }, 10);
     });
 </script>
 @endsection

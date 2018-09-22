@@ -1,5 +1,14 @@
 @extends ('layouts.master')
 
+@section('head')
+<style>
+    .no-padding {
+        padding: 0;
+    }
+</style>
+
+@endsection
+
 @section ('content')
 
 @include ('layouts.navbar')
@@ -10,13 +19,13 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" style="height: 100%;">
             <thead>
                 <tr>
                     <th></th>
                     <th>Label</th>
                     <th colspan="2">NMR</th>
-                    <th>R <sub>F</sub></th>
+                    <th>R<sub>F</sub></th>
                     <th>IR</th>
                     <th>MP</th>
                     <th colspan="2">HRMS</th>
@@ -40,50 +49,78 @@
             </thead>
 
             <tbody>
-
                 @forelse ($compounds as $compound)
                     <tr>
                         <td><img src="{{ $compound->SVGPath }}" height="70" style="margin-top:-10px;"></td>
                         
                         <td><a href="/compounds/{{ $compound->id }}">{{ $compound->label }}</a></td>
                         
-                        <td class="{{ $compound->proton_nmr ? 'bg-success' : '' }}">
-                            <input type="checkbox" {{ $compound->proton_nmr ? 'checked' : '' }} disabled>
+                        <td style="padding:0;">
+                            <checkbox-field
+                                id="{{ $compound->id }}"
+                                data="{{ $compound->proton_nmr }}"
+                                column="proton_nmr"
+                            ></checkbox-field>
                         </td>
                         
-                        <td class="{{ $compound->proton_nmr ? 'bg-success' : '' }}">
-                            <input type="checkbox" {{ $compound->carbon_nmr ? 'checked' : '' }} disabled>
+                        <td style="padding:0;">
+                             <checkbox-field
+                                id="{{ $compound->id }}"
+                                data="{{ $compound->carbon_nmr }}"
+                                column="carbon_nmr"
+                            ></checkbox-field>
                         </td>
 
-                        <td class="{{ $compound->retention ? 'bg-success' : '' }}">
-                            {{ $compound->retention }}
+                        <td style="padding:0;">
+                            <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->retention }}" 
+                                column="retention"
+                            ></text-field>
                         </td>
 
-                        <td class="{{ $compound->infrared ? 'bg-success' : '' }}">
-                            <ir-field data="{{ $compound->infrared }}"></ir-field>
+                        <td style="padding:0;">
+                            <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->infrared }}" 
+                                column="infrared"
+                            ></text-field>
+
                         </td>
 
                         @if ($compound->melting_point == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else
-                            <td class="{{ $compound->melting_point ? 'bg-success' : '' }}">
-                                {{ $compound->melting_point  }}
+                            <td style="padding:0;">
+                                <text-field 
+                                    id="{{ $compound->id }}" 
+                                    data="{{ $compound->melting_point }}" 
+                                    column="melting_point"
+                                ></text-field>
                             </td>
                         @endif
 
                         @if ($compound->mass_adduct == "@")
                              <td style="background-color: #F8F8F8"></td>
                         @else
-                             <td class="{{ $compound->mass_adduct ? 'bg-success' : '' }}">
-                                {{ $compound->mass_adduct }}
+                             <td style="padding:0;">
+                                <dropdown-field 
+                                    id="{{ $compound->id }}" 
+                                    data="{{ $compound->mass_adduct }}" 
+                                    column="mass_adduct"
+                                ></dropdown-field>
                             </td>
                         @endif
 
                         @if ($compound->mass_measured == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else 
-                            <td class="{{ $compound->mass_measured ? 'bg-success' : ''}}">
-                                {{ $compound->mass_measured }}
+                            <td style="padding:0;">
+                                <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->mass_measured }}" 
+                                column="mass_measured"
+                            ></text-field>
                             </td>
                         @endif
                         
@@ -92,21 +129,39 @@
                             <td style="background-color: #F8F8F8"></td>
                             <td style="background-color: #F8F8F8"></td>
                         @else
-                            <td class="{{ $compound->alpha_sign ? 'bg-success' : '' }}">
-                                {{ $compound->alpha_sign }} {{ $compound->alpha_value }}
+                            <td style="padding:0;">
+                                <dropdown-text-field
+                                    id="{{ $compound->id }}"
+                                    dropdown_data="{{ $compound->alpha_sign }}"
+                                    dropdown_column="alpha_sign"
+                                    text_data="{{ $compound->alpha_value }}"
+                                    text_column="alpha_value"
+                                ></dropdown-text-field>
                             </td>
 
-                            <td class="{{ $compound->alpha_concentration ? 'bg-success' : '' }}">
-                                {{ $compound->alpha_concentration }} 
+                            <td style="padding:0;">
+                                <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->alpha_concentration }}" 
+                                column="alpha_concentration"
+                            ></text-field>
                             </td>
 
-                            <td class="{{ $compound->alpha_solvent ? 'bg-success' : '' }}">
-                                {{ $compound->alpha_solvent }}
+                            <td style="padding:0;">
+                                <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->alpha_solvent }}" 
+                                column="alpha_solvent"
+                            ></text-field>
                             </td>
                         @endif
 
-                        <td>
-                            {{ $compound->notes }}
+                        <td style="padding:0;">
+                            <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->notes }}" 
+                                column="notes"
+                            ></text-field>
                         </td>
                     </tr>
                 @empty

@@ -70,6 +70,13 @@ class CompoundController extends Controller
         return redirect('/');
     }
 
+    public function update(Compound $compound, Request $request)
+    {
+        $compound->update([$request->column => $request->value]);
+        
+        return response()->json($compound, 201);
+    }
+
     public function destroy(Compound $compound)
     {
         $compound = Compound::findOrFail($compound)->first();

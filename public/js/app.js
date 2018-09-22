@@ -402,106 +402,6 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(21);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(6);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -608,6 +508,106 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(21);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(6);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(6);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 4 */
@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(48);
+module.exports = __webpack_require__(51);
 
 
 /***/ }),
@@ -1099,7 +1099,11 @@ window.Vue = __webpack_require__(36);
 Vue.component('melting-point', __webpack_require__(39));
 Vue.component('hrms-data', __webpack_require__(42));
 Vue.component('rotation-data', __webpack_require__(45));
-Vue.component('ir-field', __webpack_require__(59));
+
+Vue.component('text-field', __webpack_require__(65));
+Vue.component('dropdown-field', __webpack_require__(68));
+Vue.component('checkbox-field', __webpack_require__(71));
+Vue.component('dropdown-text-field', __webpack_require__(74));
 
 var app = new Vue({
   el: '#app'
@@ -31076,7 +31080,7 @@ module.exports = __webpack_require__(18);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(4);
 var Axios = __webpack_require__(20);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 
 /**
  * Create an instance of Axios
@@ -31159,7 +31163,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(29);
 var dispatchRequest = __webpack_require__(30);
@@ -31700,7 +31704,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
 var isCancel = __webpack_require__(8);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(32);
 var combineURLs = __webpack_require__(33);
 
@@ -43184,7 +43188,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(40)
 /* template */
@@ -43414,7 +43418,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -43788,7 +43792,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(46)
 /* template */
@@ -44155,15 +44159,15 @@ if (false) {
 }
 
 /***/ }),
-/* 48 */
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 49 */,
-/* 50 */,
-/* 51 */,
 /* 52 */,
 /* 53 */,
 /* 54 */,
@@ -44171,15 +44175,21 @@ if (false) {
 /* 56 */,
 /* 57 */,
 /* 58 */,
-/* 59 */
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(60)
+var __vue_script__ = __webpack_require__(66)
 /* template */
-var __vue_template__ = __webpack_require__(61)
+var __vue_template__ = __webpack_require__(67)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44196,7 +44206,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/IRfield.vue"
+Component.options.__file = "resources/assets/js/components/clickable/TextField.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -44205,9 +44215,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-43f985ac", Component.options)
+    hotAPI.createRecord("data-v-4d57d379", Component.options)
   } else {
-    hotAPI.reload("data-v-43f985ac", Component.options)
+    hotAPI.reload("data-v-4d57d379", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -44218,7 +44228,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 60 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44232,85 +44242,167 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['data'],
+    props: ['id', 'data', 'column'],
 
     data: function data() {
         return {
+            fieldData: this.data,
             showEdit: false
         };
     },
 
 
-    methods: {
-        submit: function submit() {
-            this.showEdit = false;
+    computed: {
+        patchPath: function patchPath() {
+            return '/compounds/' + this.id;
         },
-        toggleEdit: function toggleEdit() {
+        patchData: function patchData() {
+            return { column: this.column, value: this.fieldData };
+        },
+        classes: function classes() {
+            if (this.column == 'notes') {
+                return '';
+            }
+            return this.fieldData ? 'bg-success' : 'bg-danger';
+        }
+    },
+
+    methods: {
+        setFocus: function setFocus() {
             var _this = this;
 
-            this.showEdit = true;
-
             setTimeout(function () {
-                _this.$refs.IR.focus();
-            }, 1);
+                _this.$refs.inputField.focus();
+            }, 2);
+        },
+        unsetFocus: function unsetFocus() {
+            this.$refs.inputField.blur();
+        },
+        submitData: function submitData() {
+            this.toggleEdit();
+
+            axios.patch(this.patchPath, this.patchData).then(function (response) {
+                console.log(response.data);
+            });
+        },
+        toggleEdit: function toggleEdit() {
+            this.showEdit = !this.showEdit;
+
+            if (this.showEdit) {
+                this.setFocus();
+            }
         }
     }
 });
 
 /***/ }),
-/* 61 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    !_vm.showEdit
-      ? _c("span", { on: { click: _vm.toggleEdit } }, [
-          _vm._v(_vm._s(_vm.data))
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.showEdit
-      ? _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.data,
-                expression: "data"
-              }
-            ],
-            ref: "IR",
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.data },
-            on: {
-              blur: _vm.submit,
-              keyup: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
+  return _c(
+    "div",
+    {
+      class: _vm.classes,
+      staticStyle: {
+        display: "inline-block",
+        width: "100%",
+        height: "100%",
+        padding: "10px",
+        "text-align": "center"
+      }
+    },
+    [
+      !_vm.fieldData && !_vm.showEdit
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-link",
+              staticStyle: { color: "grey" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.toggleEdit($event)
                 }
-                return _vm.submit($event)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.data = $event.target.value
               }
-            }
-          })
-        ])
-      : _vm._e()
-  ])
+            },
+            [_vm._v("+ add")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.showEdit
+        ? _c("span", { on: { click: _vm.toggleEdit } }, [
+            _vm._v(_vm._s(_vm.fieldData))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showEdit
+        ? _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fieldData,
+                  expression: "fieldData"
+                }
+              ],
+              ref: "inputField",
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.fieldData },
+              on: {
+                blur: _vm.submitData,
+                keyup: [
+                  function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.unsetFocus($event)
+                  },
+                  function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+                    ) {
+                      return null
+                    }
+                    return _vm.unsetFocus($event)
+                  }
+                ],
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.fieldData = $event.target.value
+                }
+              }
+            })
+          ])
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -44318,7 +44410,739 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-43f985ac", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4d57d379", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(69)
+/* template */
+var __vue_template__ = __webpack_require__(70)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/clickable/DropdownField.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b02929d6", Component.options)
+  } else {
+    hotAPI.reload("data-v-b02929d6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id', 'data', 'column'],
+
+    data: function data() {
+        return {
+            fieldData: this.data,
+            showEdit: false
+        };
+    },
+
+
+    computed: {
+        patchPath: function patchPath() {
+            return '/compounds/' + this.id;
+        },
+        patchData: function patchData() {
+            return { column: this.column, value: this.fieldData };
+        },
+        classes: function classes() {
+            return this.fieldData ? 'bg-success' : 'bg-danger';
+        }
+    },
+
+    methods: {
+        setFocus: function setFocus() {
+            var _this = this;
+
+            setTimeout(function () {
+                _this.$refs.inputField.focus();
+            }, 2);
+        },
+        unsetFocus: function unsetFocus() {
+            this.$refs.inputField.blur();
+        },
+        submitData: function submitData() {
+            this.toggleEdit();
+
+            axios.patch(this.patchPath, this.patchData).then(function (response) {
+                console.log(response.data);
+            });
+        },
+        toggleEdit: function toggleEdit() {
+            this.showEdit = !this.showEdit;
+
+            if (this.showEdit) {
+                this.setFocus();
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: _vm.classes,
+      staticStyle: {
+        display: "inline-block",
+        width: "100%",
+        height: "100%",
+        padding: "10px",
+        "text-align": "center"
+      }
+    },
+    [
+      !_vm.fieldData && !_vm.showEdit
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-link",
+              staticStyle: { color: "grey" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.toggleEdit($event)
+                }
+              }
+            },
+            [_vm._v("\n        + add\n    ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.showEdit
+        ? _c("span", { on: { click: _vm.toggleEdit } }, [
+            _vm._v(_vm._s(_vm.fieldData))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showEdit
+        ? _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.fieldData,
+                    expression: "fieldData"
+                  }
+                ],
+                ref: "inputField",
+                staticClass: "form-control",
+                on: {
+                  blur: _vm.submitData,
+                  keyup: [
+                    function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.unsetFocus($event)
+                    },
+                    function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+                      ) {
+                        return null
+                      }
+                      return _vm.unsetFocus($event)
+                    }
+                  ],
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.fieldData = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "H+" } }, [_vm._v("H+")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Na+" } }, [_vm._v("Na+")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "H-" } }, [
+                  _vm._v("Negative mode (H-)")
+                ])
+              ]
+            )
+          ])
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b02929d6", module.exports)
+  }
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(73)
+/* template */
+var __vue_template__ = __webpack_require__(72)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/clickable/CheckboxField.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-dbfbc8ba", Component.options)
+  } else {
+    hotAPI.reload("data-v-dbfbc8ba", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: _vm.classes,
+      staticStyle: {
+        display: "inline-block",
+        width: "100%",
+        height: "100%",
+        padding: "10px",
+        "text-align": "center"
+      }
+    },
+    [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.fieldData,
+            expression: "fieldData"
+          }
+        ],
+        attrs: { type: "checkbox" },
+        domProps: {
+          checked: Array.isArray(_vm.fieldData)
+            ? _vm._i(_vm.fieldData, null) > -1
+            : _vm.fieldData
+        },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.toggleAndSubmit($event)
+          },
+          change: function($event) {
+            var $$a = _vm.fieldData,
+              $$el = $event.target,
+              $$c = $$el.checked ? true : false
+            if (Array.isArray($$a)) {
+              var $$v = null,
+                $$i = _vm._i($$a, $$v)
+              if ($$el.checked) {
+                $$i < 0 && (_vm.fieldData = $$a.concat([$$v]))
+              } else {
+                $$i > -1 &&
+                  (_vm.fieldData = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+              }
+            } else {
+              _vm.fieldData = $$c
+            }
+          }
+        }
+      })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-dbfbc8ba", module.exports)
+  }
+}
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id', 'data', 'column'],
+
+    data: function data() {
+        return {
+            fieldData: !!+this.data,
+            showEdit: false
+        };
+    },
+
+
+    computed: {
+        patchPath: function patchPath() {
+            return '/compounds/' + this.id;
+        },
+        patchData: function patchData() {
+            return { column: this.column, value: this.fieldData };
+        },
+        classes: function classes() {
+            return this.fieldData ? 'bg-success' : 'bg-danger';
+        }
+    },
+
+    methods: {
+        toggleAndSubmit: function toggleAndSubmit() {
+            this.fieldData = !this.fieldData;
+
+            axios.patch(this.patchPath, this.patchData).then(function (response) {
+                console.log(response.data);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(75)
+/* template */
+var __vue_template__ = __webpack_require__(76)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/clickable/DropdownTextField.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3951cee8", Component.options)
+  } else {
+    hotAPI.reload("data-v-3951cee8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id', 'dropdown_data', 'dropdown_column', 'text_data', 'text_column'],
+
+    data: function data() {
+        return {
+            dropdownData: this.dropdown_data,
+            textData: this.text_data,
+            showEdit: false
+        };
+    },
+
+
+    computed: {
+        patchPath: function patchPath() {
+            return '/compounds/' + this.id;
+        },
+        classes: function classes() {
+            return this.textData ? 'bg-success' : 'bg-danger';
+        }
+    },
+
+    methods: {
+        setFocus: function setFocus() {
+            var _this = this;
+
+            setTimeout(function () {
+                _this.$refs.dropdownField.focus();
+            });
+        },
+        patchData: function patchData(column, data) {
+            return { column: column, value: data };
+        },
+        unsetFocus: function unsetFocus() {
+            this.$refs.textField.blur();
+        },
+        closeEdit: function closeEdit() {
+            this.showEdit = false;
+        },
+        toggleEdit: function toggleEdit() {
+            this.showEdit = true;
+            this.setFocus();
+        },
+        submitData: function submitData() {
+            this.showEdit = false;
+
+            axios.patch(this.patchPath, this.patchData(this.dropdown_column, this.dropdownData)).then(function (response) {
+                console.log(response.data);
+            });
+
+            axios.patch(this.patchPath, this.patchData(this.text_column, this.textData)).then(function (response) {
+                console.log(response.data);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: _vm.classes,
+      staticStyle: {
+        display: "inline-block",
+        width: "100%",
+        height: "100%",
+        padding: "10px",
+        "text-align": "center"
+      }
+    },
+    [
+      !_vm.textData && !_vm.showEdit
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-link",
+              staticStyle: { color: "grey" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.toggleEdit($event)
+                }
+              }
+            },
+            [_vm._v("\n        + add\n    ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.showEdit
+        ? _c("span", { on: { click: _vm.toggleEdit } }, [
+            _vm._v(_vm._s(_vm.dropdownData) + " " + _vm._s(_vm.textData))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showEdit
+        ? _c("div", { staticClass: "form-group" }, [
+            _c(
+              "div",
+              {
+                staticClass: "col-sm-5",
+                staticStyle: { "margin-right": "-20px" }
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.dropdownData,
+                        expression: "dropdownData"
+                      }
+                    ],
+                    ref: "dropdownField",
+                    staticClass: "form-control",
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k(
+                            $event.keyCode,
+                            "esc",
+                            27,
+                            $event.key,
+                            "Escape"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.closeEdit($event)
+                      },
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.dropdownData = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "+" } }, [_vm._v("+")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "-" } }, [_vm._v("−")])
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.textData,
+                    expression: "textData"
+                  }
+                ],
+                ref: "textField",
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "19.65" },
+                domProps: { value: _vm.textData },
+                on: {
+                  blur: _vm.submitData,
+                  keyup: [
+                    function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.unsetFocus($event)
+                    },
+                    function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+                      ) {
+                        return null
+                      }
+                      return _vm.closeEdit($event)
+                    }
+                  ],
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.textData = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3951cee8", module.exports)
   }
 }
 

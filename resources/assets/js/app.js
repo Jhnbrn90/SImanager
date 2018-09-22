@@ -18,7 +18,11 @@ window.Vue = require('vue');
 Vue.component('melting-point', require('./components/MeltingPoint.vue'));
 Vue.component('hrms-data', require('./components/HRMSData.vue'));
 Vue.component('rotation-data', require('./components/RotationData.vue'));
-Vue.component('ir-field', require('./components/IRfield.vue'));
+
+Vue.component('text-field', require('./components/clickable/TextField.vue'));
+Vue.component('dropdown-field', require('./components/clickable/DropdownField.vue'));
+Vue.component('checkbox-field', require('./components/clickable/CheckboxField.vue'));
+Vue.component('dropdown-text-field', require('./components/clickable/DropdownTextField.vue'));
 
 const app = new Vue({
     el: '#app'
