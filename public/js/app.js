@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(60);
+module.exports = __webpack_require__(63);
 
 
 /***/ }),
@@ -1104,6 +1104,10 @@ Vue.component('text-field', __webpack_require__(48));
 Vue.component('dropdown-field', __webpack_require__(51));
 Vue.component('checkbox-field', __webpack_require__(54));
 Vue.component('dropdown-text-field', __webpack_require__(57));
+
+Vue.component('show-melting-point', __webpack_require__(60));
+Vue.component('show-hrms-data', __webpack_require__(74));
+Vue.component('show-rotation-data', __webpack_require__(77));
 
 var app = new Vue({
   el: '#app'
@@ -45126,9 +45130,842 @@ if (false) {
 
 /***/ }),
 /* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(62)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/show/MeltingPoint.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-304b3cd9", Component.options)
+  } else {
+    hotAPI.reload("data-v-304b3cd9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['data'],
+
+    data: function data() {
+        return {
+            meltingPoint: this.data
+        };
+    },
+
+
+    computed: {
+        markedUnobtainable: function markedUnobtainable() {
+            return this.meltingPoint == "@";
+        }
+    }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "form-group" }, [
+    _c(
+      "label",
+      { staticClass: "col-sm-2 control-label", attrs: { for: "MP" } },
+      [_vm._v("Melting Point (° C.)")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-sm-10" }, [
+      _vm.markedUnobtainable
+        ? _c("span", [
+            _vm._v(
+              "\n                Marked as unobtainable. \n                "
+            ),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.meltingPoint = null
+                  }
+                }
+              },
+              [_vm._v(" Undo? ")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.markedUnobtainable
+        ? _c("div", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.meltingPoint,
+                  expression: "meltingPoint"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                id: "MP",
+                name: "MP",
+                placeholder: "102 - 108"
+              },
+              domProps: { value: _vm.meltingPoint },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.meltingPoint = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.meltingPoint = "@"
+                  }
+                }
+              },
+              [_vm._v(" Mark as unobtainable ")]
+            )
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-304b3cd9", module.exports)
+  }
+}
+
+/***/ }),
+/* 63 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(75)
+/* template */
+var __vue_template__ = __webpack_require__(76)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/show/HRMSData.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-436a0845", Component.options)
+  } else {
+    hotAPI.reload("data-v-436a0845", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['mass_adduct', 'mass_calculated', 'mass_measured'],
+
+    data: function data() {
+        return {
+            massAdduct: this.mass_adduct,
+            massCalculated: this.mass_calculated,
+            massMeasured: this.mass_measured
+        };
+    },
+
+
+    computed: {
+        markedUnobtainable: function markedUnobtainable() {
+            return this.massAdduct == "@";
+        }
+    }
+});
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "label",
+        { staticClass: "col-sm-2 control-label", attrs: { for: "mass_ion" } },
+        [_vm._v("HRMS Data")]
+      ),
+      _vm._v(" "),
+      _vm.markedUnobtainable
+        ? _c("span", { staticClass: "col-sm-8" }, [
+            _vm._v("\n        Marked as unobtainable.\n        "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.massAdduct = null
+                  }
+                }
+              },
+              [_vm._v("Undo ?")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.markedUnobtainable
+        ? _c("div", [
+            _c("div", { staticClass: "col-sm-1" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.massAdduct,
+                      expression: "massAdduct"
+                    }
+                  ],
+                  ref: "ion",
+                  staticClass: "form-control",
+                  attrs: { name: "mass_ion", id: "mass_ion" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.massAdduct = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "H+" } }, [_vm._v("H+")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Na+" } }, [_vm._v("Na+")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "H-" } }, [
+                    _vm._v("Negative mode (H-)")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-4" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "input-group-addon" }, [
+                  _vm._v("calculated:")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.massCalculated,
+                      expression: "massCalculated"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "mass_calculated",
+                    name: "mass_calculated",
+                    placeholder: "221.0290"
+                  },
+                  domProps: { value: _vm.massCalculated },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.massCalculated = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-3" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "input-group-addon" }, [
+                  _vm._v("found:")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.massMeasured,
+                      expression: "massMeasured"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "mass_found",
+                    name: "mass_found",
+                    placeholder: "221.0291"
+                  },
+                  domProps: { value: _vm.massMeasured },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.massMeasured = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.massAdduct = "@"
+                  }
+                }
+              },
+              [_vm._v(" Mark as unobtainable ")]
+            )
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-436a0845", module.exports)
+  }
+}
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(78)
+/* template */
+var __vue_template__ = __webpack_require__(79)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/show/RotationData.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-58d8b79a", Component.options)
+  } else {
+    hotAPI.reload("data-v-58d8b79a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['alpha_sign', 'alpha_value', 'alpha_solvent', 'alpha_concentration'],
+
+    data: function data() {
+        return {
+            alphaSign: this.alpha_sign,
+            alphaValue: this.alpha_value,
+            alphaSolvent: this.alpha_solvent,
+            alphaConcentration: this.alpha_concentration
+        };
+    },
+
+
+    computed: {
+        markedUnobtainable: function markedUnobtainable() {
+            return this.alphaValue == "@";
+        }
+    }
+
+});
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.markedUnobtainable
+      ? _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            {
+              staticClass: "col-sm-2 control-label",
+              attrs: { for: "rotation_sign" }
+            },
+            [_vm._v("Specific Rotation")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-8" }, [
+            _vm._v("\n        Marked as unobtainable.\n        "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.alphaValue = null
+                  }
+                }
+              },
+              [_vm._v("Undo ?")]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.markedUnobtainable
+      ? _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            {
+              staticClass: "col-sm-2 control-label",
+              attrs: { for: "rotation_sign" }
+            },
+            [_vm._v("Specific Rotation")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-1" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.alphaSign,
+                    expression: "alphaSign"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "rotation_sign", id: "rotation_sign" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.alphaSign = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "+" } }, [_vm._v("+")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "-" } }, [_vm._v("−")])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.alphaValue,
+                    expression: "alphaValue"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "rotation_value",
+                  placeholder: "19.65"
+                },
+                domProps: { value: _vm.alphaValue },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.alphaValue = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("div", { staticClass: "input-group-addon" }, [
+                _vm._v("conc. = ")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.alphaConcentration,
+                    expression: "alphaConcentration"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "rotation_concentration",
+                  placeholder: "1.05"
+                },
+                domProps: { value: _vm.alphaConcentration },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.alphaConcentration = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-3" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("div", { staticClass: "input-group-addon" }, [
+                _vm._v("solvent")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.alphaSolvent,
+                    expression: "alphaSolvent"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "rotation_solvent",
+                  name: "rotation_solvent",
+                  placeholder: "CHCl3"
+                },
+                domProps: { value: _vm.alphaSolvent },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.alphaSolvent = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-link",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.alphaValue = "@"
+                }
+              }
+            },
+            [_vm._v(" Mark as unobtainable ")]
+          )
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _vm._v("[α]"),
+      _c("sup", [_vm._v("20")]),
+      _c("sub", [_vm._v("D")]),
+      _vm._v(" = ")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-58d8b79a", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

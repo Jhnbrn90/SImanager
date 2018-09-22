@@ -4,12 +4,13 @@
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 @endsection
 
+
 @section ('content')
 
 @include('layouts.navbar')
 
 <center>
-        <img src="/{{ $compound->SVGPath }}" width="143">
+        <img src="/{{ $compound->SVGPath }}" width="120">
         
         <hr>
         
@@ -44,16 +45,15 @@
         </div>
         
         <br>
-        
-        
+      
         <button class="btn btn-primary copy-btn" data-clipboard-target="#SI-text" style="margin-right: 10px;">Copy text</button>
-        <button class="btn btn-info">Edit info</button>
+        <a class="btn btn-info" href="/compounds/{{ $compound->id }}/edit">Edit info</a>
 
         <br><br>
 
-        test
-
-</center>
+    </center>
+        
+        
 
 @endsection
 
@@ -66,5 +66,6 @@
             alert('Copied to clipboard!');
         }, 10);
     });
+
 </script>
 @endsection

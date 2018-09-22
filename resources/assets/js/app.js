@@ -24,6 +24,11 @@ Vue.component('dropdown-field', require('./components/clickable/DropdownField.vu
 Vue.component('checkbox-field', require('./components/clickable/CheckboxField.vue'));
 Vue.component('dropdown-text-field', require('./components/clickable/DropdownTextField.vue'));
 
+Vue.component('show-melting-point', require('./components/show/MeltingPoint.vue'));
+Vue.component('show-hrms-data', require('./components/show/HRMSData.vue'));
+Vue.component('show-rotation-data', require('./components/show/RotationData.vue'));
+
+
 const app = new Vue({
     el: '#app'
 });

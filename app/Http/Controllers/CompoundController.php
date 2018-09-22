@@ -20,6 +20,11 @@ class CompoundController extends Controller
         return view('compounds.index', compact('compounds'));
     }
 
+    public function edit(Compound $compound)
+    {
+        return view('compounds.edit', compact('compound'));
+    }
+
     public function studentIndex(User $user)
     {
         // check if the provided user has the logged in user as a supervisor
