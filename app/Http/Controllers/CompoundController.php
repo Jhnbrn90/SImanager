@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Compound;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,21 @@ class CompoundController extends Controller
         return view('compounds.index', compact('compounds'));
     }
 
+    public function studentIndex(User $user)
+    {
+        // check if the provided user has the logged in user as a supervisor
+        if (!$this->isSupervisorOf($user)) {
+            return redirect('/');
+        }
+
+        $compounds = $user->compounds()->orderBy('created_at', 'desc')->get();
+
+        return view('compounds.index', compact('compounds'));
+    }
+
     public function show(Compound $compound)
     {
-        if(auth()->id() !== $compound->user_id) {
+        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
             return redirect('/');
         }
 
@@ -72,6 +85,10 @@ class CompoundController extends Controller
 
     public function update(Compound $compound, Request $request)
     {
+        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
+            return redirect('/');
+        }
+        
         $compound->update([$request->column => $request->value]);
         
         return response()->json($compound, 201);
@@ -84,6 +101,15 @@ class CompoundController extends Controller
         $compound->delete();
 
         return redirect('/');
+    }
+
+    public function isSupervisorOf($user)
+    {
+        if (is_int($user)) {
+            $user = User::findOrFail($user);
+        }
+
+        return $user->supervisors->contains(auth()->user());
     }
 
 }

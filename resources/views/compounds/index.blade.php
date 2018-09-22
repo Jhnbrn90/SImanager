@@ -51,7 +51,7 @@
             <tbody>
                 @forelse ($compounds as $compound)
                     <tr>
-                        <td><img src="{{ $compound->SVGPath }}" height="70" style="margin-top:-10px;"></td>
+                        <td><img src="/{{ $compound->SVGPath }}" height="70" style="margin-top:-10px;"></td>
                         
                         <td><a href="/compounds/{{ $compound->id }}">{{ $compound->label }}</a></td>
                         
@@ -166,7 +166,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="14">
+                        <td colspan="14" style="text-align:center;">
                             <br>
                             Hey there {{ Auth::user()->name }}!
                             <br>

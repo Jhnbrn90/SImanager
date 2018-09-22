@@ -19,9 +19,14 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
-                        <li><a href="/">Overview</a></li>
-                        <li><a href="/compounds/new">Add new Compound</a></li>
+                        @auth
+                            &nbsp;
+                            <li><a href="/">Overview</a></li>
+                            <li><a href="/compounds/new">Add new Compound</a></li>
+                            @if (Auth::user()->students)
+                                <li><a href="/students">View students</a></li>
+                            @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -38,6 +43,10 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a href="/supervisor/add">Add supervisor</a>
+                                    </li>
+
+                                    <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -48,6 +57,15 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <hr>
+                                    @if ($students = Auth::user()->students)
+                                        @foreach($students as $student)
+                                            <li>
+                                                <a href="/students/view/data/{{ $student->id }}"> {{ $student->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    @endif
+
                                 </ul>
                             </li>
                         @endguest
