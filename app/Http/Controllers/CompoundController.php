@@ -99,6 +99,48 @@ class CompoundController extends Controller
         return response()->json($compound, 201);
     }
 
+    public function updateAll(Compound $compound, Request $request)
+    {
+        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
+            return redirect('/');
+        }
+
+        $proton_NMR = false;
+        $carbon_NMR = false;
+
+        if($request->NMR) {
+            $proton_NMR = in_array('H_NMR', $request->NMR);
+            $carbon_NMR = in_array('C_NMR', $request->NMR);
+        }
+
+        $compound->label = $request->label;
+        $compound->proton_nmr = $proton_NMR;
+        $compound->carbon_nmr = $carbon_NMR;
+        $compound->retention = $request->Rf;
+        $compound->melting_point = $request->MP;
+        $compound->infrared = $request->IR;
+        $compound->mass_measured = $request->mass_found;
+        $compound->mass_calculated = $request->mass_calculated;
+        $compound->mass_adduct = $request->mass_ion;
+        $compound->alpha_sign = $request->rotation_sign;
+        $compound->alpha_value = $request->rotation_value;
+        $compound->alpha_concentration = $request->rotation_concentration;
+        $compound->alpha_solvent = $request->rotation_solvent;
+        $compound->notes = $request->notes;
+
+        $compound->molfile = $request->molfile;
+        $compound->molweight = $request->molweight;
+        $compound->formula = $request->formula;
+        $compound->exact_mass = $request->exact_mass;
+
+        $compound->save();
+
+        $compound->toMolfile()->toSVG();
+
+        return redirect('/compounds/'.$compound->id);
+
+    }
+
     public function destroy(Compound $compound)
     {
         $compound = Compound::findOrFail($compound)->first();

@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(63);
+module.exports = __webpack_require__(69);
 
 
 /***/ }),
@@ -1106,8 +1106,8 @@ Vue.component('checkbox-field', __webpack_require__(54));
 Vue.component('dropdown-text-field', __webpack_require__(57));
 
 Vue.component('show-melting-point', __webpack_require__(60));
-Vue.component('show-hrms-data', __webpack_require__(74));
-Vue.component('show-rotation-data', __webpack_require__(77));
+Vue.component('show-hrms-data', __webpack_require__(63));
+Vue.component('show-rotation-data', __webpack_require__(66));
 
 var app = new Vue({
   el: '#app'
@@ -45199,6 +45199,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['data'],
@@ -45252,6 +45254,35 @@ var render = function() {
               [_vm._v(" Undo? ")]
             )
           ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.markedUnobtainable
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.meltingPoint,
+                expression: "meltingPoint"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "hidden",
+              id: "MP",
+              name: "MP",
+              placeholder: "102 - 108"
+            },
+            domProps: { value: _vm.meltingPoint },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.meltingPoint = $event.target.value
+              }
+            }
+          })
         : _vm._e(),
       _vm._v(" "),
       !_vm.markedUnobtainable
@@ -45313,30 +45344,14 @@ if (false) {
 
 /***/ }),
 /* 63 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(75)
+var __vue_script__ = __webpack_require__(64)
 /* template */
-var __vue_template__ = __webpack_require__(76)
+var __vue_template__ = __webpack_require__(65)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45375,11 +45390,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 75 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45441,7 +45462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 76 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45472,6 +45493,22 @@ var render = function() {
               },
               [_vm._v("Undo ?")]
             )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.markedUnobtainable
+        ? _c("div", [
+            _c("input", {
+              attrs: { type: "hidden", name: "mass_ion", value: "@" }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "hidden", name: "mass_calculated", value: "@" }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "hidden", name: "mass_found", value: "@" }
+            })
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -45619,15 +45656,15 @@ if (false) {
 }
 
 /***/ }),
-/* 77 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(78)
+var __vue_script__ = __webpack_require__(67)
 /* template */
-var __vue_template__ = __webpack_require__(79)
+var __vue_template__ = __webpack_require__(68)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45666,11 +45703,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 78 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45740,7 +45784,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 79 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45775,6 +45819,30 @@ var render = function() {
               [_vm._v("Undo ?")]
             )
           ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.markedUnobtainable
+      ? _c("div", [
+          _c("input", {
+            attrs: { type: "hidden", name: "rotation_sign", value: "@" }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "hidden", name: "rotation_value", value: "@" }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "hidden", name: "rotation_solvent", value: "@" }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: {
+              type: "hidden",
+              name: "rotation_concentration",
+              value: "@"
+            }
+          })
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -45966,6 +46034,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-58d8b79a", module.exports)
   }
 }
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

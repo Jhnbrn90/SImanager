@@ -31,7 +31,7 @@
         
         <h1> {{ $compound->label }} </h1>
 
-        <a class="btn btn-small btn-primary">Go back</a>
+        <a href="/compounds/{{ $compound->id }}" class="btn btn-small btn-primary">View compound</a>
         <a class="btn btn-small btn-danger">Delete compound</a>
 
         <h3 style="margin-bottom:25px;">Edit info</h3>
@@ -63,7 +63,7 @@
                       <input name="NMR[]" type="checkbox" id="H_NMR" value="H_NMR" tabindex="3" {{ $compound->proton_nmr ? 'checked' : '' }}> <sup>1</sup>H
                     </label>
                     <label class="checkbox-inline">
-                      <input name="NMR[]" type="checkbox" id="C_NMR" value="C_NMR" tabindex="4" {{ $compound->proton_nmr ? 'checked' : '' }}> <sup>13</sup>C
+                      <input name="NMR[]" type="checkbox" id="C_NMR" value="C_NMR" tabindex="4" {{ $compound->carbon_nmr ? 'checked' : '' }}> <sup>13</sup>C
                     </label>
                 </div>
               </div>

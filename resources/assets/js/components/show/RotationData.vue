@@ -8,6 +8,13 @@
             <button class="btn btn-link" @click.prevent="alphaValue = null">Undo ?</button>
           </div>
         </div>
+
+        <div v-if="markedUnobtainable">
+          <input type="hidden" name="rotation_sign" value="@" >
+          <input type="hidden" name="rotation_value" value="@">
+          <input type="hidden" name="rotation_solvent" value="@">
+          <input type="hidden" name="rotation_concentration" value="@">
+        </div>
         
         <div class="form-group" v-if="!markedUnobtainable">
           <label for="rotation_sign" class="col-sm-2 control-label">Specific Rotation</label>

@@ -7,6 +7,8 @@
                     Marked as unobtainable. 
                     <button class="btn btn-link" @click.prevent="meltingPoint = null"> Undo? </button>
                 </span>
+
+                <input v-if="markedUnobtainable" type="hidden" class="form-control" id="MP" name="MP" placeholder="102 - 108" v-model="meltingPoint">
                 
                 <div v-if="!markedUnobtainable">
                     <input type="text" class="form-control" id="MP" name="MP" placeholder="102 - 108" v-model="meltingPoint">

@@ -7,6 +7,12 @@
             Marked as unobtainable.
             <button class="btn btn-link" @click.prevent="massAdduct = null">Undo ?</button>
           </span>
+          
+          <div v-if="markedUnobtainable">
+            <input type="hidden" name="mass_ion" value="@" >
+            <input type="hidden" name="mass_calculated" value="@">
+            <input type="hidden" name="mass_found" value="@">
+          </div>
 
           <div v-if="!markedUnobtainable">
               <div class="col-sm-1">

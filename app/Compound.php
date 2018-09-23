@@ -41,7 +41,7 @@ class Compound extends Model
             return "svg/unknown.svg";
         }
         
-        return "svg/{$this->id}.svg";
+        return "svg/{$this->id}.svg?".time();
     }
 
     public function toMolfile()
