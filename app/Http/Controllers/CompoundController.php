@@ -62,7 +62,7 @@ class CompoundController extends Controller
         }
 
         $compound = Compound::create([
-            'user_id'               => auth()->id(),
+            'user_id'               => $request->user_id,
             'label'                 => $request->label,
             'proton_nmr'            => $proton_NMR,
             'carbon_nmr'            => $carbon_NMR,

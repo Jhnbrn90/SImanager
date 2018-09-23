@@ -33,6 +33,19 @@
 
 <form class="form-horizontal" autocomplete="off" method="POST" action="/compounds">
     {{ csrf_field() }}
+
+    <div class="form-group">
+      <label for="label" class="col-sm-2 control-label">User</label>
+      <div class="col-sm-10">
+        <select name="user_id" class="form-control">
+              <option value="{{ Auth::user()->id }}"> {{ Auth::user()->name }} (you)</option>
+            @foreach (Auth::user()->students as $student)
+                <option value="{{ $student->id }}"> {{ $student->name }} ({{ $student->email }})</option>
+            @endforeach
+        </select>
+      </div>
+    </div>
+
   <div class="form-group">
     <label for="label" class="col-sm-2 control-label">Label</label>
     <div class="col-sm-10">
