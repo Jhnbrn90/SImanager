@@ -38,10 +38,10 @@ class Compound extends Model
     public function getSVGPathAttribute()
     {
         if (!$this->molfile) {
-            return "svg/unknown.svg";
+            return "storage/svg/unknown.svg";
         }
         
-        return "svg/{$this->id}.svg?".time();
+        return "storage/svg/{$this->id}.svg?".time();
     }
 
     public function toMolfile()
