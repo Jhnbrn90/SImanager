@@ -7,6 +7,7 @@ Route::get('/', 'CompoundController@index');
 Route::get('/compounds/new', 'CompoundController@create');
 
 Route::get('/compounds/{compound}/edit', 'CompoundController@edit');
+Route::get('/compounds/{compound}/delete', 'CompoundController@confirmDelete');
 Route::get('/compounds/{compound}', 'CompoundController@show');
 
 Route::put('/compounds/{compound}', 'CompoundController@updateAll');

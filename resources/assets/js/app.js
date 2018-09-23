@@ -28,6 +28,10 @@ Vue.component('show-melting-point', require('./components/show/MeltingPoint.vue'
 Vue.component('show-hrms-data', require('./components/show/HRMSData.vue'));
 Vue.component('show-rotation-data', require('./components/show/RotationData.vue'));
 
+Vue.component('delete-compound-form', require('./components/DeleteCompoundForm.vue'));
+
+
+
 
 const app = new Vue({
     el: '#app'

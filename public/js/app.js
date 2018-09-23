@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(69);
+module.exports = __webpack_require__(72);
 
 
 /***/ }),
@@ -1108,6 +1108,8 @@ Vue.component('dropdown-text-field', __webpack_require__(57));
 Vue.component('show-melting-point', __webpack_require__(60));
 Vue.component('show-hrms-data', __webpack_require__(63));
 Vue.component('show-rotation-data', __webpack_require__(66));
+
+Vue.component('delete-compound-form', __webpack_require__(69));
 
 var app = new Vue({
   el: '#app'
@@ -46037,6 +46039,183 @@ if (false) {
 
 /***/ }),
 /* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(70)
+/* template */
+var __vue_template__ = __webpack_require__(71)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DeleteCompoundForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3ec26fd1", Component.options)
+  } else {
+    hotAPI.reload("data-v-3ec26fd1", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['csrf_token', 'compoundId', 'compoundLabel'],
+
+    data: function data() {
+        return {
+            label: '',
+            matched: false
+        };
+    },
+
+
+    computed: {
+        postRoute: function postRoute() {
+            return '/compounds/' + this.compoundId;
+        },
+        placeHolder: function placeHolder() {
+            return 'Type ' + this.compoundLabel + ' to confirm';
+        }
+    },
+
+    methods: {
+        checkIfLabelMatches: function checkIfLabelMatches() {
+            if (this.label == this.compoundLabel) {
+                this.matched = true;
+            } else {
+                this.matched = false;
+            }
+        }
+    }
+
+});
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    { attrs: { method: "POST", action: _vm.postRoute, autocomplete: "off" } },
+    [
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrf_token }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden", name: "_method", value: "delete" }
+      }),
+      _vm._v(" "),
+      _c("p", [_vm._v("Type in the label of this compound to confirm: ")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.label,
+            expression: "label"
+          }
+        ],
+        staticClass: "form-control",
+        staticStyle: { width: "260px", "text-align": "center" },
+        attrs: {
+          type: "text",
+          name: "label",
+          placeholder: _vm.placeHolder,
+          autofocus: ""
+        },
+        domProps: { value: _vm.label },
+        on: {
+          keyup: _vm.checkIfLabelMatches,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.label = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "submit", disabled: !_vm.matched }
+        },
+        [_vm._v("Delete this compound")]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3ec26fd1", module.exports)
+  }
+}
+
+/***/ }),
+/* 72 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

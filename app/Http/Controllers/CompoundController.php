@@ -148,11 +148,20 @@ class CompoundController extends Controller
 
     public function destroy(Compound $compound)
     {
+        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
+            return redirect('/');
+        }
+
         $compound = Compound::findOrFail($compound)->first();
 
         $compound->delete();
 
         return redirect('/');
+    }
+
+    public function confirmDelete(Compound $compound)
+    {
+        return view('compounds.confirmdelete', compact('compound'));
     }
 
     public function isSupervisorOf($user)

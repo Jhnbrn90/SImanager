@@ -32,7 +32,7 @@
         <h1> {{ $compound->label }} </h1>
 
         <a href="/compounds/{{ $compound->id }}" class="btn btn-small btn-primary">View compound</a>
-        <a class="btn btn-small btn-danger">Delete compound</a>
+        <a href="/compounds/{{ $compound->id }}/delete" class="btn btn-small btn-danger">Delete compound</a>
 
         <h3 style="margin-bottom:25px;">Edit info</h3>
 
