@@ -39,8 +39,11 @@ class CompoundController extends Controller
 
     public function show(Compound $compound)
     {
-        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
-            return redirect('/');
+        if(auth()->id() !== $compound->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($compound->user_id)) {
+                return redirect('/');
+            }
         }
 
         return view('compounds.show', compact('compound'));    
@@ -90,8 +93,11 @@ class CompoundController extends Controller
 
     public function update(Compound $compound, Request $request)
     {
-        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
-            return redirect('/');
+        if(auth()->id() !== $compound->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($compound->user_id)) {
+                return redirect('/');
+            }
         }
         
         $compound->update([$request->column => $request->value]);
@@ -101,8 +107,11 @@ class CompoundController extends Controller
 
     public function updateAll(Compound $compound, Request $request)
     {
-        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
-            return redirect('/');
+        if(auth()->id() !== $compound->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($compound->user_id)) {
+                return redirect('/');
+            }
         }
 
         $proton_NMR = false;
@@ -148,8 +157,11 @@ class CompoundController extends Controller
 
     public function destroy(Compound $compound)
     {
-        if(auth()->id() !== $compound->user_id && !$this->isSupervisorOf($compound->user_id)) {
-            return redirect('/');
+        if(auth()->id() !== $compound->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($compound->user_id)) {
+                return redirect('/');
+            }
         }
 
         $compound = Compound::findOrFail($compound)->first();

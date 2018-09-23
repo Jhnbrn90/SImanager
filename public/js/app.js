@@ -44239,6 +44239,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id', 'data', 'column'],
@@ -44315,76 +44319,100 @@ var render = function() {
       }
     },
     [
-      !_vm.fieldData && !_vm.showEdit
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-link",
-              staticStyle: { color: "grey" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.toggleEdit($event)
-                }
-              }
-            },
-            [_vm._v("+ add")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.showEdit
-        ? _c("span", { on: { click: _vm.toggleEdit } }, [
-            _vm._v(_vm._s(_vm.fieldData))
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.showEdit
-        ? _c("div", { staticClass: "form-group" }, [
-            _c("input", {
-              directives: [
+      _c(
+        "div",
+        {
+          staticStyle: {
+            position: "relative",
+            top: "50%",
+            transform: "translateY(-50%)"
+          }
+        },
+        [
+          !_vm.fieldData && !_vm.showEdit
+            ? _c(
+                "button",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.fieldData,
-                  expression: "fieldData"
-                }
-              ],
-              ref: "inputField",
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.fieldData },
-              on: {
-                blur: _vm.submitData,
-                keyup: [
-                  function($event) {
-                    if (
-                      !("button" in $event) &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
+                  staticClass: "btn btn-link",
+                  staticStyle: { color: "grey" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.toggleEdit($event)
                     }
-                    return _vm.unsetFocus($event)
-                  },
-                  function($event) {
-                    if (
-                      !("button" in $event) &&
-                      _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
-                    ) {
-                      return null
+                  }
+                },
+                [_vm._v("+ add")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.showEdit
+            ? _c("span", { on: { click: _vm.toggleEdit } }, [
+                _vm._v(_vm._s(_vm.fieldData))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showEdit
+            ? _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fieldData,
+                      expression: "fieldData"
                     }
-                    return _vm.unsetFocus($event)
+                  ],
+                  ref: "inputField",
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.fieldData },
+                  on: {
+                    blur: _vm.submitData,
+                    keyup: [
+                      function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.unsetFocus($event)
+                      },
+                      function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k(
+                            $event.keyCode,
+                            "esc",
+                            27,
+                            $event.key,
+                            "Escape"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.unsetFocus($event)
+                      }
+                    ],
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.fieldData = $event.target.value
+                    }
                   }
-                ],
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.fieldData = $event.target.value
-                }
-              }
-            })
-          ])
-        : _vm._e()
+                })
+              ])
+            : _vm._e()
+        ]
+      )
     ]
   )
 }
@@ -44451,6 +44479,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -44550,93 +44581,117 @@ var render = function() {
       }
     },
     [
-      !_vm.fieldData && !_vm.showEdit
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-link",
-              staticStyle: { color: "grey" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.toggleEdit($event)
-                }
-              }
-            },
-            [_vm._v("\n        + add\n    ")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.showEdit
-        ? _c("span", { on: { click: _vm.toggleEdit } }, [
-            _vm._v(_vm._s(_vm.fieldData))
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.showEdit
-        ? _c("div", { staticClass: "form-group" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fieldData,
-                    expression: "fieldData"
-                  }
-                ],
-                ref: "inputField",
-                staticClass: "form-control",
-                on: {
-                  blur: _vm.submitData,
-                  keyup: [
-                    function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.unsetFocus($event)
-                    },
-                    function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
-                      ) {
-                        return null
-                      }
-                      return _vm.unsetFocus($event)
+      _c(
+        "div",
+        {
+          staticStyle: {
+            position: "relative",
+            top: "50%",
+            transform: "translateY(-50%)"
+          }
+        },
+        [
+          !_vm.fieldData && !_vm.showEdit
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-link",
+                  staticStyle: { color: "grey" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.toggleEdit($event)
                     }
-                  ],
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.fieldData = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
                   }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "H+" } }, [_vm._v("H+")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "Na+" } }, [_vm._v("Na+")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "H-" } }, [
-                  _vm._v("Negative mode (H-)")
-                ])
-              ]
-            )
-          ])
-        : _vm._e()
+                },
+                [_vm._v("\n            + add\n        ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.showEdit
+            ? _c("span", { on: { click: _vm.toggleEdit } }, [
+                _vm._v(_vm._s(_vm.fieldData))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showEdit
+            ? _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fieldData,
+                        expression: "fieldData"
+                      }
+                    ],
+                    ref: "inputField",
+                    staticClass: "form-control",
+                    on: {
+                      blur: _vm.submitData,
+                      keyup: [
+                        function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.unsetFocus($event)
+                        },
+                        function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "esc",
+                              27,
+                              $event.key,
+                              "Escape"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.unsetFocus($event)
+                        }
+                      ],
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.fieldData = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "H+" } }, [_vm._v("H+")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Na+" } }, [_vm._v("Na+")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "H-" } }, [
+                      _vm._v("Negative mode (H-)")
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e()
+        ]
+      )
     ]
   )
 }
@@ -44709,6 +44764,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id', 'data', 'column'],
@@ -44765,45 +44822,59 @@ var render = function() {
       }
     },
     [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.fieldData,
-            expression: "fieldData"
+      _c(
+        "div",
+        {
+          staticStyle: {
+            position: "relative",
+            top: "50%",
+            transform: "translateY(-50%)"
           }
-        ],
-        attrs: { type: "checkbox" },
-        domProps: {
-          checked: Array.isArray(_vm.fieldData)
-            ? _vm._i(_vm.fieldData, null) > -1
-            : _vm.fieldData
         },
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.toggleAndSubmit($event)
-          },
-          change: function($event) {
-            var $$a = _vm.fieldData,
-              $$el = $event.target,
-              $$c = $$el.checked ? true : false
-            if (Array.isArray($$a)) {
-              var $$v = null,
-                $$i = _vm._i($$a, $$v)
-              if ($$el.checked) {
-                $$i < 0 && (_vm.fieldData = $$a.concat([$$v]))
-              } else {
-                $$i > -1 &&
-                  (_vm.fieldData = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fieldData,
+                expression: "fieldData"
               }
-            } else {
-              _vm.fieldData = $$c
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.fieldData)
+                ? _vm._i(_vm.fieldData, null) > -1
+                : _vm.fieldData
+            },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.toggleAndSubmit($event)
+              },
+              change: function($event) {
+                var $$a = _vm.fieldData,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.fieldData = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.fieldData = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.fieldData = $$c
+                }
+              }
             }
-          }
-        }
-      })
+          })
+        ]
+      )
     ]
   )
 }
@@ -44870,6 +44941,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -44985,138 +45057,162 @@ var render = function() {
       }
     },
     [
-      !_vm.textData && !_vm.showEdit
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-link",
-              staticStyle: { color: "grey" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.toggleEdit($event)
-                }
-              }
-            },
-            [_vm._v("\n        + add\n    ")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.showEdit
-        ? _c("span", { on: { click: _vm.toggleEdit } }, [
-            _vm._v(_vm._s(_vm.dropdownData) + " " + _vm._s(_vm.textData))
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.showEdit
-        ? _c("div", { staticClass: "form-group" }, [
-            _c(
-              "div",
-              {
-                staticClass: "col-sm-5",
-                staticStyle: { "margin-right": "-20px" }
-              },
-              [
+      _c(
+        "div",
+        {
+          staticStyle: {
+            position: "relative",
+            top: "50%",
+            transform: "translateY(-50%)"
+          }
+        },
+        [
+          !_vm.textData && !_vm.showEdit
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-link",
+                  staticStyle: { color: "grey" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.toggleEdit($event)
+                    }
+                  }
+                },
+                [_vm._v("\n            + add\n        ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.showEdit
+            ? _c("span", { on: { click: _vm.toggleEdit } }, [
+                _vm._v(_vm._s(_vm.dropdownData) + " " + _vm._s(_vm.textData))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showEdit
+            ? _c("div", { staticClass: "form-group" }, [
                 _c(
-                  "select",
+                  "div",
                   {
+                    staticClass: "col-sm-5",
+                    staticStyle: { "margin-right": "-20px" }
+                  },
+                  [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.dropdownData,
+                            expression: "dropdownData"
+                          }
+                        ],
+                        ref: "dropdownField",
+                        staticClass: "form-control",
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k(
+                                $event.keyCode,
+                                "esc",
+                                27,
+                                $event.key,
+                                "Escape"
+                              )
+                            ) {
+                              return null
+                            }
+                            return _vm.closeEdit($event)
+                          },
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.dropdownData = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "+" } }, [_vm._v("+")]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "-" } }, [_vm._v("−")])
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.dropdownData,
-                        expression: "dropdownData"
+                        value: _vm.textData,
+                        expression: "textData"
                       }
                     ],
-                    ref: "dropdownField",
+                    ref: "textField",
                     staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "19.65" },
+                    domProps: { value: _vm.textData },
                     on: {
-                      keyup: function($event) {
-                        if (
-                          !("button" in $event) &&
-                          _vm._k(
-                            $event.keyCode,
-                            "esc",
-                            27,
-                            $event.key,
-                            "Escape"
-                          )
-                        ) {
-                          return null
+                      blur: _vm.submitData,
+                      keyup: [
+                        function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.unsetFocus($event)
+                        },
+                        function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k(
+                              $event.keyCode,
+                              "esc",
+                              27,
+                              $event.key,
+                              "Escape"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.closeEdit($event)
                         }
-                        return _vm.closeEdit($event)
-                      },
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.dropdownData = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
+                      ],
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.textData = $event.target.value
                       }
                     }
-                  },
-                  [
-                    _c("option", { attrs: { value: "+" } }, [_vm._v("+")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "-" } }, [_vm._v("−")])
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.textData,
-                    expression: "textData"
-                  }
-                ],
-                ref: "textField",
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "19.65" },
-                domProps: { value: _vm.textData },
-                on: {
-                  blur: _vm.submitData,
-                  keyup: [
-                    function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.unsetFocus($event)
-                    },
-                    function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
-                      ) {
-                        return null
-                      }
-                      return _vm.closeEdit($event)
-                    }
-                  ],
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.textData = $event.target.value
-                  }
-                }
-              })
-            ])
-          ])
-        : _vm._e()
+                  })
+                ])
+              ])
+            : _vm._e()
+        ]
+      )
     ]
   )
 }

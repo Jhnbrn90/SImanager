@@ -1,25 +1,28 @@
 <template>
     <div :class="classes" style="display:inline-block; width: 100%; height: 100%; padding: 10px; text-align: center;">    
-        <button @click.prevent="toggleEdit" v-if="!fieldData && !showEdit" class="btn btn-link" style="color: grey;">
-            &plus; add
-        </button>
+        <div style="position:relative; top: 50%; transform: translateY(-50%);">
 
-        <span @click="toggleEdit" v-if="!showEdit">{{ fieldData }}</span>
+            <button @click.prevent="toggleEdit" v-if="!fieldData && !showEdit" class="btn btn-link" style="color: grey;">
+                &plus; add
+            </button>
 
-        <div class="form-group" v-if="showEdit">
-            <select 
-                ref="inputField" 
-                class="form-control"
-                @blur="submitData" 
-                @keyup.enter="unsetFocus"
-                @keyup.esc="unsetFocus"   
-                v-model="fieldData"
-            >       
-                <option value="H+">H+</option>
-                <option value="Na+">Na+</option>
-                <option value="H-">Negative mode (H-)</option>
-            </select>
+            <span @click="toggleEdit" v-if="!showEdit">{{ fieldData }}</span>
 
+            <div class="form-group" v-if="showEdit">
+                <select 
+                    ref="inputField" 
+                    class="form-control"
+                    @blur="submitData" 
+                    @keyup.enter="unsetFocus"
+                    @keyup.esc="unsetFocus"   
+                    v-model="fieldData"
+                >       
+                    <option value="H+">H+</option>
+                    <option value="Na+">Na+</option>
+                    <option value="H-">Negative mode (H-)</option>
+                </select>
+
+            </div>
         </div>
     </div>
 </template>

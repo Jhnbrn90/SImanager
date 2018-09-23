@@ -2,11 +2,10 @@
 
 @section('head')
 <style>
-    .no-padding {
-        padding: 0;
+    .table > tbody > tr > td {
+         vertical-align: middle !important;
     }
 </style>
-
 @endsection
 
 @section ('content')

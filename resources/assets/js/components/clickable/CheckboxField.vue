@@ -1,6 +1,8 @@
 <template>
     <div :class="classes" style="display:inline-block; width: 100%; height: 100%; padding: 10px; text-align: center;">    
-        <input type="checkbox" v-model="fieldData" @click.prevent="toggleAndSubmit">
+        <div style="position:relative; top: 50%; transform: translateY(-50%);">
+            <input type="checkbox" v-model="fieldData" @click.prevent="toggleAndSubmit">            
+        </div>
     </div>
 </template>
 
