@@ -103,16 +103,17 @@
                          ondatachange="molchange"
                         ></div>
                     </div>
-                    <input type="hidden" name="molfile" id="molfile">
+                    <input type="hidden" name="molfile" value="{{ $compound->molfile }}" id="molfile">
                     <input type="hidden" name="molweight" id="molweight">
                     <input type="hidden" name="formula" id="formula">
                     <input type="hidden" name="exact_mass" id="exact_mass">
+                    <input type="hidden" name="user_updated_molfile" id="user_updated_molfile">
                 </div>
 
                 <div class="form-group">
                   <label for="notes" class="col-sm-2 control-label">Notes</label>
                   <div class="col-sm-10">
-                    <textarea name="notes" id="notes" class="form-control" rows="3" placeholder="Anything to say on (the synthesis of) this compound?"></textarea>
+                    <textarea name="notes" id="notes" class="form-control" rows="3" placeholder="Anything to say on (the synthesis of) this compound?">{{ $compound->notes }}</textarea>
                   </div>
                 </div>
 
@@ -140,16 +141,7 @@
         document.getElementById("molweight").value = JSDraw.get("mobile-editor").getMolWeight();
         document.getElementById("formula").value = JSDraw.get("mobile-editor").getFormula();
         document.getElementById("exact_mass").value = JSDraw.get("mobile-editor").getExactMass();
+        document.getElementById("user_updated_molfile").value = 'true';
     }
-
-    var clipboard = new ClipboardJS('.copy-btn');
-
-    clipboard.on('success', function(e) {
-        setTimeout(() => {
-            alert('Copied to clipboard!');
-        }, 10);
-    });
-
-
 </script>
 @endsection

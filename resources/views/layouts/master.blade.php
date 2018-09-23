@@ -8,7 +8,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- <title>{{ config('app.name', 'Laravel') }} @yield('title')</title> -->
+    <title>
+        @if(View::hasSection('title'))
+            @yield('title')
+        @else
+            {{ config('app.name') }}
+        @endif
+    </title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

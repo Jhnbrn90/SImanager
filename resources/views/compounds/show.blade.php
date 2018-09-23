@@ -1,5 +1,9 @@
 @extends ('layouts.master')
 
+@section('title')
+    {{ $compound->label }} ({{ config('app.name') }})
+@endsection
+
 @section('head')
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 @endsection
@@ -14,9 +18,10 @@
         
         <hr>
         
-        <h1> {{ $compound->label }} </h1>
+        <h2> {{ $compound->label }} </h2>
 
-        <h4>{!! $compound->formattedFormula !!}</h4>
+        <br>
+        
 
         <div 
             id="SI-text" 
@@ -43,18 +48,107 @@
             <strong>M.p.</strong>: {{ $compound->melting_point }} &deg; C.
         @endif
         </div>
-        
+
         <br>
-      
-        <button class="btn btn-primary copy-btn" data-clipboard-target="#SI-text" style="margin-right: 10px;">Copy text</button>
+
+        <button id="copy-btn" class="btn btn-primary copy-btn" data-clipboard-target="#SI-text" style="margin-right: 10px;">Copy text</button>
         <a class="btn btn-info" href="/compounds/{{ $compound->id }}/edit">Edit info</a>
+        
 
         <br><br>
-
+        <h3>Collected data</h3>
+        <br>
     </center>
-        
-        
 
+        <center>
+            <div class="container" style="width:70%;">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <td><strong>Label</strong></td>
+                    <td>{{ $compound->label }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Notes</strong></td>
+                    <td>{{ $compound->notes }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Formula</strong></td>
+                    @if ($compound->formula)
+                        <td>{!! $compound->formattedFormula !!}</td>
+                    @else
+                        <td><a href="/compounds/{{ $compound->id }}/edit">&plus; add structure</a></td>
+                    @endif
+                </tr>
+
+                <tr>
+                    <td><strong>Molecular weight</strong></td>
+                    <td>{{ $compound->molweight }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Exact mass</strong></td>
+                    <td>{{ $compound->exact_mass }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>R<sub>F</sub></strong></td>
+                    <td>{{ $compound->retention }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>IR</strong></td>
+                    <td>{{ $compound->infrared == "@" ? 'unobtainable' : $compound->infrared == "" ? 'N.D.' : $compound->infrared }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Melting Point</strong></td>
+                    <td>
+                        @if($compound->melting_point == "@")
+                            (unobtainable)
+                        @elseif($compound->melting_point == "")
+                            (not yet determined)
+                        @else 
+                            {{ $compound->melting_point }} &deg; C.
+                        @endif
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>HRMS</strong></td>
+                    <td>
+                        @if ($compound->mass_measured == "@")
+                            (unobtainable)
+                        @elseif($compound->mass_measured =="")
+                            (not yet determined)
+                        @else
+                            {!! $compound->formattedFormulaForHRMS() !!} <br>
+                            calculated = {{ $compound->mass_calculated }},
+                            found = {{ $compound->mass_measured }}
+                        @endif
+                    </td>
+                </tr>
+
+                 <tr>
+                    <td><strong>[&alpha;]<sup>20</sup><sub>D</sub></strong></td>
+                    <td>
+                        @if ($compound->alpha_value == "@")
+                            (unobtainable)
+                        @elseif($compound->alpha_value =="")
+                            (not yet determined)
+                        @else
+                            {{ $compound->alpha_sign }}
+                            {{ $compound->alpha_value }}
+                            (c = {{ $compound->alpha_concentration }}, {!! $compound->formattedAlphaSolvent() !!})
+                        @endif
+                    </td>
+                </tr>
+            </table>
+            <br><br>
+            </div>
+        </center>
+    
 @endsection
 
 @section('scripts')
@@ -62,9 +156,15 @@
     var clipboard = new ClipboardJS('.copy-btn');
 
     clipboard.on('success', function(e) {
+        document.querySelector('#copy-btn').innerHTML = 'Copied to clipboard!';
+        document.querySelector('#copy-btn').classList.add('btn-success');
+
         setTimeout(() => {
-            alert('Copied to clipboard!');
-        }, 10);
+            document.querySelector('#copy-btn').innerHTML = 'Copy text';
+            document.querySelector('#copy-btn').classList.remove('btn-success');
+        }, 2000);
+
+        e.clearSelection();
     });
 
 </script>

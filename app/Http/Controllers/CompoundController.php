@@ -128,14 +128,19 @@ class CompoundController extends Controller
         $compound->alpha_solvent = $request->rotation_solvent;
         $compound->notes = $request->notes;
 
-        $compound->molfile = $request->molfile;
-        $compound->molweight = $request->molweight;
-        $compound->formula = $request->formula;
-        $compound->exact_mass = $request->exact_mass;
+        if ($request->user_updated_molfile == 'true') {
+            $compound->molfile = $request->molfile;
+            $compound->molweight = $request->molweight;
+            $compound->formula = $request->formula;
+            $compound->exact_mass = $request->exact_mass;
+        }
+        
 
         $compound->save();
 
-        $compound->toMolfile()->toSVG();
+        if ($request->user_updated_molfile == 'true') {
+            $compound->toMolfile()->toSVG();
+        }
 
         return redirect('/compounds/'.$compound->id);
 
