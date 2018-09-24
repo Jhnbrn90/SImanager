@@ -27,7 +27,7 @@
                     <th>R<sub>F</sub></th>
                     <th>IR</th>
                     <th>MP</th>
-                    <th colspan="2">HRMS</th>
+                    <th colspan="3">HRMS</th>
                     <th colspan="3">Specific Rotation</th>
                     <th>Notes</th>
                 </tr>
@@ -40,7 +40,8 @@
                     <td> &nbsp; </td>
                     <td> °C </td>
                     <td>Adduct</td>
-                    <td>Found Mass</td>
+                    <td>Calculated</td>
+                    <td>Found</td>
                     <td>[α]</td>
                     <td>c</td>
                     <td>Solvent</td>
@@ -108,6 +109,18 @@
                                     data="{{ $compound->mass_adduct }}" 
                                     column="mass_adduct"
                                 ></dropdown-field>
+                            </td>
+                        @endif
+
+                        @if ($compound->mass_calculated == "@")
+                            <td style="background-color: #F8F8F8"></td>
+                        @else 
+                            <td style="padding:0;">
+                                <text-field 
+                                id="{{ $compound->id }}" 
+                                data="{{ $compound->mass_calculated }}" 
+                                column="mass_calculated"
+                            ></text-field>
                             </td>
                         @endif
 
