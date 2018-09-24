@@ -22,7 +22,15 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Label</th>
+                    <th>
+                        @if($orderByColumn == 'label' && $orderByMethod == 'asc')
+                            <a href="?by=label&order=desc">Label <span class="dropup"><span class="caret"></span></span></a>
+                        @elseif($orderByColumn == 'label' && $orderByMethod == 'desc')
+                            <a href="?by=label&order=asc">Label <span class="caret"></span></a>
+                        @else 
+                            <a href="?by=label&order=asc">Label</a>
+                        @endif
+                    </th>
                     <th colspan="2">NMR</th>
                     <th>R<sub>F</sub></th>
                     <th>IR</th>

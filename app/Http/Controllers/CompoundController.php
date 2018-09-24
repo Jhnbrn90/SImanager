@@ -13,11 +13,16 @@ class CompoundController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index($orderByColumn = 'created_at', $orderByMethod = 'desc', Request $request)
     {
-        $compounds = auth()->user()->compounds()->orderBy('created_at', 'desc')->get();
+        if($request->order && $request->by) {
+            $orderByColumn = $request->by;
+            $orderByMethod = $request->order;
+        }
 
-        return view('compounds.index', compact('compounds'));
+        $compounds = auth()->user()->compounds()->orderBy($orderByColumn, $orderByMethod)->get();
+
+        return view('compounds.index', compact('compounds', 'orderByColumn', 'orderByMethod'));
     }
 
     public function edit(Compound $compound)
@@ -25,16 +30,21 @@ class CompoundController extends Controller
         return view('compounds.edit', compact('compound'));
     }
 
-    public function studentIndex(User $user)
+    public function studentIndex(User $user, $orderByColumn = 'created_at', $orderByMethod = 'desc', Request $request)
     {
         // check if the provided user has the logged in user as a supervisor
         if (!$this->isSupervisorOf($user)) {
             return redirect('/');
         }
 
-        $compounds = $user->compounds()->orderBy('created_at', 'desc')->get();
+        if($request->order && $request->by) {
+            $orderByColumn = $request->by;
+            $orderByMethod = $request->order;
+        }
 
-        return view('compounds.index', compact('compounds'));
+        $compounds = $user->compounds()->orderBy($orderByColumn, $orderByMethod)->get();
+
+        return view('compounds.index', compact('compounds', 'orderByColumn', 'orderByMethod'));
     }
 
     public function show(Compound $compound)
