@@ -68,6 +68,18 @@
                                         @empty
                                             <li></li>
                                         @endforelse
+
+                                        @if (in_array(Auth::user()->email, config('app.admins')))
+                                            <hr>
+                                            &nbsp; Users:
+                                            @forelse(\App\User::all() as $user)
+                                                <li>
+                                                    <a href="/students/view/data/{{ $user->id }}"> {{ $user->name }}</a>
+                                                </li>
+                                            @empty
+                                                <li></li>
+                                            @endforelse
+                                        @endif
                                 
                                 </ul>
                             </li>

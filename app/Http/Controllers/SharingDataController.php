@@ -27,7 +27,13 @@ class SharingDataController extends Controller
 
     public function listStudents()
     {
+        if (in_array(auth()->user()->email, config('app.admins'))) {
+            $students = User::all();
+            return view('students.list', compact('students'));
+        }
+
         $students = auth()->user()->students;
+
         return view('students.list', compact('students'));
     }
 }

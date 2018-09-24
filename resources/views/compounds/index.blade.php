@@ -180,7 +180,7 @@
                     <tr>
                         <td colspan="14" style="text-align:center;">
                             <br>
-                            Hey there {{ Auth::user()->name }}!
+                            Hey there!
                             <br>
                             It looks like you don't have any compounds yet.
                             <br>

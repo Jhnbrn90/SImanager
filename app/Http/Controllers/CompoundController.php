@@ -178,11 +178,20 @@ class CompoundController extends Controller
 
     public function isSupervisorOf($user)
     {
+        if($this->isAdmin()) {
+            return true;
+        }
+
         if (is_int($user)) {
             $user = User::findOrFail($user);
         }
 
         return $user->supervisors->contains(auth()->user());
+    }
+
+    public function isAdmin()
+    {
+        return in_array(auth()->user()->email, config('app.admins'));
     }
 
 }
