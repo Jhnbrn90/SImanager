@@ -157,6 +157,10 @@ class Compound extends Model
         $data = preg_replace('/([A-Z][a-z]?)(\d+)/', '${1}<sub>${2}</sub>', $data);
         $data = preg_replace('/[J]\s=/', '<em>J</em> =', $data);
 
+        if(substr($data, -1) !== ".") {
+            $data .= ".";
+        }
+
         return $data;
     }
 
@@ -165,6 +169,10 @@ class Compound extends Model
         $data = $this->C_NMR_data;
         $data = preg_replace('/13C\s+NMR/', '<strong><sup>13</sup>C NMR</strong>', $data);
         $data = preg_replace('/([A-Z][a-z]?)(\d+)/', '${1}<sub>${2}</sub>', $data);
+
+        if(substr($data, -1) !== ".") {
+            $data .= ".";
+        }
 
         return $data;
     }
