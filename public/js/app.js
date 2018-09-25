@@ -44317,8 +44317,7 @@ var render = function() {
         display: "inline-block",
         width: "100%",
         height: "100%",
-        padding: "10px",
-        "text-align": "center"
+        padding: "10px"
       }
     },
     [
@@ -44587,8 +44586,7 @@ var render = function() {
         display: "inline-block",
         width: "100%",
         height: "100%",
-        padding: "10px",
-        "text-align": "center"
+        padding: "10px"
       }
     },
     [
@@ -45063,8 +45061,7 @@ var render = function() {
         display: "inline-block",
         width: "100%",
         height: "100%",
-        padding: "10px",
-        "text-align": "center"
+        padding: "10px"
       }
     },
     [
