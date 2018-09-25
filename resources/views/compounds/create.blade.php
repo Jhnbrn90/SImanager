@@ -61,14 +61,16 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">NMR</label>
+    <label for="H_NMR" class="col-sm-2 control-label"><sup>1</sup>H NMR</label>
     <div class="col-sm-10">
-        <label class="checkbox-inline">
-          <input name="NMR[]" type="checkbox" id="H_NMR" value="H_NMR" tabindex="3"> <sup>1</sup>H
-        </label>
-        <label class="checkbox-inline">
-          <input name="NMR[]" type="checkbox" id="C_NMR" value="C_NMR" tabindex="4"> <sup>13</sup>C
-        </label>
+      <textarea name="H_NMR" id="H_NMR" class="form-control" rows="1" placeholder="1H NMR (600 MHz, CDCl3) &delta; 5.34 (d, J = 8.1 Hz, 1H), 4.86 (q, J = 7.5 Hz, 1H), 4.17 (dd, J = 68.7, 13.7 Hz, 2H), 4.06 (t, J = 7.0 Hz, 1H), 3.53 (t, J = 8.0 Hz, 1H), 1.84 (s, 3H), 1.67 – 1.33 (m, 10H)." tabindex="5"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="C_NMR" class="col-sm-2 control-label"><sup>13</sup>C NMR</label>
+    <div class="col-sm-10">
+      <textarea name="C_NMR" id="C_NMR" class="form-control" rows="1" placeholder="13C NMR (151 MHz, CDCl3) &delta; 141.38, 125.49, 109.94, 71.84, 69.52, 62.18, 36.54, 35.62, 25.24, 24.12, 24.05, 21.88." tabindex="5"></textarea>
     </div>
   </div>
 

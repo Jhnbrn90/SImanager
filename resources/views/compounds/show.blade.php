@@ -26,13 +26,21 @@
         <div 
             id="SI-text" 
             class="SI-text" 
-            style="width: 50%; border: 1px solid #606060; border-radius: 2px; border-color:black; padding: 10px;"
+            style="width: 75%; border: 1px solid #606060; border-radius: 2px; border-color:black; padding: 10px;"
         >
-         <strong>R<sub>F</sub></strong> = {{ $compound->retention }}. 
-         
-         <span style="color:red;">[NMR data goes here]</span>. 
+         @if ($compound->retention)
+            <strong>R<sub>F</sub></strong> = {{ $compound->retention }}. 
+         @endif
 
-         @if ($compound->infrared && $compound->infrared !== "@")
+         @if ($compound->H_NMR_data)
+             {!! $compound->formattedProtonNMR() !!}
+         @endif
+
+         @if ($compound->C_NMR_data)
+             {!! $compound->formattedCarbonNMR() !!}
+         @endif
+
+        @if ($compound->infrared && $compound->infrared !== "@")
             <strong>IR (neat):</strong> &nu;max (cm<sup>-1</sup>): {{ $compound->infrared }}.
         @endif
         
@@ -95,6 +103,28 @@
                 <tr>
                     <td><strong>R<sub>F</sub></strong></td>
                     <td>{{ $compound->retention }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Proton</strong></td>
+                    <td>
+                        @if ($compound->H_NMR_data == "")
+                            N.D.
+                        @else
+                            {!! $compound->formattedProtonNMR() !!}
+                        @endif
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Carbon</strong></td>
+                    <td>
+                        @if ($compound->C_NMR_data == "")
+                            N.D.
+                        @else
+                            {!! $compound->formattedCarbonNMR() !!}
+                        @endif
+                    </td>
                 </tr>
 
                 <tr>

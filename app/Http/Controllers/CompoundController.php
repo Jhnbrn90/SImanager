@@ -66,19 +66,11 @@ class CompoundController extends Controller
 
     public function store(Request $request)
     {
-        $proton_NMR = false;
-        $carbon_NMR = false;
-
-        if($request->NMR) {
-            $proton_NMR = in_array('H_NMR', $request->NMR);
-            $carbon_NMR = in_array('C_NMR', $request->NMR);
-        }
-
         $compound = Compound::create([
             'user_id'               => $request->user_id,
             'label'                 => $request->label,
-            'proton_nmr'            => $proton_NMR,
-            'carbon_nmr'            => $carbon_NMR,
+            'H_NMR_data'            => $request->H_NMR,
+            'C_NMR_data'            => $request->C_NMR,
             'retention'             => $request->Rf,
             'melting_point'         => $request->MP,
             'infrared'              => $request->IR,
@@ -124,17 +116,9 @@ class CompoundController extends Controller
             }
         }
 
-        $proton_NMR = false;
-        $carbon_NMR = false;
-
-        if($request->NMR) {
-            $proton_NMR = in_array('H_NMR', $request->NMR);
-            $carbon_NMR = in_array('C_NMR', $request->NMR);
-        }
-
         $compound->label = $request->label;
-        $compound->proton_nmr = $proton_NMR;
-        $compound->carbon_nmr = $carbon_NMR;
+        $compound->H_NMR_data = $request->H_NMR;
+        $compound->C_NMR_data = $request->C_NMR;
         $compound->retention = $request->Rf;
         $compound->melting_point = $request->MP;
         $compound->infrared = $request->IR;

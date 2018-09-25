@@ -149,4 +149,24 @@ class Compound extends Model
         return $formula;
     }
 
+    public function formattedProtonNMR()
+    {
+        $data = $this->H_NMR_data;
+    
+        $data = preg_replace('/1H\s+NMR/', '<strong><sup>1</sup>H NMR</strong>', $data);
+        $data = preg_replace('/([A-Z][a-z]?)(\d+)/', '${1}<sub>${2}</sub>', $data);
+        $data = preg_replace('/[J]\s=/', '<em>J</em> =', $data);
+
+        return $data;
+    }
+
+    public function formattedCarbonNMR()
+    {
+        $data = $this->C_NMR_data;
+        $data = preg_replace('/13C\s+NMR/', '<strong><sup>13</sup>C NMR</strong>', $data);
+        $data = preg_replace('/([A-Z][a-z]?)(\d+)/', '${1}<sub>${2}</sub>', $data);
+
+        return $data;
+    }
+
 }

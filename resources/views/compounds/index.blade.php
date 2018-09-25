@@ -28,7 +28,7 @@
                         @elseif($orderByColumn == 'label' && $orderByMethod == 'desc')
                             <a href="?by=label&order=asc">Label <span class="caret"></span></a>
                         @else 
-                            <a href="?by=label&order=asc">Label</a>
+                            <a href="?by=label&order=desc">Label</a>
                         @endif
                     </th>
                     <th colspan="2">NMR</th>
@@ -64,19 +64,19 @@
                         <td><a href="/compounds/{{ $compound->id }}">{{ $compound->label }}</a></td>
                         
                         <td style="padding:0;">
-                            <checkbox-field
+                            <nmr-data-field
                                 id="{{ $compound->id }}"
-                                data="{{ $compound->proton_nmr }}"
-                                column="proton_nmr"
-                            ></checkbox-field>
+                                data="{{ $compound->H_NMR_data }}"
+                                column="H_NMR_data"
+                            ></nmr-data-field>
                         </td>
                         
                         <td style="padding:0;">
-                             <checkbox-field
+                             <nmr-data-field
                                 id="{{ $compound->id }}"
-                                data="{{ $compound->carbon_nmr }}"
-                                column="carbon_nmr"
-                            ></checkbox-field>
+                                data="{{ $compound->C_NMR_data }}"
+                                column="C_NMR_data"
+                            ></nmr-data-field>
                         </td>
 
                         <td style="padding:0;">
