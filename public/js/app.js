@@ -44353,7 +44353,11 @@ var render = function() {
             ? _c("span", { on: { click: _vm.toggleEdit } }, [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.fieldData.substring(0, 30) + "...") +
+                    _vm._s(
+                      _vm.fieldData.length > 30
+                        ? _vm.fieldData.substring(0, 30) + "..."
+                        : _vm.fieldData
+                    ) +
                     "\n        "
                 )
               ])

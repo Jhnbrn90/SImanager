@@ -8,7 +8,7 @@
             <button @click.prevent="toggleEdit" v-if="!fieldData && !showEdit" class="btn btn-link" style="color: grey;">&plus; add</button>
 
             <span @click="toggleEdit" v-if="!showEdit && fieldData">
-                {{ fieldData.substring(0,30) + '...' }}
+                {{ fieldData.length > 30 ? fieldData.substring(0,30) + '...' : fieldData }}
             </span>
             
             <div class="form-group" v-if="showEdit">
