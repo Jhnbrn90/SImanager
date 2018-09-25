@@ -7,7 +7,10 @@
         <div style="position:relative; top: 50%; transform: translateY(-50%);">
             <button @click.prevent="toggleEdit" v-if="!fieldData && !showEdit" class="btn btn-link" style="color: grey;">&plus; add</button>
 
-            <span @click="toggleEdit" v-if="!showEdit">{{ fieldData }}</span>
+            <span @click="toggleEdit" v-if="!showEdit && fieldData">
+                {{ fieldData.substring(0,30) + '...' }}
+            </span>
+            
             <div class="form-group" v-if="showEdit">
                 <input 
                     ref="inputField" 

@@ -44243,6 +44243,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id', 'data', 'column'],
@@ -44346,9 +44349,13 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          !_vm.showEdit
+          !_vm.showEdit && _vm.fieldData
             ? _c("span", { on: { click: _vm.toggleEdit } }, [
-                _vm._v(_vm._s(_vm.fieldData))
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.fieldData.substring(0, 30) + "...") +
+                    "\n        "
+                )
               ])
             : _vm._e(),
           _vm._v(" "),
