@@ -23,7 +23,7 @@
 
 <div class="container-mx-auto">
     <div class="title">
-        <h1> Compounds </h1>
+        <h1> Compounds of {{ $user->name }} </h1>
     </div>
 
     <div class="table-responsive">
