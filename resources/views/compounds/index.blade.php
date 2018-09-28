@@ -10,7 +10,6 @@
 
     .table > tbody >tr > td.structure {
         max-width: 200px;
-        text-align: center;
         overflow: hidden;
     }
 
