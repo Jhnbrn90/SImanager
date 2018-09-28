@@ -66,6 +66,10 @@ class CompoundController extends Controller
 
     public function store(Request $request)
     {
+        if(!$request->label) {
+            $request->label = '(unknown)';
+        }
+
         $compound = Compound::create([
             'user_id'               => $request->user_id,
             'label'                 => $request->label,
