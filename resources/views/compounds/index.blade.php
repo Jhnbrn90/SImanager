@@ -4,7 +4,16 @@
 <style>
     .table > tbody > tr > td {
          vertical-align: middle !important;
+         max-width: 90px;
+         overflow: hidden;
     }
+
+    .table > tbody >tr > td.structure {
+        max-width: 200px;
+        text-align: center;
+        overflow: hidden;
+    }
+
 </style>
 @endsection
 
@@ -59,7 +68,7 @@
             <tbody>
                 @forelse ($compounds as $compound)
                     <tr>
-                        <td><img src="/{{ $compound->SVGPath }}" height="100" style="margin-top:-10px;"></td>
+                        <td class="structure"><img src="/{{ $compound->SVGPath }}" height="100" style="margin-top:-10px;"></td>
                         
                         <td><a href="/compounds/{{ $compound->id }}">{{ $compound->label }}</a></td>
                         
