@@ -9,7 +9,7 @@
     }
 
     .table > tbody >tr > td.structure {
-        max-width: 200px;
+        max-width: 150px;
         overflow: hidden;
     }
 
