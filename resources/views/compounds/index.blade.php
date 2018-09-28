@@ -18,6 +18,11 @@
         overflow: hidden;
     }
 
+    .table > tbody >tr > td.mass {
+        max-width: 70px;
+        overflow: hidden;
+    }
+
 </style>
 @endsection
 
@@ -124,7 +129,7 @@
                         @if ($compound->mass_adduct == "@")
                              <td style="background-color: #F8F8F8"></td>
                         @else
-                             <td style="padding:0;">
+                             <td class="mass" style="padding:0;">
                                 <dropdown-field 
                                     id="{{ $compound->id }}" 
                                     data="{{ $compound->mass_adduct }}" 
@@ -136,7 +141,7 @@
                         @if ($compound->mass_calculated == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else 
-                            <td style="padding:0;">
+                            <td class="mass" style="padding:0;">
                                 <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->mass_calculated }}" 
@@ -148,7 +153,7 @@
                         @if ($compound->mass_measured == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else 
-                            <td style="padding:0;">
+                            <td class="mass" style="padding:0;">
                                 <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->mass_measured }}" 
