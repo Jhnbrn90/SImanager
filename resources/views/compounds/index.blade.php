@@ -13,6 +13,11 @@
         overflow: hidden;
     }
 
+    .table > tbody >tr > td.alpha {
+        max-width: 200px;
+        overflow: hidden;
+    }
+
 </style>
 @endsection
 
@@ -157,7 +162,7 @@
                             <td style="background-color: #F8F8F8"></td>
                             <td style="background-color: #F8F8F8"></td>
                         @else
-                            <td style="padding:0;">
+                            <td class="alpha" style="padding:0;">
                                 <dropdown-text-field
                                     id="{{ $compound->id }}"
                                     dropdown_data="{{ $compound->alpha_sign }}"
