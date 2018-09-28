@@ -1,6 +1,6 @@
 <template>
-    <div :class="classes" style="display:inline-block; width: 100%; height: 100%; padding: 10px;">
-        <div style="position:relative; top: 50%; transform: translateY(-50%);">
+    <div :class="classes" style="display:flex; align-items: center; width: 100%; height: 100%; padding: 10px;">
+        <div>
              <button @click.prevent="toggleEdit" v-if="!textData && !showEdit" class="btn btn-link" style="color: grey;">
                 &plus; add
             </button>
