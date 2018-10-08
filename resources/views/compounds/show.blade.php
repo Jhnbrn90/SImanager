@@ -116,6 +116,16 @@
                     </td>
                 </tr>
 
+                @if ($compound->H_NMR_data !== "")
+                <tr class="{{ $compound->checkProtonNMR() ? 'success' : 'danger' }}">
+                    <td></td>
+                    <td>
+                        {{ $compound->checkProtonNMR() ? '&#10004;' : '&#10006;' }} The number of protons in your NMR data ({{ $compound->nmrProtons }}) <strong>{{ $compound->checkProtonNMR() ? 'match' : 'do not equal' }}</strong> your molecular formula ({{ $compound->formulaProtons }}).
+                        <br>
+                    </td>
+                </tr>
+                @endif
+
                 <tr>
                     <td><strong>Carbon</strong></td>
                     <td>
@@ -126,6 +136,16 @@
                         @endif
                     </td>
                 </tr>
+
+                @if ($compound->C_NMR_data !== "")
+                <tr class="{{ $compound->checkCarbonNMR() ? 'success' : 'danger' }}">
+                    <td></td>
+                    <td>
+                        {{ $compound->checkCarbonNMR() ? '&#10004;' : '&#10006;' }} The number of carbons in your NMR data ({{ $compound->nmrCarbons }}) <strong>{{ $compound->checkCarbonNMR() ? 'match' : 'do not equal' }}</strong> your molecular formula ({{ $compound->formulaCarbons }}).
+                        <br>
+                    </td>
+                </tr>
+                @endif
 
                 <tr>
                     <td><strong>IR</strong></td>

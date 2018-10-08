@@ -184,4 +184,50 @@ class Compound extends Model
         return $data;
     }
 
+    public function getformulaProtonsAttribute()
+    {
+        $regex = '/H(\d+)/';
+
+        preg_match($regex, $this->formula, $matches);
+
+        return $matches[1];
+    }
+
+    public function getformulaCarbonsAttribute()
+    {
+        $regex = '/C(\d+)/';
+
+        preg_match($regex, $this->formula, $matches);
+
+        return $matches[1];
+    }
+
+    public function getnmrProtonsAttribute()
+    {
+        $regex = '/,\s*(\d+)\s*H/';
+
+        preg_match_all($regex, $this->H_NMR_data, $matches);
+
+        return collect($matches[1])->sum();
+    }
+
+    public function getnmrCarbonsAttribute()
+    {
+        $regex = '/(\d+\.\d+)\s*,/';
+
+        preg_match_all($regex, $this->C_NMR_data, $matches);
+
+        return collect($matches[1])->count();
+    }
+
+    public function checkProtonNMR()
+    {
+        return $this->formulaProtons == $this->nmrProtons;
+    }
+
+    public function checkCarbonNMR()
+    {
+        return $this->formulaCarbons == $this->nmrCarbons;
+    }
+
 }
