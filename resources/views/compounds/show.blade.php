@@ -116,7 +116,8 @@
                     </td>
                 </tr>
 
-                @if ($compound->H_NMR_data !== "")
+                @if ($compound->H_NMR_data == "")
+                @else
                 <tr class="{{ $compound->checkProtonNMR() ? 'success' : 'danger' }}">
                     <td></td>
                     <td>
@@ -137,7 +138,8 @@
                     </td>
                 </tr>
 
-                @if ($compound->C_NMR_data !== "")
+                @if ($compound->C_NMR_data == "")
+                @else
                 <tr class="{{ $compound->checkCarbonNMR() ? 'success' : 'danger' }}">
                     <td></td>
                     <td>
