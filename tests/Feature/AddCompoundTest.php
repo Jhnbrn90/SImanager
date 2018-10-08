@@ -36,8 +36,8 @@ class AddCompoundTest extends TestCase
 
       $compound = \App\Compound::where('label', $compound->label)->first();
 
-      $this->get($compound->path())
-        ->assertSee($compound->label);
+      $this->get($compound->path())->assertSee($compound->label);
+
     }
 
     /** @test **/

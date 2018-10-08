@@ -16,7 +16,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 $factory->define(App\Compound::class, function (Faker $faker) {
 
     return [
-        'user_id' => function() {
+        'user_id'               => function() {
             return auth()->id() ?: factory('App\User')->create()->id;
         },
         'label'                 => 'jbn478',

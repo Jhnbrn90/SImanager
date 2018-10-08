@@ -13,10 +13,12 @@ class DeleteHNMRCNMRBooleanColumnsFromCompoundsTable extends Migration
      */
     public function up()
     {
-        Schema::table('compounds', function (Blueprint $table) {
-            $table->dropColumn('proton_nmr');
-            $table->dropColumn('carbon_nmr');
-        });
+        if(Schema::hasColumn('proton_nmr', 'carbon_nmr')) {
+            Schema::table('compounds', function (Blueprint $table) {
+                $table->dropColumn('proton_nmr');
+                $table->dropColumn('carbon_nmr');
+            });    
+        }
     }
 
     /**

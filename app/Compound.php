@@ -10,6 +10,11 @@ class Compound extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'user_id'   => 'int',
+        'id'        => 'int',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
