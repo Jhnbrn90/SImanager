@@ -7,12 +7,12 @@ class DataImporter
     protected $experiment;
 
     protected $regexLookup = [
-        'protonNMR'     =>  '/((?:1H|1-H).*?NMR.*?)\.\s/s',
-        'carbonNMR'     => '/((?:13C|13-C).*?NMR.*?)\.\s/s',
+        'protonNMR'     =>  '/((?:1H|1-H).*?NMR.*?)(?:\.|\;)\s/s',
+        'carbonNMR'     => '/((?:13C|13-C).*?NMR.*?)(?:\.|\;)\s/s',
         'rfValue'       => '/(?:Rf|RF|rf|rF)\s*(?:=|\:)\s*(\d*\.\d*.*?)(?:,|\.)/s',
-        'irData'        => '/(?:IR|Ir).*?(?:\:|=)\s*(\d.*?)\.\s/s',
+        'irData'        => '/(?:IR|Ir).*?(?:\:|=)\s*(\d.*?)(?:\.|\;)\s/s',
         'meltingPoint'  => '/(?:m.p.|MP|Melting\s*-?Point|M.P.|M.p.)\s*(?:\:|=)\s*(\d*(?:\s*-\s*\d*)?)/si',
-        'HRMS'          => '/for\s*((?:[A-Z]+[a-z]?\d*)+).*?(\d*\.\d*).*?found.*?(\d\d*\.?\d*)(?:,|\.)/s',
+        'HRMS'          => '/HRMS?.*?(?:calculated for|calcd|calculated|for)\s*((?:[A-Z][a-z]?\d*)+).*?(\d*\.\d*).*?(\d*\.\d*)/si',
         'rotation'      => '/=\s*([^\d\sA-Za-z]{1})\s*(\d*\.?\d*)\s*\(.*?=\s*(\d*\.?\d*),?\s*(.*?)\)/s',
     ];
 
