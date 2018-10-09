@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use App\Project;
 use App\Compound;
 use Tests\TestCase;
@@ -11,6 +12,18 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProjectTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test **/
+    public function a_default_project_is_created_for_newly_registered_users()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertCount(1, $user->fresh()->projects);
+
+        $project = $user->fresh()->projects->first();
+
+        $this->assertEquals('Default project', $project->name);
+    }
 
     /** @test **/
     public function a_project_can_get_all_of_its_compounds()
