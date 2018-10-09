@@ -44,6 +44,9 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a href="/projects">Manage projects</a>
+                                    </li>
+                                    <li>
                                         <a href="/supervisor/add">Add supervisor</a>
                                     </li>
 

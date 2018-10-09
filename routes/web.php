@@ -25,3 +25,6 @@ Route::post('/supervisor', 'SharingDataController@store');
 Route::get('/students', 'SharingDataController@listStudents');
 
 Route::get('/students/view/data/{user}', 'CompoundController@studentIndex');
+
+Route::get('/projects', 'ProjectController@index');
+Route::get('/projects/{project}', 'ProjectController@show');
