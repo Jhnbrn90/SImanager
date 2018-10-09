@@ -7,13 +7,13 @@ class DataImporter
     protected $experiment;
 
     protected $regexLookup = [
-        'protonNMR'     =>  '/((?:1H|1-H)\s*NMR.*?)\.\s/',
-        'carbonNMR'     => '/((?:13C|13-C)\s*NMR.*?)\.\s/',
-        'rfValue'       => '/(?:Rf|RF|rf|rF)\s*(?:=|\:)\s*(\d\.\d+\s*\(.*?\))/',
-        'irData'        => '/(?:IR|Ir).*?(?:\:|=)\s*(\d.*?)\.\s/',
-        'meltingPoint'  => '/\.\s*(?:melting point|M\.?p\.?|M\.?P\.?|m\.?p\.?)\s*(?::|=)?\s*(\d*).*?(?:c|C)\./i',
-        'HRMS'          => '/for\s*((?:[A-Z]+[a-z]?\d*)+).*?(\d*\.\d*).*?found.*?(\d\d*\.?\d*)/',
-        'rotation'      => '/=\s*([^\d\sA-Za-z]{1})\s*(\d*\.?\d*)\s*\(.*?=\s*(\d*\.?\d*),?\s*(.*?)\)/',
+        'protonNMR'     =>  '/((?:1H|1-H).*?NMR.*?)\.\s/s',
+        'carbonNMR'     => '/((?:13C|13-C).*?NMR.*?)\.\s/s',
+        'rfValue'       => '/(?:Rf|RF|rf|rF)\s*(?:=|\:)\s*(\d*\.\d*.*?)(?:,|\.)/s',
+        'irData'        => '/(?:IR|Ir).*?(?:\:|=)\s*(\d.*?)\.\s/s',
+        'meltingPoint'  => '/(?:m.p.|MP|Melting\s*-?Point|M.P.|M.p.)\s*(?:\:|=)\s*(\d*(?:\s*-\s*\d*)?)/si',
+        'HRMS'          => '/for\s*((?:[A-Z]+[a-z]?\d*)+).*?(\d*\.\d*).*?found.*?(\d\d*\.?\d*)(?:,|\.)/s',
+        'rotation'      => '/=\s*([^\d\sA-Za-z]{1})\s*(\d*\.?\d*)\s*\(.*?=\s*(\d*\.?\d*),?\s*(.*?)\)/s',
     ];
 
     public function __construct(string $experiment)
