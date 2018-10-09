@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Project;
+use App\Compound;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -88,7 +90,15 @@ class CompoundTest extends TestCase
       ]);
       
       $this->assertTrue($compound->checkCarbonNMR());   
+   }
 
+   /** @test **/
+   public function a_compound_belongs_to_a_project()
+   {
+      $project = factory(Project::class)->create(['name' => 'Fake Project 007']);
+      $compound = factory(Compound::class)->create(['project_id' => $project]);
+
+      $this->assertEquals('Fake Project 007', $compound->project->name);
    }
 
 }

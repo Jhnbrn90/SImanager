@@ -75,7 +75,14 @@
             </thead>
 
             <tbody>
-                @forelse ($compounds as $compound)
+                @foreach($projects as $project)
+                <tr class="info">
+                    <td colspan="14" style="text-align:center">
+                        <strong>{{ $project->name }}</strong>
+                    </td>
+                </tr>
+
+                @forelse ($project->compounds as $compound)
                     <tr>
                         <td class="structure"><img src="/{{ $compound->SVGPath }}" height="100" style="margin-top:-10px;"></td>
                         
@@ -208,13 +215,16 @@
                             <br>
                             Hey there!
                             <br>
-                            It looks like you don't have any compounds yet.
+                            It looks like you don't have any compounds in this project yet.
                             <br>
                             <a href="/compounds/new"><strong>Click here to add your first</strong></a>
+                            <br>
+                            <br>
                         </td>
                     </tr>
                 @endforelse
-
+                
+                @endforeach
             </tbody>
         </table>
     </div>

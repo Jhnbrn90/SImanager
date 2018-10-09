@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Project;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,6 +32,11 @@ class User extends Authenticatable
     public function compounds()
     {
         return $this->hasMany(Compound::class);
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 
     public function addSupervisor(User $user)

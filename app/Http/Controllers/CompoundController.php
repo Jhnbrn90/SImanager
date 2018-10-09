@@ -22,9 +22,12 @@ class CompoundController extends Controller
         }
 
         $user = auth()->user();
-        $compounds = $user->compounds()->orderBy($orderByColumn, $orderByMethod)->get();
 
-        return view('compounds.index', compact('compounds', 'user', 'orderByColumn', 'orderByMethod'));
+        $projects = $user->projects()->orderBy('id', 'desc')->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
+            return $query->orderBy($orderByColumn, $orderByMethod);
+        }])->get();
+
+        return view('compounds.index', compact('user', 'projects', 'orderByColumn', 'orderByMethod'));
     }
 
     public function edit(Compound $compound)
@@ -44,9 +47,11 @@ class CompoundController extends Controller
             $orderByMethod = $request->order;
         }
 
-        $compounds = $user->compounds()->orderBy($orderByColumn, $orderByMethod)->get();
+        $projects = $user->projects()->orderBy('id', 'desc')->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
+            return $query->orderBy($orderByColumn, $orderByMethod);
+        }])->get();
 
-        return view('compounds.index', compact('compounds', 'user', 'orderByColumn', 'orderByMethod'));
+        return view('compounds.index', compact('projects', 'user', 'orderByColumn', 'orderByMethod'));
     }
 
     public function show(Compound $compound)
