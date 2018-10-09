@@ -11,6 +11,18 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ImportingCompoundsTest extends TestCase
 {
     /** @test **/
+    public function it_returns_null_if_no_matching_proton_nmr_data_is_found()
+    {
+        $protonNMR = "";
+
+        $importer = new DataImporter(
+            ExperimentBuilder::build(['protonNMR' => $protonNMR])
+        );
+
+        $this->assertEquals(null, $importer->getProtonNMR());
+    }
+
+    /** @test **/
     public function it_can_extract_proton_nmr_data_from_an_experiment()
     {
         $protonNMR = '1H NMR (600 MHz, CDCl3) δ 5.34 (d, J = 8.1 Hz, 1H), 4.86 (q, J = 7.5 Hz, 1H), 4.17 (dd, J = 68.7, 13.7 Hz, 2H), 4.06 (t, J = 7.0 Hz, 1H), 3.53 (t, J = 8.0 Hz, 1H), 1.84 (s, 3H), 1.67 – 1.33 (m, 10H)';
@@ -135,6 +147,18 @@ class ImportingCompoundsTest extends TestCase
     }
 
     /** @test **/
+    public function it_can_extract_the_HRMS_ion()
+    {
+        $hrmsText = "HRMS (ESI): calculated for C12H19BrNaO2 ([M+Na]+) = 297.0461, found = 297.0462";
+
+        $importer = new DataImporter(
+            ExperimentBuilder::build(['hrms' => $hrmsText])
+        );
+
+        $this->assertEquals('Na+', $importer->getHRMS('ion'));
+    }
+
+    /** @test **/
     public function it_can_extract_the_optical_rotation_data_from_an_experiment()
     {
         $rotationText = "[α]D20 = + 32.29 (c = 1.20, CHCl3).";
@@ -157,5 +181,20 @@ class ImportingCompoundsTest extends TestCase
         $this->assertEquals('10.19', $importerEdgeCase->getRotation('value'));
         $this->assertEquals('1.20', $importerEdgeCase->getRotation('concentration'));
         $this->assertEquals('PhMe', $importerEdgeCase->getRotation('solvent'));  
+    }
+
+    /** @test **/
+    public function it_can_returns_null_if_no_optical_rotation_data_was_found()
+    {
+        $rotationText = "";
+
+        $importer = new DataImporter(
+            ExperimentBuilder::build(['rotation' => $rotationText])
+        );
+
+        $this->assertEquals(null, $importer->getRotation('sign'));
+        $this->assertEquals(null, $importer->getRotation('value'));
+        $this->assertEquals(null, $importer->getRotation('concentration'));
+        $this->assertEquals(null, $importer->getRotation('solvent'));
     }
 }

@@ -5,6 +5,8 @@ Auth::routes();
 Route::get('/', 'CompoundController@index');
 
 Route::get('/compounds/new', 'CompoundController@create');
+Route::get('/compounds/import', 'CompoundController@import');
+Route::post('/compounds/import', 'CompoundController@storeFromImport');
 
 Route::get('/compounds/{compound}/edit', 'CompoundController@edit');
 Route::get('/compounds/{compound}/delete', 'CompoundController@confirmDelete');

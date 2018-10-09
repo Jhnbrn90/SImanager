@@ -23,6 +23,7 @@
                             &nbsp;
                             <li><a href="/">Overview</a></li>
                             <li><a href="/compounds/new">Add new Compound</a></li>
+                            <li><a href="/compounds/import">Import from document</a></li>
                             @if (Auth::user()->students->count())
                                 <li><a href="/students">View students</a></li>
                             @endif

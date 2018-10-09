@@ -186,6 +186,10 @@ class Compound extends Model
 
     public function getformulaProtonsAttribute()
     {
+        if (empty($this->formula)) {
+            return;
+        }
+
         $regex = '/H(\d+)/';
 
         preg_match($regex, $this->formula, $matches);
@@ -195,6 +199,10 @@ class Compound extends Model
 
     public function getformulaCarbonsAttribute()
     {
+        if (empty($this->formula)) {
+            return;
+        }
+        
         $regex = '/C(\d+)/';
 
         preg_match($regex, $this->formula, $matches);

@@ -48,13 +48,17 @@ class DataImporter
 
     public function getHRMS($type)
     {
+        $hrmsArray = $this->matchMultiple('HRMS');
+
         switch ($type) {
             case 'formula':
-                return $this->matchMultiple('HRMS')[1];
+                return $hrmsArray[1];
+            case 'ion':
+                return $this->resolveHRMSAdduct($hrmsArray[1]);
             case 'calculated':
-                return $this->matchMultiple('HRMS')[2];
+                return $hrmsArray[2];
             case 'found':
-                return $this->matchMultiple('HRMS')[3];
+                return $hrmsArray[3];
             default:
                 return;
         }
@@ -81,6 +85,10 @@ class DataImporter
         $regex = $this->regexLookup[$lookup];
         
         preg_match($regex, $this->experiment, $match);
+
+        if (empty($match)) {
+            return null;
+        }
         
         return $match[1];
     }
@@ -90,7 +98,23 @@ class DataImporter
         $regex = $this->regexLookup[$lookup];
         
         preg_match($regex, $this->experiment, $matches);
+
+        if (empty($matches)) {
+            return null;
+        }
         
         return $matches;
+    }
+
+    protected function resolveHRMSAdduct($formula)
+    {
+        $regex = '/([A-Z][a-z]?)(\d*)/';
+        preg_match_all($regex, $formula, $matches);
+        
+        if(in_array('Na', $matches[1])) {
+            return 'Na+';
+        }
+        
+        return 'H+';
     }
 }
