@@ -27,4 +27,12 @@ Route::get('/students', 'SharingDataController@listStudents');
 Route::get('/students/view/data/{user}', 'CompoundController@studentIndex');
 
 Route::get('/projects', 'ProjectController@index');
+Route::post('/projects', 'ProjectController@store');
+Route::get('/projects/create', 'ProjectController@create');
 Route::get('/projects/{project}', 'ProjectController@show');
+Route::get('/projects/{project}/edit', 'ProjectController@edit');
+Route::patch('/projects/{project}', 'ProjectController@update');
+Route::get('/projects/{project}/delete', 'ProjectController@destroy');
+Route::get('/projects/{project}/export', 'ProjectController@export');
+Route::get('/projects/{project}/move', 'ProjectController@move');
+Route::post('/projects/{project}/move', 'ProjectController@moveCompounds');

@@ -53,6 +53,17 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="label" class="col-sm-2 control-label">Project</label>
+      <div class="col-sm-10">
+        <select name="project" class="form-control">
+            @foreach (Auth::user()->projects as $project)
+                <option value="{{ $project->id }}"> {{ $project->name }} </option>
+            @endforeach
+        </select>
+      </div>
+    </div>
+
   <div class="form-group">
     <label for="label" class="col-sm-2 control-label">Label</label>
     <div class="col-sm-10">

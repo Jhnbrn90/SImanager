@@ -6,11 +6,25 @@
 
 <div class="container">
     <div class="title">
-        <h1> {{ $project->name }} </h1>
+        <h1> {{ $project->name }} ({{ $project->compounds()->count() }} compounds) </h1>
+        <p style="font-style: italic;">
+          {{ $project->description }}
+        </p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      change name | export | delete project
+      <a href="/projects/{{ $project->id }}/edit"> edit </a>
+      @if ($project->compounds()->count() < 1)
+        | 
+        <a href="/projects/{{ $project->id }}/delete" class="text-danger">delete empty project</a>
+      @else
+        | 
+        <a href="/projects/{{ $project->id }}/export"> export all </a> 
+        @if (Auth::user()->projects()->count() > 1)
+        | 
+        <a href="/projects/{{ $project->id }}/move">move all to other project</a>
+        @endif
+      @endif
     </div>
     
     <hr>

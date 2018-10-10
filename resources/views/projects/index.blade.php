@@ -8,6 +8,10 @@
     <div class="title">
         <h1> Projects </h1>
     </div>
+
+    <div style="margin: 20px 5px;">
+      <a href="/projects/create" class="btn btn-primary">Create new project</a>
+    </div>
     
     <div>
       <div class="list-group">

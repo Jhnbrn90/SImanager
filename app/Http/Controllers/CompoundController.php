@@ -84,6 +84,7 @@ class CompoundController extends Controller
 
         $compound = Compound::create([
             'user_id'               => $request->user_id,
+            'project_id'            => $request->project,
             'label'                 => $request->label,
             'H_NMR_data'            => $request->H_NMR,
             'C_NMR_data'            => $request->C_NMR,
@@ -119,6 +120,7 @@ class CompoundController extends Controller
 
         $compound = Compound::create([
             'user_id'               => $request->user_id,
+            'project_id'            => $request->project,
             'label'                 => $request->label,
             'H_NMR_data'            => $importer->getProtonNMR(),
             'C_NMR_data'            => $importer->getCarbonNMR(),
@@ -168,6 +170,7 @@ class CompoundController extends Controller
         }
 
         $compound->label = $request->label;
+        $compound->project_id = $request->project;
         $compound->H_NMR_data = $request->H_NMR;
         $compound->C_NMR_data = $request->C_NMR;
         $compound->retention = $request->Rf;
