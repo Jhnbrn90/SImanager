@@ -50,6 +50,21 @@
               </div>
 
               <div class="form-group">
+                <label for="label" class="col-sm-2 control-label">Project</label>
+                <div class="col-sm-10">
+                  <select name="project" class="form-control">
+                    <option value="{{ $compound->project->id }}">{{ $compound->project->name }}</option>
+                    @foreach (Auth::user()->projects as $project)
+                      @if ($project->id == $compound->project->id)
+                      @else
+                      <option value="{{ $project->id }}">{{ $project->name }}</option>
+                      @endif
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label for="Rf" class="col-sm-2 control-label">Rf</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="Rf" name="Rf" placeholder="0.30 (EtOAc / cHex = 1:1)" tabindex="2" value="{{ $compound->retention }}">

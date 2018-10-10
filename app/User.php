@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Project;
+use App\Events\UserWasCreated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +11,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+
+    /**
+    * The event map for the model.
+    *
+    * @var array 
+    */
+    protected $dispatchesEvents = [
+        'created'   => UserWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +42,11 @@ class User extends Authenticatable
     public function compounds()
     {
         return $this->hasMany(Compound::class);
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 
     public function addSupervisor(User $user)

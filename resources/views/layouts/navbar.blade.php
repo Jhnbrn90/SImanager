@@ -22,8 +22,9 @@
                         @auth
                             &nbsp;
                             <li><a href="/">Overview</a></li>
+                            <li><a href="/projects">Projects</a></li>
                             <li><a href="/compounds/new">Add new Compound</a></li>
-                            <li><a href="/compounds/import">Import from document</a></li>
+                            <li><a href="/compounds/import">Import Compound</a></li>
                             @if (Auth::user()->students->count())
                                 <li><a href="/students">View students</a></li>
                             @endif
@@ -43,6 +44,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/projects">Manage projects</a>
+                                    </li>
                                     <li>
                                         <a href="/supervisor/add">Add supervisor</a>
                                     </li>
