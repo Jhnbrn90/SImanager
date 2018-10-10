@@ -53,13 +53,16 @@
                 <label for="label" class="col-sm-2 control-label">Project</label>
                 <div class="col-sm-10">
                   <select name="project" class="form-control">
-                    <option value="{{ $compound->project->id }}">{{ $compound->project->name }}</option>
                     @foreach (Auth::user()->projects as $project)
-                      @if ($project->id == $compound->project->id)
-                      @else
-                      <option value="{{ $project->id }}">{{ $project->name }}</option>
-                      @endif
+                        <option value="{{ $project->id }}" {{ $compound->project->id == $project->id ? 'selected' : '' }}> {{ $project->name }}</option>
                     @endforeach
+                    @forelse (Auth::user()->students as $student)
+                        @foreach($student->projects as $project)
+                          <option value="{{ $project->id }}" {{ $compound->project->id == $project->id ? 'selected' : '' }}> {{ $project->name }} ({{ $student->email }})</option>
+                        @endforeach
+                    @empty
+                    @endforelse
+
                   </select>
                 </div>
               </div>

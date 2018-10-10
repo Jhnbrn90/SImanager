@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Project;
 use App\Compound;
 use App\DataImporter;
 use Illuminate\Http\Request;
@@ -82,9 +83,11 @@ class CompoundController extends Controller
             $request->label = '(unknown)';
         }
 
+        $project = Project::findOrFail($request->project);
+
         $compound = Compound::create([
-            'user_id'               => $request->user_id,
-            'project_id'            => $request->project,
+            'user_id'               => $project->user->id,
+            'project_id'            => $project->id,
             'label'                 => $request->label,
             'H_NMR_data'            => $request->H_NMR,
             'C_NMR_data'            => $request->C_NMR,
@@ -107,6 +110,10 @@ class CompoundController extends Controller
 
         $compound->toMolfile()->toSVG();
 
+        if ($project->user->id !== auth()->id()) {
+            return redirect('/students/view/data/' . $project->user->id);
+        }
+
         return redirect('/');
     }
 
@@ -118,9 +125,11 @@ class CompoundController extends Controller
 
         $importer = new DataImporter($request->experimental);
 
+        $project = Project::findOrFail($request->project);
+
         $compound = Compound::create([
-            'user_id'               => $request->user_id,
-            'project_id'            => $request->project,
+            'user_id'               => $project->user->id,
+            'project_id'            => $project->id,
             'label'                 => $request->label,
             'H_NMR_data'            => $importer->getProtonNMR(),
             'C_NMR_data'            => $importer->getCarbonNMR(),
@@ -142,6 +151,10 @@ class CompoundController extends Controller
         ]);
 
         $compound->toMolfile()->toSVG();
+
+        if ($project->user->id !== auth()->id()) {
+            return redirect('/students/view/data/' . $project->user->id);
+        }
 
         return redirect('/');
     }

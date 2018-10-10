@@ -35,24 +35,18 @@
     {{ csrf_field() }}
 
     <div class="form-group">
-      <label for="label" class="col-sm-2 control-label">User</label>
-      <div class="col-sm-10">
-        <select name="user_id" class="form-control">
-              <option value="{{ Auth::user()->id }}"> {{ Auth::user()->name }} (you)</option>
-            @foreach (Auth::user()->students as $student)
-                <option value="{{ $student->id }}"> {{ $student->name }} ({{ $student->email }})</option>
-            @endforeach
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
       <label class="col-sm-2 control-label">Project</label>
       <div class="col-sm-10">
         <select name="project" class="form-control">
             @foreach (Auth::user()->projects as $project)
-                <option value="{{ $project->id }}"> {{ $project->name }} </option>
+                <option value="{{ $project->id }}"> {{ $project->name }}</option>
             @endforeach
+            @forelse (Auth::user()->students as $student)
+                @foreach($student->projects as $project)
+                  <option value="{{ $project->id }}"> {{ $project->name }} ({{ $student->email }})</option>
+                @endforeach
+            @empty
+            @endforelse
         </select>
       </div>
     </div>
