@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $projects = auth()->user()->projects;
-        return view('projects.index', compact('projects'));
+        
+        $students = auth()->user()->students()->with('projects.compounds')->get();
+
+        return view('projects.index', compact('projects', 'students'));
     }
 
     public function show(Project $project)
     {
-        if ($project->user_id !== auth()->id()) {
-            // check if the user is a supervisor of this user.
-            return redirect('/');
+        if(auth()->id() !== $project->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($project->user_id)) {
+                return redirect('/');
+            }
         }
 
         $project->load('compounds');
@@ -47,9 +59,11 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        if ($project->user_id !== auth()->id()) {
-            // check if the user is a supervisor of this user.
-            return redirect('/');
+        if(auth()->id() !== $project->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($project->user_id)) {
+                return redirect('/');
+            }
         }
 
         return view('projects.edit', compact('project'));
@@ -57,9 +71,11 @@ class ProjectController extends Controller
 
     public function update(Project $project, Request $request)
     {
-        if ($project->user_id !== auth()->id()) {
-            // check if the user is a supervisor of this user.
-            return redirect('/');
+        if(auth()->id() !== $project->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($project->user_id)) {
+                return redirect('/');
+            }
         }
 
         $project->name = $request->name;
@@ -71,10 +87,12 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-         if ($project->user_id !== auth()->id()) {
-             // check if the user is a supervisor of this user.
-             return redirect('/');
-         }   
+         if(auth()->id() !== $project->user_id) {
+             // check if the user is a supervisor of this student
+             if(!$this->isSupervisorOf($project->user_id)) {
+                 return redirect('/');
+             }
+         }
 
          // check if the project is empty 
          if ($project->compounds()->count() > 0) {
@@ -88,9 +106,11 @@ class ProjectController extends Controller
 
     public function export(Project $project)
     {
-        if ($project->user_id !== auth()->id()) {
-            // check if the user is a supervisor of this user.
-            return redirect('/');
+        if(auth()->id() !== $project->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($project->user_id)) {
+                return redirect('/');
+            }
         }
 
         $project->load('compounds');
@@ -101,9 +121,11 @@ class ProjectController extends Controller
 
     public function move(Project $project)
     {
-        if ($project->user_id !== auth()->id()) {
-            // check if the user is a supervisor of this user.
-            return redirect('/');
+        if(auth()->id() !== $project->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($project->user_id)) {
+                return redirect('/');
+            }
         }
 
         $project->load('compounds');
@@ -116,9 +138,11 @@ class ProjectController extends Controller
 
     public function moveCompounds(Project $project, Request $request)
     {
-        if ($project->user_id !== auth()->id()) {
-            // check if the user is a supervisor of this user.
-            return redirect('/');
+        if(auth()->id() !== $project->user_id) {
+            // check if the user is a supervisor of this student
+            if(!$this->isSupervisorOf($project->user_id)) {
+                return redirect('/');
+            }
         }
 
         $project->compounds()->update(['project_id' => $request->toProject]);
@@ -128,5 +152,24 @@ class ProjectController extends Controller
         }
 
         return redirect('/projects');
+    }
+
+    public function isSupervisorOf($user)
+    {
+        if($this->isAdmin()) {
+            return true;
+        }
+
+        if (is_int($user)) {
+            $user = User::findOrFail($user);
+        }
+
+        return $user->supervisors->contains(auth()->user());
+    }
+
+
+    public function isAdmin()
+    {
+        return in_array(auth()->user()->email, config('app.admins'));
     }
 }
