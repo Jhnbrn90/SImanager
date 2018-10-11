@@ -78,7 +78,7 @@
                 @foreach($projects as $project)
                 <tr class="info">
                     <td colspan="14" style="text-align:center">
-                        <strong>{{ $project->name }}</strong>
+                        <strong title="{{ $project->description }}"> {{ $project->name }} </strong>
                     </td>
                 </tr>
 
