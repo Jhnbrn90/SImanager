@@ -7,6 +7,7 @@ use App\Project;
 use App\Compound;
 use App\DataImporter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CompoundController extends Controller
 {
@@ -38,8 +39,7 @@ class CompoundController extends Controller
 
     public function studentIndex(User $user, $orderByColumn = 'created_at', $orderByMethod = 'desc', Request $request)
     {
-        // check if the provided user has the logged in user as a supervisor
-        if (!$this->isSupervisorOf($user)) {
+        if (Gate::denies('access-compounds', $user)) {
             return redirect('/');
         }
 
@@ -57,11 +57,8 @@ class CompoundController extends Controller
 
     public function show(Compound $compound)
     {
-        if(auth()->id() !== $compound->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($compound->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-compound', $compound)) {
+            return redirect('/');
         }
 
         return view('compounds.show', compact('compound'));    
@@ -161,11 +158,8 @@ class CompoundController extends Controller
 
     public function update(Compound $compound, Request $request)
     {
-        if(auth()->id() !== $compound->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($compound->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-compound', $compound)) {
+            return redirect('/');
         }
         
         $compound->update([$request->column => $request->value]);
@@ -175,11 +169,8 @@ class CompoundController extends Controller
 
     public function updateAll(Compound $compound, Request $request)
     {
-        if(auth()->id() !== $compound->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($compound->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-compound', $compound)) {
+            return redirect('/');
         }
 
         $compound->label = $request->label;
@@ -218,11 +209,8 @@ class CompoundController extends Controller
 
     public function destroy(Compound $compound)
     {
-        if(auth()->id() !== $compound->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($compound->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-compound', $compound)) {
+            return redirect('/');
         }
 
         $compound = Compound::findOrFail($compound)->first();
@@ -235,24 +223,6 @@ class CompoundController extends Controller
     public function confirmDelete(Compound $compound)
     {
         return view('compounds.confirmdelete', compact('compound'));
-    }
-
-    public function isSupervisorOf($user)
-    {
-        if($this->isAdmin()) {
-            return true;
-        }
-
-        if (is_int($user)) {
-            $user = User::findOrFail($user);
-        }
-
-        return $user->supervisors->contains(auth()->user());
-    }
-
-    public function isAdmin()
-    {
-        return in_array(auth()->user()->email, config('app.admins'));
     }
 
 }

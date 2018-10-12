@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -25,11 +26,8 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        if(auth()->id() !== $project->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($project->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
         }
 
         $project->load('compounds');
@@ -59,11 +57,8 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        if(auth()->id() !== $project->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($project->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
         }
 
         return view('projects.edit', compact('project'));
@@ -71,11 +66,8 @@ class ProjectController extends Controller
 
     public function update(Project $project, Request $request)
     {
-        if(auth()->id() !== $project->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($project->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
         }
 
         $project->name = $request->name;
@@ -87,11 +79,8 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-         if(auth()->id() !== $project->user_id) {
-             // check if the user is a supervisor of this student
-             if(!$this->isSupervisorOf($project->user_id)) {
-                 return redirect('/');
-             }
+         if (Gate::denies('interact-with-project', $project)) {
+             return redirect('/');
          }
 
          // check if the project is empty 
@@ -106,11 +95,8 @@ class ProjectController extends Controller
 
     public function export(Project $project)
     {
-        if(auth()->id() !== $project->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($project->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
         }
 
         $project->load('compounds');
@@ -121,11 +107,8 @@ class ProjectController extends Controller
 
     public function move(Project $project)
     {
-        if(auth()->id() !== $project->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($project->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
         }
 
         $project->load('compounds');
@@ -138,11 +121,8 @@ class ProjectController extends Controller
 
     public function moveCompounds(Project $project, Request $request)
     {
-        if(auth()->id() !== $project->user_id) {
-            // check if the user is a supervisor of this student
-            if(!$this->isSupervisorOf($project->user_id)) {
-                return redirect('/');
-            }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
         }
 
         $project->compounds()->update(['project_id' => $request->toProject]);
@@ -153,23 +133,5 @@ class ProjectController extends Controller
 
         return redirect('/projects');
     }
-
-    public function isSupervisorOf($user)
-    {
-        if($this->isAdmin()) {
-            return true;
-        }
-
-        if (is_int($user)) {
-            $user = User::findOrFail($user);
-        }
-
-        return $user->supervisors->contains(auth()->user());
-    }
-
-
-    public function isAdmin()
-    {
-        return in_array(auth()->user()->email, config('app.admins'));
-    }
+    
 }

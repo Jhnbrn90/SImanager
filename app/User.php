@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'student_supervisor', 'supervisor_id', 'student_id');
     }
+
+    public function isAdmin()
+    {
+        return in_array($this->email, config('app.admins'));
+    }
 }
