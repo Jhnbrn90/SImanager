@@ -20,6 +20,7 @@ Vue.component('hrms-data', require('./components/HRMSData.vue'));
 Vue.component('rotation-data', require('./components/RotationData.vue'));
 
 Vue.component('text-field', require('./components/clickable/TextField.vue'));
+Vue.component('retention-field', require('./components/clickable/RetentionField.vue'));
 Vue.component('nmr-data-field', require('./components/clickable/NMRDataField.vue'));
 Vue.component('dropdown-field', require('./components/clickable/DropdownField.vue'));
 Vue.component('checkbox-field', require('./components/clickable/CheckboxField.vue'));
