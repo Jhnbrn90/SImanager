@@ -76,7 +76,7 @@
 
             <tbody>
                 @foreach($projects as $project)
-                <tr class="info">
+                <tr style="height:100%;" class="info">
                     <td colspan="14" style="text-align:center">
                         <strong title="{{ $project->description }}"> {{ $project->name }} </strong>
                     </td>
@@ -105,11 +105,11 @@
                         </td>
 
                         <td style="padding:0;">
-                            <text-field 
+                            <retention-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->retention }}" 
                                 column="retention"
-                            ></text-field>
+                            ></retention-field>
                         </td>
 
                         <td style="padding:0;">

@@ -14,7 +14,7 @@
 @include('layouts.navbar')
 
 <center>
-        <img src="/{{ $compound->SVGPath }}" width="140">
+        <img src="/{{ $compound->SVGPath }}">
         
         <hr>
         
