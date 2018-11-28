@@ -43,6 +43,12 @@
                 {{ csrf_field() }}
                 {{ method_field('put') }}
               <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-lg btn-block btn-success">Save changes</button>
+                </div>
+              </div>
+                
+              <div class="form-group">
                 <label for="label" class="col-sm-2 control-label">Label</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" name="label" id="label" value="{{ $compound->label }}" placeholder="JBN123" tabindex="1">
