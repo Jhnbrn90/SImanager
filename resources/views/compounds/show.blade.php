@@ -14,7 +14,11 @@
 @include('layouts.navbar')
 
 <center>
-        <img src="/{{ $compound->SVGPath }}">
+        @if ($compound->SVGPath == 'storage/svg/unknown.svg')
+            <img width="100" src="/{{ $compound->SVGPath }}">
+        @else 
+            <img src="/{{ $compound->SVGPath }}">
+        @endif
         
         <hr>
         
