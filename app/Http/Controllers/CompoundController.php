@@ -80,7 +80,7 @@ class CompoundController extends Controller
             $request->label = '(unknown)';
         }
 
-        $project = Project::findOrFail($request->project);
+        $project = Project::firstOrFail($request->project);
 
         $compound = Compound::create([
             'user_id'               => $project->user->id,
