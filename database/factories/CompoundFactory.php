@@ -1,38 +1,14 @@
 <?php
 
-use App\Project;
 use Faker\Generator as Faker;
 
-$factory->define(App\User::class, function (Faker $faker) {
-    static $password;
-
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
-    ];
-});
-
-$factory->define(App\Project::class, function (Faker $faker) {
-    return [
-        'name'          => $faker->word,
-        'description'   => $faker->sentence,
-        'user_id'       => function() {
-            return auth()->id() ?: factory('App\User')->create()->id;
-        },
-    ]; 
-});
-
-
 $factory->define(App\Compound::class, function (Faker $faker) {
-
     return [
         'user_id'               => function() {
             return auth()->id() ?: factory('App\User')->create()->id;
         },
         'project_id'            => function() {
-            return factory(Project::class)->create()->id;
+            return factory('App\Project')->create()->id;
         },
         'label'                 => 'jbn478',
         'formula'               => 'C6H12O6',
