@@ -4,6 +4,8 @@ Auth::routes();
 
 Route::get('/', 'CompoundController@index');
 
+Route::patch('/userlabel', 'UserController@updateLabel');
+
 Route::get('/compounds/new', 'CompoundController@create');
 Route::get('/compounds/import', 'CompoundController@import');
 Route::post('/compounds/import', 'CompoundController@storeFromImport');
@@ -36,3 +38,9 @@ Route::get('/projects/{project}/delete', 'ProjectController@destroy');
 Route::get('/projects/{project}/export', 'ProjectController@export');
 Route::get('/projects/{project}/move', 'ProjectController@move');
 Route::post('/projects/{project}/move', 'ProjectController@moveCompounds');
+
+
+Route::get('/reactions', 'ReactionController@index');
+Route::get('/reactions/new/{project}', 'ReactionController@store');
+Route::get('/reactions/{reaction}', 'ReactionController@show');
+Route::patch('/reactions/{reaction}', 'ReactionController@update');

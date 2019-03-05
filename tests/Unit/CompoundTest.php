@@ -28,10 +28,6 @@ class CompoundTest extends TestCase
     {
         $compound = create('App\Compound');
 
-        $this->assertEquals(
-            "/compounds/{$compound->id}",
-            $compound->path());
+        $this->assertEquals("/compounds/{$compound->id}", $compound->path());
     }
-
-
 }

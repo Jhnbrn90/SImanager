@@ -25,8 +25,6 @@ class CompoundTest extends TestCase
    /** @test **/
    public function unauthenticated_users_are_can_not_list_compounds_but_are_redirected_to_auth_page()
    {
-        $this->withExceptionHandling();
-
         $this->get('/')->assertRedirect('/login');
    }
 
@@ -100,5 +98,4 @@ class CompoundTest extends TestCase
 
       $this->assertEquals('Fake Project 007', $compound->project->name);
    }
-
 }

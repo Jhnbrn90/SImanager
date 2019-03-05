@@ -24,20 +24,19 @@ class AddCompoundTest extends TestCase
     /** @test **/
     public function authenticated_users_can_add_new_compounds()
     {
-      $this->withoutExceptionHandling();
+      $user = factory('App\User')->create();
+      $project = factory('App\Project')->create(['user_id' => $user->id]);
 
-      $this->signIn();
+      $compound = make('App\Compound', ['project_id' => $project->id])->toArray();
+      $compound['project'] = $project->id;
 
-      $compound = make('App\Compound');
+      $this->actingAs($user)->post("/compounds", $compound);
 
-      $this->post("/compounds", $compound->toArray());
+      $this->assertDatabaseHas('compounds', ['label' => $compound['label']]);
 
-      $this->assertDatabaseHas('compounds', ['label' => $compound->label]);
+      $compound = \App\Compound::where('label', $compound['label'])->first();
 
-      $compound = \App\Compound::where('label', $compound->label)->first();
-
-      $this->get($compound->path())->assertSee($compound->label);
-
+      $this->get($compound->path())->assertStatus(200)->assertSee($compound->label);
     }
 
     /** @test **/

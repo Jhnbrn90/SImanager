@@ -4,6 +4,7 @@ namespace App;
 
 use App\User;
 use App\Compound;
+use App\Reaction;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -18,5 +19,10 @@ class Project extends Model
     public function compounds()
     {
         return $this->hasMany(Compound::class);
+    }
+
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
     }
 }

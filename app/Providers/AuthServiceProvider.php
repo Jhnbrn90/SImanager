@@ -59,5 +59,13 @@ class AuthServiceProvider extends ServiceProvider
             return $project->user->supervisors->contains($user);
         });
 
+        Gate::define('interact-with-reaction', function ($user, $reaction) {
+            if ($user->id == $reaction->user_id) {
+                return true;
+            }
+
+            return $reaction->user->supervisors->contains($user);
+        });
+
     }
 }

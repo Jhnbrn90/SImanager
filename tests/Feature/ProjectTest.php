@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\User;
 use App\Project;
 use App\Compound;
+use App\Reaction;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,7 +29,6 @@ class ProjectTest extends TestCase
     /** @test **/
     public function a_project_can_get_all_of_its_compounds()
     {
-        // Given we have a project 
         $project = factory(Project::class)->create(['name' => "Fake Project"]);
 
         // Given we have some compounds
@@ -39,5 +39,18 @@ class ProjectTest extends TestCase
         $this->assertTrue($project->compounds->contains($compounds[1]));
         
         $this->assertFalse($project->compounds->contains($compoundFromDifferentProject));
+    }
+
+    /** @test **/
+    public function a_project_can_get_all_of_its_reactions()
+    {
+        $project = factory(Project::class)->create(['name' => "Fake Project"]);
+        $reactions = factory(Reaction::class, 2)->create(['project_id' => $project]);
+        $reactionFromDifferentProject = factory(Compound::class)->create();
+
+        $this->assertTrue($project->reactions->contains($reactions[0]));
+        $this->assertTrue($project->reactions->contains($reactions[1]));
+
+        $this->assertFalse($project->reactions->contains($reactionFromDifferentProject));
     }
 }

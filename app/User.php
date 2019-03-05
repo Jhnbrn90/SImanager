@@ -46,7 +46,12 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class)->latest();
+    }
+
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class)->latest();
     }
 
     public function addSupervisor(User $user)
@@ -70,5 +75,12 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return in_array($this->email, config('app.admins'));
+    }
+
+    public function getNewReactionLabelAttribute()
+    {
+        $experimentNumber = $this->reactions->count() + 1;
+
+        return "{$this->prefix}_{$experimentNumber}";
     }
 }
