@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\User;
+use App\Bundle;
 use App\Project;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -20,7 +21,6 @@ class ProjectTest extends TestCase
         $this->assertEquals('Fake project', $project->name);
     }
 
-
     /** @test **/
     public function a_project_has_a_description()
     {
@@ -37,5 +37,15 @@ class ProjectTest extends TestCase
         $project = factory(Project::class)->create(['user_id' => $user]);
 
         $this->assertEquals('Project tester', $project->user->name);
+    }
+
+    /** @test **/
+    public function a_project_belongs_to_a_bundle()
+    {
+        $bundle = factory('App\Bundle')->create(['name' => 'Test bundle']);
+        $project = factory('App\Project')->create(['bundle_id' => $bundle->id]);
+
+        $this->assertEquals($bundle->id, $project->bundle_id);
+        $this->assertEquals('Test bundle', $project->bundle->name);
     }
 }

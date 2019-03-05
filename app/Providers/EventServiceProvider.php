@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\UserWasCreated' => [
-            'App\Listeners\RegisterNewProject',
+            'App\Listeners\RegisterDefaultBundleWithProject',
         ],
     ];
 

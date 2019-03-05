@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Bundle;
 use App\Project;
 use App\Events\UserWasCreated;
 use Illuminate\Support\Facades\DB;
@@ -44,11 +45,16 @@ class User extends Authenticatable
         return $this->hasMany(Compound::class);
     }
 
+    public function bundles()
+    {
+        return $this->hasMany(Bundle::class)->latest();
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class)->latest();
     }
-
+    
     public function reactions()
     {
         return $this->hasMany(Reaction::class)->latest();

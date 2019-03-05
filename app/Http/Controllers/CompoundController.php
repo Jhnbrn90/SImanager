@@ -25,14 +25,19 @@ class CompoundController extends Controller
 
         $user = auth()->user();
 
-        $projects = $user->projects()
-                    ->orderBy('id', 'desc')
-                    ->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
+        $bundles = $user->bundles()
+                ->with(['projects.compounds' => function($query) use ($orderByColumn, $orderByMethod) {
                         return $query->orderBy($orderByColumn, $orderByMethod);
-                    }])
-                    ->get();
+                    }])->get();
 
-        return view('compounds.index', compact('user', 'projects', 'orderByColumn', 'orderByMethod'));
+        // $projects = $user->projects()
+        //             ->orderBy('id', 'desc')
+        //             ->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
+        //                 return $query->orderBy($orderByColumn, $orderByMethod);
+        //             }])
+        //             ->get();
+
+        return view('compounds.index', compact('user', 'bundles', 'orderByColumn', 'orderByMethod'));
     }
 
     public function edit(Compound $compound)

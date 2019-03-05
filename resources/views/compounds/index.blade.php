@@ -75,7 +75,14 @@
             </thead>
 
             <tbody>
-                @foreach($projects as $project)
+                @foreach ($bundles as $bundle)
+                <tr style="height:100%;" class="secondary">
+                    <td colspan="14" style="text-align:center">
+                        <strong title="{{ $bundle->description }}"> {{ $bundle->name }} </strong>
+                    </td>
+                </tr>
+
+                @foreach($bundle->projects as $project)
                 <tr style="height:100%;" class="info">
                     <td colspan="14" style="text-align:center">
                         <strong title="{{ $project->description }}"> {{ $project->name }} </strong>
@@ -224,6 +231,7 @@
                     </tr>
                 @endforelse
                 
+                @endforeach
                 @endforeach
             </tbody>
         </table>
