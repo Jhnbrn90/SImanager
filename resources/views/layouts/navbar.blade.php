@@ -21,7 +21,7 @@
                     <ul class="nav navbar-nav">
                         @auth
                             &nbsp;
-                            <li><a href="/">Overview</a></li>
+                            <li><a href="/">Compounds</a></li>
                             <li><a href="/reactions">Reactions</a></li>
                             <li><a href="/projects">Projects</a></li>
                             <li><a href="/compounds/new">Add new Compound</a></li>

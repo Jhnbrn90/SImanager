@@ -78,7 +78,7 @@
 
                     @forelse ($project->reactions as $reaction)
                         <tr>
-                            <td colspan="1">{{ $reaction->label }}</td>
+                            <td colspan="1"><a href="/reactions/{{ $reaction->id }}">{{ $reaction->label }}</a></td>
                             <td colspan="12">
                                 @forelse ($reaction->startingMaterials as $compound)
                                   @if (! $loop->first) 

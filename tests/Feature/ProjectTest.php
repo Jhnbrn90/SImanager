@@ -40,17 +40,4 @@ class ProjectTest extends TestCase
         
         $this->assertFalse($project->compounds->contains($compoundFromDifferentProject));
     }
-
-    /** @test **/
-    public function a_project_can_get_all_of_its_reactions()
-    {
-        $project = factory(Project::class)->create(['name' => "Fake Project"]);
-        $reactions = factory(Reaction::class, 2)->create(['project_id' => $project]);
-        $reactionFromDifferentProject = factory(Compound::class)->create();
-
-        $this->assertTrue($project->reactions->contains($reactions[0]));
-        $this->assertTrue($project->reactions->contains($reactions[1]));
-
-        $this->assertFalse($project->reactions->contains($reactionFromDifferentProject));
-    }
 }
