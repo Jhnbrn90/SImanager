@@ -64,7 +64,8 @@
         <br>
 
         <button id="copy-btn" class="btn btn-primary copy-btn" data-clipboard-target="#SI-text" style="margin-right: 10px;">Copy text</button>
-        <a class="btn btn-info" href="/compounds/{{ $compound->id }}/edit">Edit info</a>
+        <a class="btn btn-info" href="/compounds/{{ $compound->id }}/edit" style="margin-right:10px;">Edit info</a>
+        <a class="btn btn-danger" href="/compounds/{{ $compound->id }}/delete">Delete compound</a>
         
 
         <br><br>
