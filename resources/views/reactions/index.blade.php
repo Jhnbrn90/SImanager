@@ -60,9 +60,6 @@
             <thead>
                 <tr>
                     <th>
-                        Date
-                    </th>
-                    <th>
                         Label
                     </th>
                 </tr>
@@ -73,15 +70,14 @@
                 <tr style="height:100%;" class="info">
                     <td colspan="14" style="text-align:center">
                         <strong title="{{ $project->description }}"> {{ $project->name }} </strong><br>
-                        <a href="/reactions/new/{{ $project->id }}">
-                            <strong>&plus; Add New Reaction</strong>
+                        <a class="btn btn-sm btn-primary" href="/reactions/new/{{ $project->id }}">
+                            &plus; Add reaction
                         </a>
                     </td>
                 </tr>
 
                     @forelse ($project->reactions as $reaction)
                         <tr>
-                            <td colspan="1">{{ $reaction->created_at->format('d-m-Y') }}</td>
                             <td colspan="1">{{ $reaction->label }}</td>
                             <td colspan="12">
                                 @forelse ($reaction->startingMaterials as $compound)
@@ -113,11 +109,7 @@
                         <tr>
                             <td colspan="14" style="text-align:center;">
                                 <br>
-                                Hey there!
-                                <br>
-                                It looks like you don't have any reactions in this project yet.
-                                <br>
-                                <a href="/reactions/new/{{ $project->id }}"><strong>Click here to add your first</strong></a>
+                                There are no reactions in this project yet.
                                 <br>
                                 <br>
                             </td>
