@@ -25,9 +25,12 @@ class CompoundController extends Controller
 
         $user = auth()->user();
 
-        $projects = $user->projects()->orderBy('id', 'desc')->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
-            return $query->orderBy($orderByColumn, $orderByMethod);
-        }])->get();
+        $projects = $user->projects()
+                    ->orderBy('id', 'desc')
+                    ->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
+                        return $query->orderBy($orderByColumn, $orderByMethod);
+                    }])
+                    ->get();
 
         return view('compounds.index', compact('user', 'projects', 'orderByColumn', 'orderByMethod'));
     }
@@ -79,8 +82,8 @@ class CompoundController extends Controller
         if(!$request->label) {
             $request->label = '(unknown)';
         }
-
-        $project = Project::firstOrFail($request->project);
+    
+        $project = Project::findOrFail($request->project);
 
         $compound = Compound::create([
             'user_id'               => $project->user->id,
