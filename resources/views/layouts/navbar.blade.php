@@ -22,6 +22,7 @@
                         @auth
                             &nbsp;
                             <li><a href="/">Overview</a></li>
+                            <li><a href="/reactions">Reactions</a></li>
                             <li><a href="/projects">Projects</a></li>
                             <li><a href="/compounds/new">Add new Compound</a></li>
                             <li><a href="/compounds/import">Import Compound</a></li>
