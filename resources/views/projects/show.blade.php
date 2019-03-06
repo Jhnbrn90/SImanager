@@ -6,23 +6,31 @@
 
 <div class="container">
     <div class="title">
-        <h1> {{ $project->name }} ({{ $project->compounds()->count() }} compounds) </h1>
+        <h1> 
+          {{ $project->name }} 
+          ({{ $count = $project->compounds()->count() }} {{ str_plural('compound', $count) }}) 
+        </h1>
         <p style="font-style: italic;">
           {{ $project->description }}
         </p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      <a href="/projects/{{ $project->id }}/edit"> edit </a>
+      <a class="btn btn-primary" style="margin-right: 10px;" href="/projects/{{ $project->id }}/edit">
+        Edit project 
+      </a>
       @if ($project->compounds()->count() < 1)
-        | 
-        <a href="/projects/{{ $project->id }}/delete" class="text-danger">delete empty project</a>
+        <a href="/projects/{{ $project->id }}/delete" style="margin-right: 10px;" class="btn btn-danger">
+          Delete this project
+        </a>
       @else
-        | 
-        <a href="/projects/{{ $project->id }}/export"> export all </a> 
+        <a href="/projects/{{ $project->id }}/export" class="btn btn-default" style="margin-right: 10px;">
+          Export 
+        </a> 
         @if (Auth::user()->projects()->count() > 1)
-        | 
-        <a href="/projects/{{ $project->id }}/move">move all to other project</a>
+        <a href="/project-compounds/{{ $project->id }}/edit" class="btn btn-default">
+          Move compounds
+        </a>
         @endif
       @endif
     </div>

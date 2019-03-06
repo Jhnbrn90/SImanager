@@ -10,8 +10,9 @@
     </div>
 
     <div style="margin-bottom: 20px;">
-      <form action="/projects/{{ $project->id }}/move" method="POST">
+      <form action="/project-compounds/{{ $project->id }}" method="POST">
         {{ csrf_field() }}
+        {{ method_field('patch') }}
 
       to 
       <div class="form-group" style="width: 20%; display:inline-block; margin-right:10px;">

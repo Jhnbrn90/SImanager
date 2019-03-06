@@ -31,4 +31,15 @@ class Project extends Model
     {
         return $this->belongsTo(Bundle::class);
     }
+
+    public function path()
+    {
+        return '/projects/' . $this->id;
+    }
+
+    public function moveTo(Bundle $bundle)
+    {
+        $this->bundle_id = $bundle->id;
+        $this->save();
+    }
 }

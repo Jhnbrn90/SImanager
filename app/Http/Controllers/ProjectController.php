@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Bundle;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -18,10 +19,12 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = auth()->user()->projects;
-        
-        $students = auth()->user()->students()->with('projects.compounds')->get();
 
-        return view('projects.index', compact('projects', 'students'));
+        $bundles = auth()->user()->bundles()->with('projects')->get();
+        
+        $students = auth()->user()->students()->with('bundles.projects')->get();
+
+        return view('projects.index', compact('bundles', 'projects', 'students'));
     }
 
     public function show(Project $project)
@@ -37,19 +40,22 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return view('projects.create');
+        $bundles = Bundle::where('user_id', auth()->id())->get();
+        return view('projects.create', compact('bundles'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required',
+            'name'      => 'required',
+            'bundle_id' => 'required|exists:bundles,id'
         ]);
 
         $project = Project::create([
             'name'          =>  $request->name,
             'description'   =>  $request->description,
             'user_id'       =>  auth()->id(),
+            'bundle_id'     => $request->bundle_id,
         ]);
 
         return redirect('/projects');
@@ -104,34 +110,4 @@ class ProjectController extends Controller
 
         return view('projects.export', compact('project', 'compounds'));
     }
-
-    public function move(Project $project)
-    {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
-
-        $project->load('compounds');
-        $compounds = $project->compounds;
-
-        $projects = auth()->user()->projects;
-
-        return view('projects.move', compact('project', 'projects', 'compounds'));   
-    }
-
-    public function moveCompounds(Project $project, Request $request)
-    {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
-
-        $project->compounds()->update(['project_id' => $request->toProject]);
-
-        if ($request->deleteProject == "on") {
-            $project->delete();
-        }
-
-        return redirect('/projects');
-    }
-    
 }

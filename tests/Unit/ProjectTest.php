@@ -6,6 +6,7 @@ use App\User;
 use App\Bundle;
 use App\Project;
 use Tests\TestCase;
+use Facades\Tests\Setup\BundleFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -40,6 +41,13 @@ class ProjectTest extends TestCase
     }
 
     /** @test **/
+    public function a_project_can_make_its_path()
+    {
+        $project = factory(Project::class)->create();
+        $this->assertEquals('/projects/' . $project->id, $project->path());
+    }
+
+    /** @test **/
     public function a_project_belongs_to_a_bundle()
     {
         $bundle = factory('App\Bundle')->create(['name' => 'Test bundle']);
@@ -47,5 +55,23 @@ class ProjectTest extends TestCase
 
         $this->assertEquals($bundle->id, $project->bundle_id);
         $this->assertEquals('Test bundle', $project->bundle->name);
+    }
+
+    /** @test **/
+    public function a_project_can_move_itself_to_a_different_bundle()
+    {
+        $user = factory('App\User')->create();
+        $firstBundle = BundleFactory::ownedBy($user)->withProjects(1)->create();
+        $secondBundle = BundleFactory::ownedBy($user)->withProjects(2)->create();
+
+        $this->assertCount(1, $firstBundle->projects);
+        $this->assertCount(2, $secondBundle->projects);
+
+        $movingProject = tap($firstBundle->projects[0])->moveTo($secondBundle);
+
+        $this->assertCount(0, $firstBundle->fresh()->projects);
+        $this->assertCount(3, $secondBundle->fresh()->projects);
+
+        $this->assertTrue($secondBundle->fresh()->projects->contains($movingProject));
     }
 }

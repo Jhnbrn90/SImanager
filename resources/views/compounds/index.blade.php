@@ -76,15 +76,22 @@
 
             <tbody>
                 @foreach ($bundles as $bundle)
-                <tr style="height:100%;" class="secondary">
+                @if (! $loop->first)
+                <tr style="height:20px;">
+                    <td colspan="14" style="text-align:center;">
+                    </td>
+                </tr>
+                @endif
+
+                <tr style="height:100%;" class="active">
                     <td colspan="14" style="text-align:center">
-                        <strong title="{{ $bundle->description }}"> {{ $bundle->name }} </strong>
+                        <h4 title="{{ $bundle->description }}"> {{ $bundle->name }} </h4>
                     </td>
                 </tr>
 
                 @foreach($bundle->projects as $project)
-                <tr style="height:100%;" class="info">
-                    <td colspan="14" style="text-align:center">
+                <tr style="height:100%;">
+                    <td colspan="14" class="info" style="text-align:center">
                         <strong title="{{ $project->description }}"> {{ $project->name }} </strong>
                     </td>
                 </tr>
@@ -231,8 +238,9 @@
                     </tr>
                 @endforelse
                 
+                @endforeach 
                 @endforeach
-                @endforeach
+
             </tbody>
         </table>
     </div>

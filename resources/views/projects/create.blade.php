@@ -12,6 +12,16 @@
     <div style="margin-bottom: 20px;">
       <form action="/projects" method="POST" autocomplete="off">
         {{ csrf_field() }}
+
+        <div class="form-group" style="width:50%;">
+          <label for="bundle">Bundle</label>
+          <select class="form-control" name="bundle_id" id="bundle">
+            @foreach ($bundles as $bundle)
+              <option value="{{ $bundle->id }}">{{ $bundle->name }}</option>
+            @endforeach
+          </select>
+        </div>
+
         <div class="form-group" style="width:50%;">
           <label for="name">Project name</label>
           <input type="text" id="name" class="form-control" name="name" placeholder="Project name">

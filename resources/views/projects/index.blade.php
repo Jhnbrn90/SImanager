@@ -8,32 +8,46 @@
     <div class="title">
         <h1> Projects </h1>
     </div>
+    
+    <div class="buttons" style="margin-bottom: 20px;">
+      <div style="display:inline-block; margin-right: 10px;">
+        <a href="/projects/create" class="btn btn-primary">Create new project</a>
+      </div>
 
-    <div style="margin: 20px 5px;">
-      <a href="/projects/create" class="btn btn-primary">Create new project</a>
+      <div style="display:inline-block;">
+        <a href="/bundles/new" class="btn btn-warning">Create new bundle</a>
+      </div>
     </div>
     
     <div>
       <div class="list-group">
-        @foreach ($projects as $project)
+        @foreach ($bundles as $bundle)
+        <li class="list-group-item list-group-item-warning">
+            <a href="/bundle-projects/{{ $bundle->id }}/edit"><strong>{{ $bundle->name }}</strong></a>
+        </li>
+        @foreach ($bundle->projects as $project)
           <a href="/projects/{{ $project->id }}" class="list-group-item">
             <div>
-              <strong> {{ $project->name }} </strong>
+              <strong>{{ $project->name }} </strong>
             </div>
             <div>
               <em> {{ $project->description }} </em>
             </div>
           </a>
         @endforeach
+        @endforeach
       </div>
 
       @if ($students->count() > 0)
-      <hr>
-      <h2>Students</h2>
+      <h1>Students</h1>
         @forelse ($students as $student)
         <div class="list-group">
           <h3>{{ $student->name }}</h3>
-          @foreach ($student->projects as $project)
+          @foreach ($student->bundles as $bundle)
+          <li class="list-group-item list-group-item-warning">
+              <strong>{{ $bundle->name }}</strong>
+          </li>
+          @foreach ($bundle->projects as $project)
           <a href="/projects/{{ $project->id }}" class="list-group-item">
             <div>
               <strong> {{ $project->name }} </strong>
@@ -42,6 +56,7 @@
               <em> {{ $project->description }} </em>
             </div>
           </a>
+          @endforeach
           @endforeach
         </div>
         @empty

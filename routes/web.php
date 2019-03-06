@@ -36,11 +36,17 @@ Route::get('/projects/{project}/edit', 'ProjectController@edit');
 Route::patch('/projects/{project}', 'ProjectController@update');
 Route::get('/projects/{project}/delete', 'ProjectController@destroy');
 Route::get('/projects/{project}/export', 'ProjectController@export');
-Route::get('/projects/{project}/move', 'ProjectController@move');
-Route::post('/projects/{project}/move', 'ProjectController@moveCompounds');
 
+Route::get('/project-compounds/{project}/edit', 'ProjectCompoundController@edit');
+Route::patch('/project-compounds/{project}', 'ProjectCompoundController@update');
+
+Route::get('/bundle-projects/{bundle}/edit', 'BundleProjectController@edit');
+Route::patch('/bundle-projects/{bundle}', 'BundleProjectController@update');
 
 Route::get('/reactions', 'ReactionController@index');
 Route::get('/reactions/new/{project}', 'ReactionController@store');
 Route::get('/reactions/{reaction}', 'ReactionController@show');
 Route::patch('/reactions/{reaction}', 'ReactionController@update');
+
+Route::get('/bundles/new', 'BundleController@create');
+Route::post('/bundles', 'BundleController@store');

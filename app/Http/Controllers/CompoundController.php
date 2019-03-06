@@ -30,13 +30,6 @@ class CompoundController extends Controller
                         return $query->orderBy($orderByColumn, $orderByMethod);
                     }])->get();
 
-        // $projects = $user->projects()
-        //             ->orderBy('id', 'desc')
-        //             ->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
-        //                 return $query->orderBy($orderByColumn, $orderByMethod);
-        //             }])
-        //             ->get();
-
         return view('compounds.index', compact('user', 'bundles', 'orderByColumn', 'orderByMethod'));
     }
 
@@ -56,11 +49,12 @@ class CompoundController extends Controller
             $orderByMethod = $request->order;
         }
 
-        $projects = $user->projects()->orderBy('id', 'desc')->with(['compounds' => function($query) use ($orderByColumn, $orderByMethod) {
-            return $query->orderBy($orderByColumn, $orderByMethod);
-        }])->get();
+        $bundles = $user->bundles()
+                ->with(['projects.compounds' => function($query) use ($orderByColumn, $orderByMethod) {
+                        return $query->orderBy($orderByColumn, $orderByMethod);
+                    }])->get();
 
-        return view('compounds.index', compact('projects', 'user', 'orderByColumn', 'orderByMethod'));
+        return view('compounds.index', compact('bundles', 'user', 'orderByColumn', 'orderByMethod'));
     }
 
     public function show(Compound $compound)
