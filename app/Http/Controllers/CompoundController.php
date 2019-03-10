@@ -11,19 +11,17 @@ use Illuminate\Support\Facades\Gate;
 
 class CompoundController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function index($orderByColumn = 'created_at', $orderByMethod = 'desc', Request $request)
+    public function index(Request $request)
     {
-        if($request->order && $request->by) {
-            $orderByColumn = $request->by;
-            $orderByMethod = $request->order;
-        }
-
         $user = auth()->user();
+        
+        $orderByColumn = $this->orderByColumn($request);
+        $orderByMethod = $this->orderByMethod($request);
 
         $bundles = $user->bundles()
                 ->with(['projects.compounds' => function($query) use ($orderByColumn, $orderByMethod) {
@@ -38,16 +36,14 @@ class CompoundController extends Controller
         return view('compounds.edit', compact('compound'));
     }
 
-    public function studentIndex(User $user, $orderByColumn = 'created_at', $orderByMethod = 'desc', Request $request)
+    public function studentIndex(User $user, Request $request)
     {
         if (Gate::denies('access-compounds', $user)) {
             return redirect('/');
         }
 
-        if($request->order && $request->by) {
-            $orderByColumn = $request->by;
-            $orderByMethod = $request->order;
-        }
+        $orderByColumn = $this->orderByColumn($request);
+        $orderByMethod = $this->orderByMethod($request);
 
         $bundles = $user->bundles()
                 ->with(['projects.compounds' => function($query) use ($orderByColumn, $orderByMethod) {
@@ -224,4 +220,13 @@ class CompoundController extends Controller
         return view('compounds.confirmdelete', compact('compound'));
     }
 
+    protected function orderByColumn($request)
+    {
+        return $request->by ?? 'created_at';
+    }
+
+    protected function orderByMethod($request)
+    {
+        return $request->order ?? 'desc';
+    }
 }
