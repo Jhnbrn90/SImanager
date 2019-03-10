@@ -78,16 +78,12 @@ class CompoundController extends Controller
 
     public function store(Request $request)
     {
-        if(!$request->label) {
-            $request->label = '(unknown)';
-        }
-    
         $project = Project::findOrFail($request->project);
 
         $compound = Compound::create([
             'user_id'               => $project->user->id,
             'project_id'            => $project->id,
-            'label'                 => $request->label,
+            'label'                 => $request->label ?? '(unkown)',
             'H_NMR_data'            => $request->H_NMR,
             'C_NMR_data'            => $request->C_NMR,
             'retention'             => $request->Rf,
@@ -118,9 +114,10 @@ class CompoundController extends Controller
 
     public function storeFromImport(Request $request)
     {
-        if(!$request->label) {
-            $request->label = '(unknown)';
-        }
+        $request->validate([
+            'project' => 'required',
+            'experimental'  => 'required',
+        ]);
 
         $importer = new DataImporter($request->experimental);
 
@@ -129,7 +126,7 @@ class CompoundController extends Controller
         $compound = Compound::create([
             'user_id'               => $project->user->id,
             'project_id'            => $project->id,
-            'label'                 => $request->label,
+            'label'                 => $request->label ?? '(unkown)',
             'H_NMR_data'            => $importer->getProtonNMR(),
             'C_NMR_data'            => $importer->getCarbonNMR(),
             'retention'             => $importer->getRfValue(),
