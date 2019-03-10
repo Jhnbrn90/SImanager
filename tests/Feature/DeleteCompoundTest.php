@@ -12,12 +12,8 @@ class DeleteCompoundTest extends TestCase
     /** @test **/
     public function authenticated_users_can_delete_compounds()
     {
-        // $this->withExceptionHandling();
-
-        // given we have an authenticated user
-        $this->signIn();
-        // With an existing compound
-        $compound = create('App\Compound');
+        $this->signIn($user = create('App\User'));
+        $compound = create('App\Compound', ['user_id' => $user->id]);
 
         $this->assertDatabaseHas('compounds', ['id' => $compound->id]);
 
@@ -29,12 +25,9 @@ class DeleteCompoundTest extends TestCase
         /** @test **/
     public function unauthenticated_users_can_not_delete_compounds()
     {
-        $this->withExceptionHandling();
-
         $compound = create('App\Compound');
 
         $this->delete("/compounds/{$compound->id}")
           ->assertRedirect('/login');
     }
-
 }

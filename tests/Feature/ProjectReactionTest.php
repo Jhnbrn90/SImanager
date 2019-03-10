@@ -13,8 +13,8 @@ class ProjectReactionTest extends TestCase
     /** @test **/
    public function a_reaction_belongs_to_a_project()
    {
-      $project = factory('App\Project')->create(['name' => 'Fake Project 007']);
-      $reaction = factory('App\Reaction')->create(['project_id' => $project->id]);
+      $project = create('App\Project', ['name' => 'Fake Project 007']);
+      $reaction = create('App\Reaction', ['project_id' => $project->id]);
 
       $this->assertEquals('Fake Project 007', $reaction->project->name);
    }

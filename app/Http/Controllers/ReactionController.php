@@ -17,20 +17,17 @@ class ReactionController extends Controller
 
     public function index()
     {
-        $user = auth()->user();
-        $projects = $user->projects()
+        $projects = auth()->user()->projects()
                     ->orderBy('id', 'desc')
                     ->with('reactions')
                     ->get();
 
-        return view('reactions.index', compact('user', 'projects'));
+        return view('reactions.index', compact('projects'));
     }
 
     public function show(Reaction $reaction)
     {
-        if (Gate::denies('interact-with-reaction', $reaction)) {
-            return redirect('/reactions');
-        }
+        Gate::authorize('interact-with-reaction', $reaction);
 
         return view('reactions.create', compact('reaction'));
     }
@@ -38,9 +35,9 @@ class ReactionController extends Controller
     public function store(Project $project)
     {
         $reaction = Reaction::create([
-            'project_id' => $project->id, 
-            'user_id' => $project->user->id,
-            'label' => auth()->user()->newReactionLabel,
+            'project_id'    => $project->id, 
+            'user_id'       => $project->user->id,
+            'label'         => auth()->user()->newReactionLabel,
         ]);
 
         return view('reactions.create', compact('reaction'));
@@ -48,9 +45,7 @@ class ReactionController extends Controller
 
     public function update(Request $request, Reaction $reaction)
     {
-        if (Gate::denies('interact-with-reaction', $reaction)) {
-            return redirect('/reactions');
-        }
+        Gate::authorize('interact-with-reaction', $reaction);
 
         $project = Project::findOrFail($request->project);
 

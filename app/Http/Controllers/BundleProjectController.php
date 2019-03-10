@@ -16,7 +16,7 @@ class BundleProjectController extends Controller
     public function edit(Bundle $bundle)
     {
         if (Gate::denies('interact-with-bundle', $bundle)) {
-            return redirect('/');
+            return abort(403, 'This action is not authorized.');
         }
 
         $projects = $bundle->projects;
@@ -29,7 +29,7 @@ class BundleProjectController extends Controller
     public function update(Bundle $bundle, Request $request)
     {
         if (Gate::denies('interact-with-bundle', $bundle)) {
-            return redirect('/');
+            return abort(403, 'This action is not authorized.');
         }
 
         $targetBundle = Bundle::findOrFail($request->toBundle);

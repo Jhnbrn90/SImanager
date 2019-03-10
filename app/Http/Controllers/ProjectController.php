@@ -18,20 +18,16 @@ class ProjectController extends Controller
 
     public function index()
     {
-        $projects = auth()->user()->projects;
-
         $bundles = auth()->user()->bundles()->with('projects')->get();
         
         $students = auth()->user()->students()->with('bundles.projects')->get();
 
-        return view('projects.index', compact('bundles', 'projects', 'students'));
+        return view('projects.index', compact('bundles', 'students'));
     }
 
     public function show(Project $project)
     {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-project', $project);
 
         $project->load('compounds');
 
@@ -40,7 +36,8 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $bundles = Bundle::where('user_id', auth()->id())->get();
+        $bundles = auth()->user()->bundles;
+
         return view('projects.create', compact('bundles'));
     }
 
@@ -63,18 +60,14 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-project', $project);
 
         return view('projects.edit', compact('project'));
     }
 
     public function update(Project $project, Request $request)
     {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-project', $project); 
 
         $project->name = $request->name;
         $project->description = $request->description;
@@ -85,12 +78,9 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-         if (Gate::denies('interact-with-project', $project)) {
-             return abort(403, 'You are not authorized to perform this action.');
-         }
+         Gate::authorize('interact-with-project', $project);
 
-         // check if the project is empty 
-         if ($project->compounds()->count() > 0) {
+         if (! $project->isEmpty()) {
             return abort(422, 'Only empty projects can be deleted.');
          }
 
@@ -101,9 +91,7 @@ class ProjectController extends Controller
 
     public function export(Project $project)
     {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-project', $project);
 
         $project->load('compounds');
         $compounds = $project->compounds;

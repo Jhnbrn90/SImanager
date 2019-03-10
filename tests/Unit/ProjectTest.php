@@ -7,6 +7,7 @@ use App\Bundle;
 use App\Project;
 use Tests\TestCase;
 use Facades\Tests\Setup\BundleFactory;
+use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -73,5 +74,13 @@ class ProjectTest extends TestCase
         $this->assertCount(3, $secondBundle->fresh()->projects);
 
         $this->assertTrue($secondBundle->fresh()->projects->contains($movingProject));
+    }
+
+    /** @test **/
+    public function a_project_knows_if_it_has_projects_associated()
+    {
+        $project = ProjectFactory::withCompounds(2)->create();
+
+        $this->assertFalse($project->isEmpty());
     }
 }

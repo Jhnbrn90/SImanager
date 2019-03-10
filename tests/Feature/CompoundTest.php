@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Project;
-use App\Compound;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -14,8 +12,8 @@ class CompoundTest extends TestCase
     /** @test **/
    public function authenticated_users_can_list_their_compounds()
    {
-        $this->signIn();
-        $compound = create('App\Compound');
+        $this->signIn($user = create('App\User'));
+        $compound = create('App\Compound', ['user_id' => $user->id]);
 
         $this->get('/compounds')->assertSee($compound->label);
    }
@@ -29,8 +27,8 @@ class CompoundTest extends TestCase
    /** @test **/
    public function authenticated_users_can_view_a_single_compound()
    {
-      $this->signIn();
-      $compound = create('App\Compound');
+      $this->signIn($user = create('App\User'));
+      $compound = create('App\Compound', ['user_id' => $user->id]);
 
       $this->get($compound->path())
         ->assertSee($compound->label);
@@ -91,8 +89,8 @@ class CompoundTest extends TestCase
    /** @test **/
    public function a_compound_belongs_to_a_project()
    {
-      $project = factory(Project::class)->create(['name' => 'Fake Project 007']);
-      $compound = factory(Compound::class)->create(['project_id' => $project]);
+      $project = create('App\Project', ['name' => 'Fake Project 007']);
+      $compound = create('App\Compound', ['project_id' => $project]);
 
       $this->assertEquals('Fake Project 007', $compound->project->name);
    }

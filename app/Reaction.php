@@ -26,35 +26,47 @@ class Reaction extends Model
 
     public function addStartingMaterial(Compound $compound)
     {
-        $this->compounds()->attach($compound, ['type' => 'starting_material']);
+        $this->compounds()
+            ->attach($compound, ['type' => 'starting_material']);
+        
         return $this;
     }
 
     public function getStartingMaterialsAttribute()
     {
-        return $this->compounds()->wherePivot('type', 'starting_material')->get();
+        return $this->compounds()
+                    ->wherePivot('type', 'starting_material')
+                    ->get();
     }
 
     public function addReagent(Compound $compound)
     {
-        $this->compounds()->attach($compound, ['type' => 'reagent']);
+        $this->compounds()  
+            ->attach($compound, ['type' => 'reagent']);
+        
         return $this;
     }
 
     public function getReagentsAttribute()
     {
-        return $this->compounds()->wherePivot('type', 'reagent')->get();
+        return $this->compounds()
+                    ->wherePivot('type', 'reagent')
+                    ->get();
     }
 
     public function addProduct(Compound $compound)
     {
-        $this->compounds()->attach($compound, ['type' => 'product']);
+        $this->compounds()
+            ->attach($compound, ['type' => 'product']);
+        
         return $this;
     }
 
     public function getProductsAttribute()
     {
-        return $this->compounds()->wherePivot('type', 'product')->get();
+        return $this->compounds()
+                    ->wherePivot('type', 'product')
+                    ->get();
     }
 
     public function path()

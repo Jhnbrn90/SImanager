@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use App\Project;
-use App\Compound;
-use App\Reaction;
 use Tests\TestCase;
 use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,7 +14,7 @@ class ProjectTest extends TestCase
     /** @test **/
     public function a_default_project_is_created_for_newly_registered_users()
     {
-        $user = factory(User::class)->create();
+        $user = create('App\User');
 
         $this->assertCount(1, $user->fresh()->projects);
 
@@ -30,11 +26,10 @@ class ProjectTest extends TestCase
     /** @test **/
     public function a_project_can_get_all_of_its_compounds()
     {
-        $project = factory(Project::class)->create(['name' => "Fake Project"]);
+        $project = create('App\Project', ['name' => "Fake Project"]);
 
-        // Given we have some compounds
-        $compounds = factory(Compound::class, 2)->create(['project_id' => $project]);
-        $compoundFromDifferentProject = factory(Compound::class)->create();
+        $compounds = create('App\Compound', ['project_id' => $project], 2);
+        $compoundFromDifferentProject = create('App\Compound');
 
         $this->assertTrue($project->compounds->contains($compounds[0]));
         $this->assertTrue($project->compounds->contains($compounds[1]));
@@ -62,6 +57,7 @@ class ProjectTest extends TestCase
         $project = ProjectFactory::ownedBy($user)->withCompounds(2)->create();
 
         $this->actingAs($user)->delete($project->path())->assertStatus(422);
+
         $this->assertDatabaseHas('projects', $project->toArray());
     }
 
@@ -73,6 +69,7 @@ class ProjectTest extends TestCase
         $project = ProjectFactory::ownedBy($john)->create();
 
         $this->actingAs($frank)->delete($project->path())->assertStatus(403);
+        
         $this->assertDatabaseHas('projects', $project->toArray());
     }
 }

@@ -12,7 +12,7 @@ class SharingDataController extends Controller
     {
         $users = User::all();
 
-        $supervisors = Auth::user()->supervisors;
+        $supervisors = auth()->user()->supervisors;
 
         return view('supervisor.add', compact('users', 'supervisors'));
     }
@@ -20,16 +20,16 @@ class SharingDataController extends Controller
     public function store(Request $request)
     {
         $supervisor = User::findOrFail($request->supervisor);
-        Auth::user()->addSupervisor($supervisor);
+
+        auth()->user()->addSupervisor($supervisor);
 
         return redirect('/supervisor/add');
     }
 
     public function listStudents()
     {
-        if (in_array(auth()->user()->email, config('app.admins'))) {
+        if (auth()->user()->isAdmin()) {
             $students = User::all();
-            return view('students.list', compact('students'));
         }
 
         $students = auth()->user()->students;

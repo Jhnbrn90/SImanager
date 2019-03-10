@@ -15,9 +15,7 @@ class ProjectCompoundController extends Controller
 
     public function edit(Project $project)
     {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-project', $project);
 
         $project->load('compounds');
         $compounds = $project->compounds;
@@ -29,9 +27,7 @@ class ProjectCompoundController extends Controller
 
     public function update(Project $project, Request $request)
     {
-        if (Gate::denies('interact-with-project', $project)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-project', $project);
 
         $targetProject = Project::findOrFail($request->toProject);
 

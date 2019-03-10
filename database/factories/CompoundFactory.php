@@ -3,12 +3,12 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Compound::class, function (Faker $faker) {
+    $user = auth()->user() ?? factory('App\User')->create();
+
     return [
-        'user_id'               => function() {
-            return auth()->id() ?: factory('App\User')->create()->id;
-        },
-        'project_id'            => function() {
-            return factory('App\Project')->create()->id;
+        'user_id'               => $user->id, 
+        'project_id'            => function() use ($user) {
+            return factory('App\Project')->create(['user_id' => $user->id])->id;
         },
         'label'                 => 'jbn478',
         'formula'               => 'C6H12O6',

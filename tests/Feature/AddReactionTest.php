@@ -13,8 +13,8 @@ class AddReactionTest extends TestCase
     /** @test **/
     public function an_authenticated_user_can_start_a_new_reaction()
     {
-        $user = factory('App\User')->create();
-        $project = factory('App\Project')->create(['user_id' => $user->id]);
+        $user = create('App\User');
+        $project = create('App\Project', ['user_id' => $user->id]);
 
         $this->actingAs($user)->get('/reactions/new/' . $project->id)->assertStatus(200);
 

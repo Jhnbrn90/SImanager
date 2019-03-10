@@ -14,7 +14,7 @@ class MoveCompoundsTest extends TestCase
     /** @test **/
     public function a_user_can_move_all_compounds_to_another_project()
     {
-        $user = factory('App\User')->create();
+        $user = create('App\User');
 
         $defaultProject = $user->projects->first();
 

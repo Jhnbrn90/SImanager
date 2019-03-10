@@ -32,10 +32,10 @@
 
 <div class="container-mx-auto">
     <div class="title">
-        <h1> Reactions of {{ $user->name }} </h1>
+        <h1> Reactions of {{ auth()->user()->name }} </h1>
     </div>
 
-    @if (! $user->prefix)
+    @if (! auth()->user()->prefix)
         <form class="form-inline" action="/userlabel" method="POST">
             {{ @csrf_field() }}
             {{ @method_field('patch') }}

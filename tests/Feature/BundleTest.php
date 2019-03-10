@@ -13,7 +13,7 @@ class BundleTest extends TestCase
     /** @test **/
     public function a_new_user_has_a_default_bundle()
     {
-        $user = factory('App\User')->create();
+        $user = create('App\User');
 
         $this->assertCount(1, $user->bundles); // 1 + default bundle
         $this->assertEquals('Default bundle', $user->bundles->first()->name);

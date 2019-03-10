@@ -38,9 +38,7 @@ class CompoundController extends Controller
 
     public function studentIndex(User $user, Request $request)
     {
-        if (Gate::denies('access-compounds', $user)) {
-            return redirect('/');
-        }
+        Gate::authorize('access-compounds', $user);
 
         $orderByColumn = $this->orderByColumn($request);
         $orderByMethod = $this->orderByMethod($request);
@@ -55,9 +53,7 @@ class CompoundController extends Controller
 
     public function show(Compound $compound)
     {
-        if (Gate::denies('interact-with-compound', $compound)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-compound', $compound);
 
         return view('compounds.show', compact('compound'));    
     }
@@ -153,9 +149,7 @@ class CompoundController extends Controller
 
     public function update(Compound $compound, Request $request)
     {
-        if (Gate::denies('interact-with-compound', $compound)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-compound', $compound);
         
         $compound->update([$request->column => $request->value]);
         
@@ -164,9 +158,7 @@ class CompoundController extends Controller
 
     public function updateAll(Compound $compound, Request $request)
     {
-        if (Gate::denies('interact-with-compound', $compound)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-compound', $compound);
 
         $compound->label = $request->label;
         $compound->project_id = $request->project;
@@ -191,7 +183,6 @@ class CompoundController extends Controller
             $compound->exact_mass = $request->exact_mass;
         }
         
-
         $compound->save();
 
         if ($request->user_updated_molfile == 'true') {
@@ -199,14 +190,11 @@ class CompoundController extends Controller
         }
 
         return redirect('/compounds/'.$compound->id);
-
     }
 
     public function destroy(Compound $compound)
     {
-        if (Gate::denies('interact-with-compound', $compound)) {
-            return redirect('/');
-        }
+        Gate::authorize('interact-with-compound', $compound);
 
         $compound = Compound::findOrFail($compound)->first();
 
@@ -217,6 +205,8 @@ class CompoundController extends Controller
 
     public function confirmDelete(Compound $compound)
     {
+        Gate::authorize('interact-with-compound', $compound);
+        
         return view('compounds.confirmdelete', compact('compound'));
     }
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Bundle;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,12 +11,17 @@ class AddBundleTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->user = create('App\User');
+    }
+
     /** @test **/
     public function an_authenticated_user_can_make_a_new_bundle()
     {
-        $user = factory('App\User')->create();
-
-        $this->actingAs($user)->post('/bundles', ['name' => 'Custom Bundle']);
+        $this->actingAs($this->user)->post('/bundles', ['name' => 'Custom Bundle']);
 
         $this->assertDatabaseHas('bundles', ['name' => 'Custom Bundle']);
     }
@@ -31,21 +37,17 @@ class AddBundleTest extends TestCase
     /** @test **/
     public function a_new_bundle_is_associated_with_the_authenticated_user()
     {
-        $user = factory('App\User')->create();
+        $this->actingAs($this->user)->post('/bundles', ['name' => 'Custom Bundle']);
 
-        $this->actingAs($user)->post('/bundles', ['name' => 'Custom Bundle']);
+        $bundle = Bundle::where('name', 'Custom Bundle')->first();
 
-        $bundle = \App\Bundle::where('name', 'Custom Bundle')->first();
-
-        $this->assertEquals($user->id, $bundle->user_id);
+        $this->assertEquals($this->user->id, $bundle->user_id);
     }
 
     /** @test **/
     public function a_new_bundle_requires_a_name()
     {
-        $user = factory('App\User')->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/bundles', ['name' => ''])
             ->assertSessionHasErrors('name');
     }

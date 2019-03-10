@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'prefix',
     ];
 
     /**
@@ -62,10 +62,7 @@ class User extends Authenticatable
 
     public function addSupervisor(User $user)
     {
-        DB::table('student_supervisor')->insert([
-            'student_id'   => $this->id,
-            'supervisor_id' => $user->id,
-        ]);
+        $this->supervisors()->attach($user);
     }
 
     public function supervisors()

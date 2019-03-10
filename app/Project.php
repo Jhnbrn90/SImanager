@@ -39,7 +39,11 @@ class Project extends Model
 
     public function moveTo(Bundle $bundle)
     {
-        $this->bundle_id = $bundle->id;
-        $this->save();
+        $this->update(['bundle_id' => $bundle->id]);
+    }
+
+    public function isEmpty()
+    {
+        return $this->compounds()->count() == 0;
     }
 }

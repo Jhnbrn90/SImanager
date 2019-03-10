@@ -13,8 +13,8 @@ class ViewReactionTest extends TestCase
     /** @test **/
     public function an_authenticated_user_can_view_his_reactions()
     {
-        $user = factory('App\User')->create();
-        $reaction = factory('App\Reaction')->create(['user_id' => $user->id]);
+        $user = create('App\User');
+        $reaction = create('App\Reaction', ['user_id' => $user->id]);
 
         $this->actingAs($user)->get('/reactions')->assertStatus(200);
     }
@@ -31,8 +31,8 @@ class ViewReactionTest extends TestCase
     /** @test **/
     public function a_user_can_view_a_single_reaction()
     {
-        $user = factory('App\User')->create();
-        $reaction = factory('App\Reaction')->create(['user_id' => $user->id]);
+        $user = create('App\User');
+        $reaction = create('App\Reaction', ['user_id' => $user->id]);
 
         $this->actingAs($user)->get('/reactions/' . $reaction->id)->assertStatus(200);
     }
@@ -40,8 +40,8 @@ class ViewReactionTest extends TestCase
     /** @test **/
     public function guests_can_not_view_a_single_reaction()
     {
-        $user = factory('App\User')->create();
-        $reaction = factory('App\Reaction')->create(['user_id' => $user->id]);
+        $user = create('App\User');
+        $reaction = create('App\Reaction', ['user_id' => $user->id]);
 
         $this->get('/reactions/' . $reaction->id)->assertRedirect('login');
     }
@@ -49,27 +49,25 @@ class ViewReactionTest extends TestCase
     /** @test **/
     public function a_user_can_not_view_reactions_of_others()
     {
-        $this->withoutExceptionHandling();
+        $john = create('App\User');
+        $reaction = create('App\Reaction', ['user_id' => $john->id]);
+        $frank = create('App\User');
 
-        $user = factory('App\User')->create();
-        $reaction = factory('App\Reaction')->create(['user_id' => $user->id]);
-        $user2 = factory('App\User')->create();
-
-        $this->actingAs($user2)->get('/reactions/' . $reaction->id)->assertRedirect('/reactions');
+        $this->actingAs($frank)->get('/reactions/' . $reaction->id)->assertStatus(403);
     }
 
     /** @test **/
-    public function a_supervisor_can_its_students_reactions()
+    public function a_supervisor_can_view_its_students_reactions()
     {
-        $student = factory('App\User')->create();
-        $supervisor = factory('App\User')->create();
-        $reaction = factory('App\Reaction')->create(['user_id' => $student->id]);
+        $student = create('App\User');
+        $supervisor = create('App\User');
+        $reaction = create('App\Reaction', ['user_id' => $student->id]);
 
-        $this->actingAs($student)->get('/reactions/' . $reaction->id)->assertStatus(200);
-        $this->actingAs($supervisor)->get('/reactions/' . $reaction->id)->assertRedirect('/reactions');
+        $this->actingAs($student)->get($reaction->path())->assertStatus(200);
+        $this->actingAs($supervisor)->get($reaction->path())->assertStatus(403);
 
         $student->addSupervisor($supervisor);
 
-        $this->actingAs($supervisor)->get('/reactions/' . $reaction->id)->assertStatus(200);
+        $this->actingAs($supervisor)->get($reaction->path())->assertStatus(200);
     }
 }
