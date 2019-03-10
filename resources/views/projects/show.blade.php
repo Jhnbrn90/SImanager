@@ -20,9 +20,13 @@
         Edit project 
       </a>
       @if ($project->compounds()->count() < 1)
-        <a href="/projects/{{ $project->id }}/delete" style="margin-right: 10px;" class="btn btn-danger">
-          Delete this project
-        </a>
+        <form action="/projects/{{ $project->id }}" method="POST" style="display: inline-block;">
+          {{ csrf_field() }}
+          {{ method_field('DELETE') }}
+          <button type="submit" style="margin-right: 10px;" class="btn btn-danger">
+            Delete this project
+          </button>
+        </form>
       @else
         <a href="/projects/{{ $project->id }}/export" class="btn btn-default" style="margin-right: 10px;">
           Export 

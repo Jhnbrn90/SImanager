@@ -1,52 +1,70 @@
 <?php
 
+/**
+**************************
+* Application Web Routes
+**************************
+*/
+
 Auth::routes();
 
-Route::get('/', 'CompoundController@index');
+Route::get('/', 'HomepageController');
 
 Route::patch('/userlabel', 'UserController@updateLabel');
+ 
+/**
+ * Compounds 
+ */
+Route::group(['prefix' => 'compounds'], function() {
+    Route::get('/new', 'CompoundController@create');
+    Route::get('/import', 'CompoundController@import');
+    Route::post('/import', 'CompoundController@storeFromImport');
+    Route::put('/{compound}', 'CompoundController@updateAll');
+    Route::get('/{compound}/delete', 'CompoundController@confirmDelete');
+    Route::patch('/{compound}', 'CompoundController@update');
+});
 
-Route::get('/compounds/new', 'CompoundController@create');
-Route::get('/compounds/import', 'CompoundController@import');
-Route::post('/compounds/import', 'CompoundController@storeFromImport');
+Route::resource('compounds', 'CompoundController', 
+    ['only' => ['index', 'edit', 'show', 'store', 'destroy']]
+);
 
-Route::get('/compounds/{compound}/edit', 'CompoundController@edit');
-Route::get('/compounds/{compound}/delete', 'CompoundController@confirmDelete');
-Route::get('/compounds/{compound}', 'CompoundController@show');
-
-Route::put('/compounds/{compound}', 'CompoundController@updateAll');
-
-Route::post('/compounds', 'CompoundController@store');
-
-Route::patch('/compounds/{compound}', 'CompoundController@update');
-
-Route::delete('/compounds/{compound}', 'CompoundController@destroy');
-
+/**
+ * Supervisor-Student interaction routes 
+ */
 Route::get('/supervisor/add', 'SharingDataController@addSupervisor');
 Route::post('/supervisor', 'SharingDataController@store');
 Route::get('/students', 'SharingDataController@listStudents');
-
+// View compounds of students 
 Route::get('/students/view/data/{user}', 'CompoundController@studentIndex');
 
-Route::get('/projects', 'ProjectController@index');
-Route::post('/projects', 'ProjectController@store');
-Route::get('/projects/create', 'ProjectController@create');
-Route::get('/projects/{project}', 'ProjectController@show');
-Route::get('/projects/{project}/edit', 'ProjectController@edit');
-Route::patch('/projects/{project}', 'ProjectController@update');
-Route::get('/projects/{project}/delete', 'ProjectController@destroy');
+/**
+ * Projects
+ */
+Route::resource('projects', 'ProjectController');
 Route::get('/projects/{project}/export', 'ProjectController@export');
 
+/**
+ * Move Compounds between Projects
+ */
 Route::get('/project-compounds/{project}/edit', 'ProjectCompoundController@edit');
 Route::patch('/project-compounds/{project}', 'ProjectCompoundController@update');
 
+/**
+ * Move Projects between Controllers
+ */
 Route::get('/bundle-projects/{bundle}/edit', 'BundleProjectController@edit');
 Route::patch('/bundle-projects/{bundle}', 'BundleProjectController@update');
 
+/**
+ * Reactions
+ */
 Route::get('/reactions', 'ReactionController@index');
 Route::get('/reactions/new/{project}', 'ReactionController@store');
 Route::get('/reactions/{reaction}', 'ReactionController@show');
 Route::patch('/reactions/{reaction}', 'ReactionController@update');
 
+/**
+ * Bundles
+ */
 Route::get('/bundles/new', 'BundleController@create');
 Route::post('/bundles', 'BundleController@store');

@@ -14,18 +14,16 @@ class CompoundTest extends TestCase
     /** @test **/
    public function authenticated_users_can_list_their_compounds()
    {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
         $compound = create('App\Compound');
 
-        $this->get('/')->assertSee($compound->label);
+        $this->get('/compounds')->assertSee($compound->label);
    }
 
    /** @test **/
    public function unauthenticated_users_are_can_not_list_compounds_but_are_redirected_to_auth_page()
    {
-        $this->get('/')->assertRedirect('/login');
+        $this->get('/compounds')->assertRedirect('/login');
    }
 
    /** @test **/

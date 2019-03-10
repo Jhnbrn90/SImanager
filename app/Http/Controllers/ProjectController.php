@@ -86,12 +86,12 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
          if (Gate::denies('interact-with-project', $project)) {
-             return redirect('/');
+             return abort(403, 'You are not authorized to perform this action.');
          }
 
          // check if the project is empty 
          if ($project->compounds()->count() > 0) {
-            return redirect('/projects');
+            return abort(422, 'Only empty projects can be deleted.');
          }
 
          $project->delete();
