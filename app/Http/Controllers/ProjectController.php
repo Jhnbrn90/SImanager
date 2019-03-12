@@ -69,9 +69,9 @@ class ProjectController extends Controller
     {
         Gate::authorize('interact-with-project', $project); 
 
-        $project->name = $request->name;
-        $project->description = $request->description;
-        $project->save();
+        $request->validate(['name' => 'required']);
+
+        $project->update($request->only('name', 'description'));
 
         return redirect('/projects/'.$project->id);
     }

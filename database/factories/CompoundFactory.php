@@ -10,7 +10,7 @@ $factory->define(App\Compound::class, function (Faker $faker) {
         'project_id'            => function() use ($user) {
             return factory('App\Project')->create(['user_id' => $user->id])->id;
         },
-        'label'                 => 'jbn478',
+        'label'                 => $faker->word,
         'formula'               => 'C6H12O6',
         'molweight'             => 180.16,
         'exact_mass'            => 180.0634,

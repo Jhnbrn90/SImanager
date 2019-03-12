@@ -77,10 +77,25 @@ class ProjectTest extends TestCase
     }
 
     /** @test **/
-    public function a_project_knows_if_it_has_projects_associated()
+    public function a_project_can_get_all_of_its_compounds()
+    {
+        $project = ProjectFactory::create();
+
+        $compounds = create('App\Compound', ['project_id' => $project], 2);
+        $compoundFromDifferentProject = create('App\Compound');
+
+        $this->assertTrue($project->compounds->contains($compounds[0]));
+        $this->assertTrue($project->compounds->contains($compounds[1]));
+        
+        $this->assertFalse($project->compounds->contains($compoundFromDifferentProject));
+    }
+
+    /** @test **/
+    public function a_project_knows_if_it_has_compounds_in_it()
     {
         $project = ProjectFactory::withCompounds(2)->create();
 
         $this->assertFalse($project->isEmpty());
     }
+
 }

@@ -10,88 +10,79 @@ class CompoundTest extends TestCase
     use RefreshDatabase;
 
     /** @test **/
-   public function authenticated_users_can_list_their_compounds()
-   {
+    public function users_can_list_their_compounds()
+    {
         $this->signIn($user = create('App\User'));
         $compound = create('App\Compound', ['user_id' => $user->id]);
 
         $this->get('/compounds')->assertSee($compound->label);
-   }
+    }
 
-   /** @test **/
-   public function unauthenticated_users_are_can_not_list_compounds_but_are_redirected_to_auth_page()
-   {
+    /** @test **/
+    public function guests_can_not_view_compounds()
+    {
         $this->get('/compounds')->assertRedirect('/login');
-   }
+    }
 
-   /** @test **/
-   public function authenticated_users_can_view_a_single_compound()
-   {
-      $this->signIn($user = create('App\User'));
-      $compound = create('App\Compound', ['user_id' => $user->id]);
+    /** @test **/
+    public function authenticated_users_can_view_a_single_compound()
+    {
+        $this->signIn($user = create('App\User'));
+        $compound = create('App\Compound', ['user_id' => $user->id]);
 
-      $this->get($compound->path())
-        ->assertSee($compound->label);
-   }
+        $this->get($compound->path())
+          ->assertSee($compound->label);
+    }
 
-   /** @test **/
-   public function a_compound_returns_the_number_of_protons_in_its_formula_and_NMR_data()
-   {  
-      $compound = create('App\Compound', [
-        'formula'     => 'C18H21NO3',
-        'H_NMR_data'  => '1H NMR (600 MHz, CDCl3) δ 7.17 – 7.13 (m, 2H), 6.89 – 6.84 (m, 2H), 6.02 – 5.92 (m, 1H), 5.26 – 5.11 (m, 2H), 4.34 (dd, J = 98.0, 14.5 Hz, 2H), 3.81 (s, 3H), 3.25 – 3.15 (m, 2H), 2.55 (s, 3H), 2.01 (d, J = 9.6 Hz, 1H), 1.40 (s, 3H).'
-      ]);
+    /** @test **/
+    public function authenticated_users_can_delete_a_compound_they_own()
+    {
+        $this->signIn($user = create('App\User'));
+        $compound = create('App\Compound', ['user_id' => $user->id]);
 
-      $this->assertEquals(21, $compound->formulaProtons);
-      $this->assertEquals(21, $compound->nmrProtons);
-   }
+        $this->assertDatabaseHas('compounds', ['id' => $compound->id]);
 
-   /** @test **/
-   public function a_compound_can_check_the_integrity_of_its_proton_NMR_data()
-   {
-      $compound = create('App\Compound', [
-        'formula'     => 'C18H21NO3',
-        'H_NMR_data'  => '1H NMR (600 MHz, CDCl3) δ 7.17 – 7.13 (m, 2H), 6.89 – 6.84 (m, 2H), 6.02 – 5.92 (m, 1H), 5.26 – 5.11 (m, 2H), 4.34 (dd, J = 98.0, 14.5 Hz, 2H), 3.81 (s, 3H), 3.25 – 3.15 (m, 2H), 2.55 (s, 3H), 2.01 (d, J = 9.6 Hz, 1H), 1.40 (s, 3H).'
-      ]);
+        $this->delete("/compounds/{$compound->id}");
 
-      $incorrectCompound = create('App\Compound', [
-        'formula'     => 'C18H20NO3',
-        'H_NMR_data'  => '1H NMR (600 MHz, CDCl3) δ 7.17 – 7.13 (m, 2H), 6.89 – 6.84 (m, 2H), 6.02 – 5.92 (m, 1H), 5.26 – 5.11 (m, 2H), 4.34 (dd, J = 98.0, 14.5 Hz, 2H), 3.81 (s, 3H), 3.25 – 3.15 (m, 2H), 2.55 (s, 3H), 2.01 (d, J = 9.6 Hz, 1H), 1.40 (s, 3H).'
-      ]);
+        $this->assertDatabaseMissing('compounds', ['id' => $compound->id]);
+    }
 
-      $this->assertTrue($compound->checkProtonNMR());   
-      $this->assertFalse($incorrectCompound->checkProtonNMR());   
-   }
+    /** @test **/
+    public function unauthenticated_users_can_not_delete_compounds()
+    {
+        $compound = create('App\Compound');
 
-   /** @test **/
-   public function a_compound_returns_the_number_of_carbons_in_its_formula_and_NMR_data()
-   {  
-      $compound = create('App\Compound', [
-        'formula'     => 'C12H19BrO2',
-        'C_NMR_data'  => '13C NMR (126 MHz, CDCl3) δ 140.21, 137.13, 128.69, 110.30, 72.69, 68.99, 40.08, 36.65, 35.77, 25.44, 24.29, 24.22, 15.66.'
-      ]);
+        $this->delete("/compounds/{$compound->id}")
+          ->assertRedirect('/login');
+    }
 
-      $this->assertEquals(12, $compound->formulaCarbons);
-      $this->assertEquals(12, $compound->nmrCarbons);
-   }
+    /** @test **/
+    public function an_authenticated_user_can_view_a_single_compound()
+    {
+        $this->signIn($user = create('App\User'));
 
-      /** @test **/
-   public function a_compound_can_check_the_integrity_of_its_carbon_NMR_data()
-   {
-      $compound = create('App\Compound', [
-        'formula'     => 'C12H19BrO2',
-        'C_NMR_data'  => '13C NMR (126 MHz, CDCl3) δ 140.21, 137.13, 128.69, 110.30, 72.69, 68.99, 40.08, 36.65, 35.77, 25.44, 24.29, 24.22, 15.66.'
-      ]);
-      
-      $this->assertTrue($compound->checkCarbonNMR());   
-   }
+        $compound = create('App\Compound', ['user_id' => $user->id]);
 
-   /** @test **/
-   public function a_compound_belongs_to_a_project()
-   {
-      $project = create('App\Project', ['name' => 'Fake Project 007']);
-      $compound = create('App\Compound', ['project_id' => $project]);
+        $this->get($compound->path())->assertStatus(200)->assertSee($compound->label);
+    }
 
-      $this->assertEquals('Fake Project 007', $compound->project->name);
-   }
+    /** @test **/
+    public function guests_can_not_view_other_users_compounds()
+    {
+        $compound = create('App\Compound');
+        $this->get($compound->path())->assertRedirect('/login');
+    }
+
+    /** @test **/
+    public function a_user_can_only_view_his_own_compounds()
+    {
+        $john = create('App\User');
+        $bart = create('App\User');
+        
+        $compound = create('App\Compound', ['user_id' => $john]);
+        
+        $this->signIn($bart);
+
+        $this->get($compound->path())->assertStatus(403);
+    }
 }
