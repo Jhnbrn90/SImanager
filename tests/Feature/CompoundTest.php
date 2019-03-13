@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Facades\Tests\Setup\CompoundFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CompoundTest extends TestCase
@@ -32,6 +33,55 @@ class CompoundTest extends TestCase
 
         $this->get($compound->path())
           ->assertSee($compound->label);
+    }
+
+    /** @test **/
+    public function a_user_can_update_an_owned_compound()
+    {
+        $this->signIn($user = create('App\User'));
+
+        $compound = CompoundFactory::ownedBy($user)->create();
+        
+        $this->get("{$compound->path()}/edit")->assertStatus(200);
+
+        $attributes = [
+            'label'     =>  'FKN_label_1',
+            'notes'     =>  'Some fake notes.', 
+        ];
+
+        $this->put($compound->path(), $attributes);
+
+        $this->assertDatabaseHas('compounds', $attributes);
+    }
+
+    /** @test **/
+    public function a_user_can_only_update_his_own_compounds()
+    {
+        $john = create('App\User');
+        $frank = create('App\User');
+
+        $compound = CompoundFactory::ownedBy($john)->create();
+        
+        $this->actingAs($frank)->get("{$compound->path()}/edit")->assertStatus(403);
+
+        $attributes = [
+            'label'     =>  'FKN_label_1',
+            'notes'     =>  'Some fake notes.', 
+        ];
+
+        $this->actingAs($frank)->put($compound->path(), $attributes)->assertStatus(403);
+
+        $this->assertDatabaseMissing('compounds', $attributes);
+    }
+
+    /** @test **/
+    public function guests_can_not_update_compounds()
+    {
+        $compound = CompoundFactory::create();
+     
+        $this->get("{$compound->path()}/edit")->assertRedirect('/login');
+        $this->put($compound->path(), ['label' => 'fake label'])->assertRedirect('/login');
+        $this->assertDatabaseMissing('compounds', ['label' => 'fake label']);
     }
 
     /** @test **/

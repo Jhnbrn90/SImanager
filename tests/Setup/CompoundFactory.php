@@ -17,6 +17,8 @@ class CompoundFactory
     public function ownedBy($user)
     {
         $this->user = $user;
+
+        return $this;
     }
 
     public function inProject($project)
@@ -33,7 +35,7 @@ class CompoundFactory
         return $this;   
     }
 
-    public function create($attributes)
+    public function create($attributes = [])
     {
         $user = $this->user ?? factory(User::class)->create();
         $project = $this->project ?? factory(Project::class)->create();

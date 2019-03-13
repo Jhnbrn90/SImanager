@@ -7,7 +7,6 @@ use App\Project;
 use App\Compound;
 use App\DataImporter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class CompoundController extends Controller
 {
@@ -33,12 +32,13 @@ class CompoundController extends Controller
 
     public function edit(Compound $compound)
     {
+        $this->authorize('interact-with-compound', $compound);
         return view('compounds.edit', compact('compound'));
     }
 
     public function studentIndex(User $user, Request $request)
     {
-        Gate::authorize('access-compounds', $user);
+        $this->authorize('interact-with-compound', $compound);
 
         $orderByColumn = $this->orderByColumn($request);
         $orderByMethod = $this->orderByMethod($request);
@@ -53,7 +53,7 @@ class CompoundController extends Controller
 
     public function show(Compound $compound)
     {
-        Gate::authorize('interact-with-compound', $compound);
+        $this->authorize('interact-with-compound', $compound);
 
         return view('compounds.show', compact('compound'));    
     }
@@ -149,7 +149,7 @@ class CompoundController extends Controller
 
     public function update(Compound $compound, Request $request)
     {
-        Gate::authorize('interact-with-compound', $compound);
+        $this->authorize('interact-with-compound', $compound);
         
         $compound->update([$request->column => $request->value]);
         
@@ -158,10 +158,10 @@ class CompoundController extends Controller
 
     public function updateAll(Compound $compound, Request $request)
     {
-        Gate::authorize('interact-with-compound', $compound);
+        $this->authorize('interact-with-compound', $compound);
 
         $compound->label = $request->label;
-        $compound->project_id = $request->project;
+        $compound->project_id = $request->project ?? $compound->project_id;
         $compound->H_NMR_data = $request->H_NMR;
         $compound->C_NMR_data = $request->C_NMR;
         $compound->retention = $request->Rf;
@@ -194,7 +194,7 @@ class CompoundController extends Controller
 
     public function destroy(Compound $compound)
     {
-        Gate::authorize('interact-with-compound', $compound);
+        $this->authorize('interact-with-compound', $compound);
 
         $compound = Compound::findOrFail($compound)->first();
 
@@ -205,7 +205,7 @@ class CompoundController extends Controller
 
     public function confirmDelete(Compound $compound)
     {
-        Gate::authorize('interact-with-compound', $compound);
+        $this->authorize('interact-with-compound', $compound);
         
         return view('compounds.confirmdelete', compact('compound'));
     }
