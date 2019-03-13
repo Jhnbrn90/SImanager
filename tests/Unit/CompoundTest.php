@@ -3,25 +3,34 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Facades\Tests\Setup\CompoundFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CompoundTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $compound;
-
     public function setUp()
     {
         parent::setUp();
 
         $this->compound = create('App\Compound');
+        $this->structure = file_get_contents('tests/stubs/structure.php');
     }
 
     /** @test **/
     public function a_compound_has_a_creator()
     {
         $this->assertInstanceOf('App\User', $this->compound->creator);
+    }
+
+    /** @test **/
+    public function a_compound_belongs_to_a_project()
+    {
+       $project = create('App\Project', ['name' => 'Fake Project 007']);
+       $compound = create('App\Compound', ['project_id' => $project]);
+
+       $this->assertEquals('Fake Project 007', $compound->project->name);
     }
 
     /** @test **/
@@ -33,54 +42,50 @@ class CompoundTest extends TestCase
     }
 
     /** @test **/
-    public function a_molfile_is_created_when_a_new_compound_is_added_to_the_database()
-    {
-        $compound = create('App\Compound');
+    public function a_compound_can_prepare_its_molfile_and_svg_assets()
+    { 
+        $compound = CompoundFactory::withMolfile($this->structure)->create(['id' => 9999999]);
 
-        $structure = "C3H6O
-APtclcactv12201710073D 0   0.00000     0.00000
+        $compound->toMolfile();
+        $compound->toSVG();
 
- 10  9  0  0  0  0  0  0  0  0999 V2000
-    1.3051   -0.6772   -0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
-    0.0000    0.0763   -0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
-   -0.0000    1.2839    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
-   -1.3051   -0.6772    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
-    1.6198   -0.8588    1.0277 H   0  0  0  0  0  0  0  0  0  0  0  0
-    1.1748   -1.6296   -0.5138 H   0  0  0  0  0  0  0  0  0  0  0  0
-    2.0647   -0.0881   -0.5138 H   0  0  0  0  0  0  0  0  0  0  0  0
-   -1.1059   -1.7488   -0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
-   -1.8767   -0.4138    0.8900 H   0  0  0  0  0  0  0  0  0  0  0  0
-   -1.8767   -0.4138   -0.8900 H   0  0  0  0  0  0  0  0  0  0  0  0
-  1  2  1  0  0  0  0
-  2  3  2  0  0  0  0
-  2  4  1  0  0  0  0
-  1  5  1  0  0  0  0
-  1  6  1  0  0  0  0
-  1  7  1  0  0  0  0
-  4  8  1  0  0  0  0
-  4  9  1  0  0  0  0
-  4 10  1  0  0  0  0
-M  END
-$$$$
-";
+        $this->assertFileExists($pathToMolfile = storage_path() . "/app/public/molfiles/{$compound->id}.mol");
+        $this->assertFileExists($pathToSvg = storage_path() . "/app/public/svg/{$compound->id}.svg");
+        $this->assertContains("storage/svg/{$compound->id}.svg", $compound->SVGPath);
 
-        $compound->toMolfile($structure);
-
-        $this->assertFileExists(storage_path() . "/app/public/molfiles/{$compound->id}.mol");
+        unlink($pathToMolfile);
+        unlink($pathToSvg);
     }
 
     /** @test **/
-    public function an_svg_image_is_prepared_when_a_new_compound_is_added_to_the_database()
+    public function a_compound_returns_a_standard_svg_if_it_does_not_have_a_structure()
     {
-        $compound = create('App\Compound');
+        $compound = CompoundFactory::create(['id' => 9999999]);
+
+        $compound->toSVG();
+        $this->assertFileNotExists($pathToSvg = storage_path() . "/app/public/svg/{$compound->id}.svg");
+
+        $this->assertEquals("storage/svg/unknown.svg", $compound->SVGPath);
+    }
+
+    /** @test **/
+    public function in_lack_of_a_molfile_a_compound_will_create_a_molfile_from_its_structure()
+    {
+        $compound = CompoundFactory::withMolfile($this->structure)->create(['id' => 9999999]);
+
+        $this->assertFileNotExists($pathToMolfile = storage_path() . "/app/public/molfiles/{$compound->id}.mol");
 
         $compound->toSVG();
 
-        $this->assertFileExists(storage_path() . "/app/public/svg/{$compound->id}.svg");
+        $this->assertFileExists($pathToMolfile = storage_path() . "/app/public/molfiles/{$compound->id}.mol");
+        $this->assertFileExists($pathToSVG = storage_path() . "/app/public/svg/{$compound->id}.svg");
+
+        unlink($pathToMolfile);
+        unlink($pathToSVG);
     }
 
     /** @test **/
-    public function a_compound_returns_the_number_of_protons_in_its_formula_and_NMR_data()
+    public function a_compound_can_return_the_number_of_protons_in_its_formula_and_NMR_data()
     {  
        $compound = create('App\Compound', [
          'formula'     => 'C18H21NO3',
@@ -92,7 +97,7 @@ $$$$
     }
 
     /** @test **/
-    public function a_compound_can_check_the_integrity_of_its_proton_NMR_data()
+    public function a_compound_can_check_if_its_proton_NMR_data_matches_its_formula()
     {
        $compound = create('App\Compound', [
          'formula'     => 'C18H21NO3',
@@ -109,7 +114,7 @@ $$$$
     }
 
     /** @test **/
-    public function a_compound_returns_the_number_of_carbons_in_its_formula_and_NMR_data()
+    public function a_compound_can_return_the_number_of_carbons_in_its_formula_and_NMR_data()
     {  
        $compound = create('App\Compound', [
          'formula'     => 'C12H19BrO2',
@@ -121,7 +126,7 @@ $$$$
     }
 
        /** @test **/
-    public function a_compound_can_check_the_integrity_of_its_carbon_NMR_data()
+    public function a_compound_can_check_if_its_carbon_NMR_data_matches_its_formula()
     {
        $compound = create('App\Compound', [
          'formula'     => 'C12H19BrO2',
@@ -129,14 +134,5 @@ $$$$
        ]);
        
        $this->assertTrue($compound->checkCarbonNMR());   
-    }
-
-    /** @test **/
-    public function a_compound_belongs_to_a_project()
-    {
-       $project = create('App\Project', ['name' => 'Fake Project 007']);
-       $compound = create('App\Compound', ['project_id' => $project]);
-
-       $this->assertEquals('Fake Project 007', $compound->project->name);
     }
 }

@@ -48,7 +48,7 @@ class Compound extends Model
 
     public function getSVGPathAttribute()
     {
-        if (!$this->molfile) {
+        if (! $this->molfile) {
             return "storage/svg/unknown.svg";
         }
         
@@ -58,12 +58,8 @@ class Compound extends Model
     public function toMolfile()
     {
         if($this->molfile[0] == " " || $this->molfile[0] == "J") {
-            // if the first character of the first line is a space or J (from JSDRAW)
-            // then insert a newline
-            
-            Storage::put("public/molfiles/{$this->id}.mol", "\r\n" . $this->molfile);
-            
-            return $this;
+            // insert newline if the first character of the first line is a space or J (from JSDRAW)
+            $this->molfile = "\r\n" . $this->molfile;
         }
 
         Storage::put("public/molfiles/{$this->id}.mol", $this->molfile);
@@ -73,6 +69,18 @@ class Compound extends Model
 
     public function toSVG()
     {
+        if (! $this->molfile) {
+            return;
+        }
+
+        if (! file_exists(storage_path() . "/app/public/molfiles/{$this->id}.mol")) {
+            $this->toMolfile();
+            
+            if (! file_exists(storage_path() . "/app/public/molfiles/{$this->id}.mol")) {
+                throw new \Exception('Error creating the molfile for this structure.');
+            }
+        }
+
         $mol2svg_path = "/usr/local/bin/mol2svg";
         $options = "--bgcolor=white" . " " . "--color=colors.conf";
 
