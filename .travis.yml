@@ -6,6 +6,7 @@ php:
   - 7.3
 
 before_script:
+  - php artisan key:generate
   - travis_retry composer update
 
 script:
