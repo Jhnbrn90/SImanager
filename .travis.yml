@@ -9,6 +9,8 @@ before_script:
   - travis_retry composer update
   - cp .env.example .env
   - php artisan key:generate
+  - mkdir storage/app/public/molfiles
+  - mkdir storage/app/public/svg
 
 script:
   - vendor/bin/phpunit
