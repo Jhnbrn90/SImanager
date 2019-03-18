@@ -108,4 +108,13 @@ class ReactionTest extends TestCase
         
         $this->assertEquals('JBN_2b', $reaction->nextProductLabel());
     }
+
+    /** @test **/
+    public function a_new_reaction_increments_the_label_code()
+    {
+        $user = create('App\User', ['prefix' => 'JBN']);
+        $reaction = create('App\Reaction', ['user_id' => $user->id]);
+
+        $this->assertEquals('JBN_2', $user->newReactionLabel);
+    }
 }

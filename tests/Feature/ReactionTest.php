@@ -6,12 +6,12 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddReactionTest extends TestCase
+class ReactionTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test **/
-    public function an_authenticated_user_can_start_a_new_reaction()
+    public function an_authenticated_user_can_add_a_new_reaction()
     {
         $user = create('App\User');
         $project = create('App\Project', ['user_id' => $user->id]);
