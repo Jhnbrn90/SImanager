@@ -33,6 +33,7 @@ class CompoundController extends Controller
     public function edit(Compound $compound)
     {
         $this->authorize('interact-with-compound', $compound);
+        
         return view('compounds.edit', compact('compound'));
     }
 
@@ -70,24 +71,28 @@ class CompoundController extends Controller
 
     public function store(Request $request)
     {
-        $project = Project::findOrFail($request->project);
+        $project = Project::findOrFail($request->project_id);
+
+        if (! auth()->user()->is($project->user)) {
+            return abort(403);
+        }
 
         $compound = Compound::create([
             'user_id'               => $project->user->id,
             'project_id'            => $project->id,
             'label'                 => $request->label ?? '(unkown)',
-            'H_NMR_data'            => $request->H_NMR,
-            'C_NMR_data'            => $request->C_NMR,
-            'retention'             => $request->Rf,
-            'melting_point'         => $request->MP,
-            'infrared'              => $request->IR,
-            'mass_adduct'           => $request->mass_ion,
-            'mass_measured'         => $request->mass_found,
+            'H_NMR_data'            => $request->H_NMR_data,
+            'C_NMR_data'            => $request->C_NMR_data,
+            'retention'             => $request->retention,
+            'melting_point'         => $request->melting_point,
+            'infrared'              => $request->infrared,
+            'mass_adduct'           => $request->mass_adduct,
+            'mass_measured'         => $request->mass_measured,
             'mass_calculated'       => $request->mass_calculated,
-            'alpha_sign'            => $request->rotation_sign,
-            'alpha_value'           => $request->rotation_value,
-            'alpha_concentration'   => $request->rotation_concentration,
-            'alpha_solvent'         => $request->rotation_solvent,
+            'alpha_sign'            => $request->alpha_sign,
+            'alpha_value'           => $request->alpha_value,
+            'alpha_concentration'   => $request->alpha_concentration,
+            'alpha_solvent'         => $request->alpha_solvent,
             'notes'                 => $request->notes,
             'molfile'               => $request->molfile,
             'molweight'             => $request->molweight,
@@ -161,19 +166,19 @@ class CompoundController extends Controller
         $this->authorize('interact-with-compound', $compound);
 
         $compound->label = $request->label;
-        $compound->project_id = $request->project ?? $compound->project_id;
-        $compound->H_NMR_data = $request->H_NMR;
-        $compound->C_NMR_data = $request->C_NMR;
-        $compound->retention = $request->Rf;
-        $compound->melting_point = $request->MP;
-        $compound->infrared = $request->IR;
-        $compound->mass_measured = $request->mass_found;
+        $compound->project_id = $request->project_id ?? $compound->project_id;
+        $compound->H_NMR_data = $request->H_NMR_data;
+        $compound->C_NMR_data = $request->C_NMR_data;
+        $compound->retention = $request->retention;
+        $compound->melting_point = $request->melting_point;
+        $compound->infrared = $request->infrared;
+        $compound->mass_measured = $request->mass_measured;
         $compound->mass_calculated = $request->mass_calculated;
-        $compound->mass_adduct = $request->mass_ion;
-        $compound->alpha_sign = $request->rotation_sign;
-        $compound->alpha_value = $request->rotation_value;
-        $compound->alpha_concentration = $request->rotation_concentration;
-        $compound->alpha_solvent = $request->rotation_solvent;
+        $compound->mass_adduct = $request->mass_adduct;
+        $compound->alpha_sign = $request->alpha_sign;
+        $compound->alpha_value = $request->alpha_value;
+        $compound->alpha_concentration = $request->alpha_concentration;
+        $compound->alpha_solvent = $request->alpha_solvent;
         $compound->notes = $request->notes;
 
         if ($request->user_updated_molfile == 'true') {
@@ -200,7 +205,7 @@ class CompoundController extends Controller
 
         $compound->delete();
 
-        return redirect('/');
+        return redirect('/compounds');
     }
 
     public function confirmDelete(Compound $compound)

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group">
-          <label for="mass_ion" class="col-sm-2 control-label">HRMS Data</label>
+          <label for="mass_adduct" class="col-sm-2 control-label">HRMS Data</label>
 
           <span class="col-sm-8" v-if="markedUnobtainable">
             Marked as unobtainable.
@@ -9,14 +9,14 @@
           </span>
           
           <div v-if="markedUnobtainable">
-            <input type="hidden" name="mass_ion" value="@" >
+            <input type="hidden" name="mass_adduct" value="@" >
             <input type="hidden" name="mass_calculated" value="@">
-            <input type="hidden" name="mass_found" value="@">
+            <input type="hidden" name="mass_measured" value="@">
           </div>
 
           <div v-if="!markedUnobtainable">
               <div class="col-sm-1">
-                  <select name="mass_ion" ref="ion" id="mass_ion" v-model="massAdduct" class="form-control">
+                  <select name="mass_adduct" ref="ion" id="mass_adduct" v-model="massAdduct" class="form-control">
                       <option value="H+">H+</option>
                       <option value="Na+">Na+</option>
                       <option value="H-">Negative mode (H-)</option>
@@ -33,7 +33,7 @@
               <div class="col-sm-3">
                   <div class="input-group">
                       <div class="input-group-addon">found:</div>
-                      <input type="text" class="form-control" id="mass_found" name="mass_found" v-model="massMeasured" placeholder="221.0291">
+                      <input type="text" class="form-control" id="mass_measured" name="mass_measured" v-model="massMeasured" placeholder="221.0291">
                   </div>
               </div>
               <button class="btn btn-link" @click.prevent="massAdduct = '@'"> Mark as unobtainable </button>

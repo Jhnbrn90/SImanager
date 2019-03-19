@@ -43314,7 +43314,10 @@ var render = function() {
   return _c("div", { staticClass: "form-group" }, [
     _c(
       "label",
-      { staticClass: "col-sm-2 control-label", attrs: { for: "MP" } },
+      {
+        staticClass: "col-sm-2 control-label",
+        attrs: { for: "melting_point" }
+      },
       [_vm._v("Melting Point (° C.)")]
     ),
     _vm._v(" "),
@@ -43326,8 +43329,8 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                id: "MP",
-                name: "MP",
+                id: "melting_point",
+                name: "melting_point",
                 placeholder: "102 - 108"
               }
             }),
@@ -43385,7 +43388,12 @@ var render = function() {
       _vm.markUnobtainable
         ? _c("div", [
             _c("input", {
-              attrs: { type: "hidden", id: "MP", name: "MP", value: "@" }
+              attrs: {
+                type: "hidden",
+                id: "MP",
+                name: "melting_point",
+                value: "@"
+              }
             }),
             _vm._v(" "),
             _c("input", {
@@ -43575,7 +43583,7 @@ var render = function() {
               "label",
               {
                 staticClass: "col-sm-2 control-label",
-                attrs: { for: "mass_ion" }
+                attrs: { for: "mass_adduct" }
               },
               [_vm._v("Mass Ion")]
             ),
@@ -43586,7 +43594,7 @@ var render = function() {
                 {
                   ref: "ion",
                   staticClass: "form-control",
-                  attrs: { name: "mass_ion", id: "mass_ion" }
+                  attrs: { name: "mass_adduct", id: "mass_adduct" }
                 },
                 [
                   _c("option", { attrs: { value: "H+" } }, [_vm._v("H+")]),
@@ -43691,7 +43699,7 @@ var render = function() {
                 attrs: {
                   type: "hidden",
                   id: "mass_ion",
-                  name: "mass_ion",
+                  name: "mass_adduct",
                   value: "@"
                 }
               }),
@@ -43700,7 +43708,7 @@ var render = function() {
                 attrs: {
                   type: "hidden",
                   id: "mass_found",
-                  name: "mass_found",
+                  name: "mass_measured",
                   value: "@"
                 }
               }),
@@ -43777,8 +43785,8 @@ var staticRenderFns = [
           staticClass: "form-control",
           attrs: {
             type: "text",
-            id: "mass_found",
-            name: "mass_found",
+            id: "mass_measured",
+            name: "mass_measured",
             placeholder: "221.0291"
           }
         })
@@ -44013,8 +44021,8 @@ var render = function() {
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "rotation_sign",
-                  name: "rotation_sign",
+                  id: "alpha_sign",
+                  name: "alpha_sign",
                   value: "@"
                 }
               }),
@@ -44022,8 +44030,8 @@ var render = function() {
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "rotation_value",
-                  name: "rotation_value",
+                  id: "alpha_value",
+                  name: "alpha_value",
                   value: "@"
                 }
               }),
@@ -44031,8 +44039,8 @@ var render = function() {
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "rotation_concentration",
-                  name: "rotation_concentration",
+                  id: "alpha_concentration",
+                  name: "alpha_concentration",
                   value: "@"
                 }
               }),
@@ -44040,8 +44048,8 @@ var render = function() {
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "rotation_solvent",
-                  name: "rotation_solvent",
+                  id: "alpha_solvent",
+                  name: "alpha_solvent",
                   value: "@"
                 }
               }),
@@ -44082,10 +44090,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "form-group" }, [
       _c(
         "label",
-        {
-          staticClass: "col-sm-2 control-label",
-          attrs: { for: "rotation_sign" }
-        },
+        { staticClass: "col-sm-2 control-label", attrs: { for: "alpha_sign" } },
         [_vm._v("Specific Rotation")]
       ),
       _vm._v(" "),
@@ -44094,7 +44099,7 @@ var staticRenderFns = [
           "select",
           {
             staticClass: "form-control",
-            attrs: { name: "rotation_sign", id: "rotation_sign" }
+            attrs: { name: "alpha_sign", id: "alpha_sign" }
           },
           [
             _c("option", { attrs: { value: "+" } }, [_vm._v("+")]),
@@ -44115,11 +44120,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("input", {
             staticClass: "form-control",
-            attrs: {
-              type: "text",
-              name: "rotation_value",
-              placeholder: "19.65"
-            }
+            attrs: { type: "text", name: "alpha_value", placeholder: "19.65" }
           })
         ])
       ]),
@@ -44132,7 +44133,7 @@ var staticRenderFns = [
             staticClass: "form-control",
             attrs: {
               type: "text",
-              name: "rotation_concentration",
+              name: "alpha_concentration",
               placeholder: "1.05"
             }
           })
@@ -44148,7 +44149,7 @@ var staticRenderFns = [
             attrs: {
               type: "text",
               id: "rotation_solvent",
-              name: "rotation_solvent",
+              name: "alpha_solvent",
               placeholder: "CHCl3"
             }
           })
@@ -45884,7 +45885,10 @@ var render = function() {
   return _c("div", { staticClass: "form-group" }, [
     _c(
       "label",
-      { staticClass: "col-sm-2 control-label", attrs: { for: "MP" } },
+      {
+        staticClass: "col-sm-2 control-label",
+        attrs: { for: "melting_point" }
+      },
       [_vm._v("Melting Point (° C.)")]
     ),
     _vm._v(" "),
@@ -45923,8 +45927,8 @@ var render = function() {
             staticClass: "form-control",
             attrs: {
               type: "hidden",
-              id: "MP",
-              name: "MP",
+              id: "melting_point",
+              name: "melting_point",
               placeholder: "102 - 108"
             },
             domProps: { value: _vm.meltingPoint },
@@ -45953,8 +45957,8 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                id: "MP",
-                name: "MP",
+                id: "melting_point",
+                name: "melting_point",
                 placeholder: "102 - 108"
               },
               domProps: { value: _vm.meltingPoint },
@@ -46127,7 +46131,10 @@ var render = function() {
     _c("div", { staticClass: "form-group" }, [
       _c(
         "label",
-        { staticClass: "col-sm-2 control-label", attrs: { for: "mass_ion" } },
+        {
+          staticClass: "col-sm-2 control-label",
+          attrs: { for: "mass_adduct" }
+        },
         [_vm._v("HRMS Data")]
       ),
       _vm._v(" "),
@@ -46153,7 +46160,7 @@ var render = function() {
       _vm.markedUnobtainable
         ? _c("div", [
             _c("input", {
-              attrs: { type: "hidden", name: "mass_ion", value: "@" }
+              attrs: { type: "hidden", name: "mass_adduct", value: "@" }
             }),
             _vm._v(" "),
             _c("input", {
@@ -46161,7 +46168,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("input", {
-              attrs: { type: "hidden", name: "mass_found", value: "@" }
+              attrs: { type: "hidden", name: "mass_measured", value: "@" }
             })
           ])
         : _vm._e(),
@@ -46182,7 +46189,7 @@ var render = function() {
                   ],
                   ref: "ion",
                   staticClass: "form-control",
-                  attrs: { name: "mass_ion", id: "mass_ion" },
+                  attrs: { name: "mass_adduct", id: "mass_adduct" },
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
@@ -46264,8 +46271,8 @@ var render = function() {
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
-                    id: "mass_found",
-                    name: "mass_found",
+                    id: "mass_measured",
+                    name: "mass_measured",
                     placeholder: "221.0291"
                   },
                   domProps: { value: _vm.massMeasured },
@@ -46452,7 +46459,7 @@ var render = function() {
             "label",
             {
               staticClass: "col-sm-2 control-label",
-              attrs: { for: "rotation_sign" }
+              attrs: { for: "alpha_sign" }
             },
             [_vm._v("Specific Rotation")]
           ),
@@ -46479,23 +46486,19 @@ var render = function() {
     _vm.markedUnobtainable
       ? _c("div", [
           _c("input", {
-            attrs: { type: "hidden", name: "rotation_sign", value: "@" }
+            attrs: { type: "hidden", name: "alpha_sign", value: "@" }
           }),
           _vm._v(" "),
           _c("input", {
-            attrs: { type: "hidden", name: "rotation_value", value: "@" }
+            attrs: { type: "hidden", name: "alpha_value", value: "@" }
           }),
           _vm._v(" "),
           _c("input", {
-            attrs: { type: "hidden", name: "rotation_solvent", value: "@" }
+            attrs: { type: "hidden", name: "alpha_solvent", value: "@" }
           }),
           _vm._v(" "),
           _c("input", {
-            attrs: {
-              type: "hidden",
-              name: "rotation_concentration",
-              value: "@"
-            }
+            attrs: { type: "hidden", name: "alpha_concentration", value: "@" }
           })
         ])
       : _vm._e(),
@@ -46506,7 +46509,7 @@ var render = function() {
             "label",
             {
               staticClass: "col-sm-2 control-label",
-              attrs: { for: "rotation_sign" }
+              attrs: { for: "alpha_sign" }
             },
             [_vm._v("Specific Rotation")]
           ),
@@ -46524,7 +46527,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { name: "rotation_sign", id: "rotation_sign" },
+                attrs: { name: "alpha_sign", id: "alpha_sign" },
                 on: {
                   change: function($event) {
                     var $$selectedVal = Array.prototype.filter
@@ -46565,7 +46568,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
-                  name: "rotation_value",
+                  name: "alpha_value",
                   placeholder: "19.65"
                 },
                 domProps: { value: _vm.alphaValue },
@@ -46599,7 +46602,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
-                  name: "rotation_concentration",
+                  name: "alpha_concentration",
                   placeholder: "1.05"
                 },
                 domProps: { value: _vm.alphaConcentration },
@@ -46633,8 +46636,8 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
-                  id: "rotation_solvent",
-                  name: "rotation_solvent",
+                  id: "alpha_solvent",
+                  name: "alpha_solvent",
                   placeholder: "CHCl3"
                 },
                 domProps: { value: _vm.alphaSolvent },

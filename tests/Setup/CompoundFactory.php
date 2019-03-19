@@ -38,11 +38,11 @@ class CompoundFactory
     public function create($attributes = [])
     {
         $user = $this->user ?? factory(User::class)->create();
-        $project = $this->project ?? factory(Project::class)->create();
+        $project = $this->project ?? factory(Project::class)->create(['user_id' => $user->id]);
         $molfile = $this->molfile;
 
         $compound = factory(Compound::class)->create(array_merge($attributes, [
-            'user_id'       => $user->id,
+            'user_id'       => $project->user->id,
             'project_id'    => $project->id,
             'molfile'       => $molfile,
         ]));

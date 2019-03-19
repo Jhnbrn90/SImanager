@@ -1,15 +1,15 @@
 <template>
     
     <div class="form-group">
-      <label for="MP" class="col-sm-2 control-label">Melting Point (&deg; C.)</label>
+      <label for="melting_point" class="col-sm-2 control-label">Melting Point (&deg; C.)</label>
       <div class="col-sm-10">
         <div v-if="showMP">
           <input
             ref="MP" 
             type="text" 
             class="form-control" 
-            id="MP" 
-            name="MP" 
+            id="melting_point" 
+            name="melting_point" 
             placeholder="102 - 108"  
             >
             <a href="#" @click.prevent="showMP = false">undo</a>
@@ -25,7 +25,7 @@
             </div>
 
             <div v-if="markUnobtainable">
-                <input type="hidden" id="MP" name="MP" value="@">
+                <input type="hidden" id="MP" name="melting_point" value="@">
                 <input type="text" class="form-control" placeholder="Unobtainable" disabled>
                 <a href="#" @click.prevent="markUnobtainable = false">undo</a>
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <label for="MP" class="col-sm-2 control-label">Melting Point (&deg; C.)</label>
+        <label for="melting_point" class="col-sm-2 control-label">Melting Point (&deg; C.)</label>
         <div class="col-sm-10">
                 
                 <span v-if="markedUnobtainable">
@@ -8,10 +8,10 @@
                     <button class="btn btn-link" @click.prevent="meltingPoint = null"> Undo? </button>
                 </span>
 
-                <input v-if="markedUnobtainable" type="hidden" class="form-control" id="MP" name="MP" placeholder="102 - 108" v-model="meltingPoint">
+                <input v-if="markedUnobtainable" type="hidden" class="form-control" id="melting_point" name="melting_point" placeholder="102 - 108" v-model="meltingPoint">
                 
                 <div v-if="!markedUnobtainable">
-                    <input type="text" class="form-control" id="MP" name="MP" placeholder="102 - 108" v-model="meltingPoint">
+                    <input type="text" class="form-control" id="melting_point" name="melting_point" placeholder="102 - 108" v-model="meltingPoint">
                     <button class="btn btn-link" @click.prevent="meltingPoint = '@'"> Mark as unobtainable </button>
                 </div>
         </div>

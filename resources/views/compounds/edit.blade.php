@@ -58,7 +58,7 @@
               <div class="form-group">
                 <label for="label" class="col-sm-2 control-label">Project</label>
                 <div class="col-sm-10">
-                  <select name="project" class="form-control">
+                  <select name="project_id" class="form-control">
                     @foreach (Auth::user()->projects as $project)
                         <option value="{{ $project->id }}" {{ $compound->project->id == $project->id ? 'selected' : '' }}> {{ $project->name }}</option>
                     @endforeach
@@ -74,30 +74,30 @@
               </div>
 
               <div class="form-group">
-                <label for="Rf" class="col-sm-2 control-label">Rf</label>
+                <label for="retention" class="col-sm-2 control-label">Rf</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="Rf" name="Rf" placeholder="0.30 (EtOAc / cHex = 1:1)" tabindex="2" value="{{ $compound->retention }}">
+                  <input type="text" class="form-control" id="retention" name="retention" placeholder="0.30 (EtOAc / cHex = 1:1)" tabindex="2" value="{{ $compound->retention }}">
                 </div>
               </div>
               
               <div class="form-group">
-                <label for="H_NMR" class="col-sm-2 control-label"><sup>1</sup>H NMR</label>
+                <label for="H_NMR_data" class="col-sm-2 control-label"><sup>1</sup>H NMR</label>
                 <div class="col-sm-10">
-                  <textarea name="H_NMR" id="H_NMR" class="form-control" rows="1" placeholder="1H NMR (600 MHz, CDCl3) &delta; 5.34 (d, J = 8.1 Hz, 1H), 4.86 (q, J = 7.5 Hz, 1H), 4.17 (dd, J = 68.7, 13.7 Hz, 2H), 4.06 (t, J = 7.0 Hz, 1H), 3.53 (t, J = 8.0 Hz, 1H), 1.84 (s, 3H), 1.67 – 1.33 (m, 10H)." tabindex="5">{{ $compound->H_NMR_data }}</textarea>
+                  <textarea name="H_NMR_data" id="H_NMR_data" class="form-control" rows="1" placeholder="1H NMR (600 MHz, CDCl3) &delta; 5.34 (d, J = 8.1 Hz, 1H), 4.86 (q, J = 7.5 Hz, 1H), 4.17 (dd, J = 68.7, 13.7 Hz, 2H), 4.06 (t, J = 7.0 Hz, 1H), 3.53 (t, J = 8.0 Hz, 1H), 1.84 (s, 3H), 1.67 – 1.33 (m, 10H)." tabindex="5">{{ $compound->H_NMR_data }}</textarea>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="C_NMR" class="col-sm-2 control-label"><sup>13</sup>C NMR</label>
+                <label for="C_NMR_data" class="col-sm-2 control-label"><sup>13</sup>C NMR</label>
                 <div class="col-sm-10">
-                  <textarea name="C_NMR" id="C_NMR" class="form-control" rows="1" placeholder="13C NMR (151 MHz, CDCl3) &delta; 141.38, 125.49, 109.94, 71.84, 69.52, 62.18, 36.54, 35.62, 25.24, 24.12, 24.05, 21.88." tabindex="5">{{ $compound->C_NMR_data }}</textarea>
+                  <textarea name="C_NMR_data" id="C_NMR_data" class="form-control" rows="1" placeholder="13C NMR (151 MHz, CDCl3) &delta; 141.38, 125.49, 109.94, 71.84, 69.52, 62.18, 36.54, 35.62, 25.24, 24.12, 24.05, 21.88." tabindex="5">{{ $compound->C_NMR_data }}</textarea>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="IR" class="col-sm-2 control-label">IR</label>
+                <label for="infrared" class="col-sm-2 control-label">IR</label>
                 <div class="col-sm-10">
-                  <textarea name="IR" id="IR" class="form-control" rows="1" placeholder="3500, 2200, 1750, 1300, 1100, 900" tabindex="5">{{ $compound->infrared }}</textarea>
+                  <textarea name="infrared" id="infrared" class="form-control" rows="1" placeholder="3500, 2200, 1750, 1300, 1100, 900" tabindex="5">{{ $compound->infrared }}</textarea>
                 </div>
               </div>
 

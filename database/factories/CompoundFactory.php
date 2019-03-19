@@ -1,14 +1,16 @@
 <?php
 
+use App\Project;
+use App\Compound;
 use Faker\Generator as Faker;
 
-$factory->define(App\Compound::class, function (Faker $faker) {
-    $user = auth()->user() ?? factory('App\User')->create();
+$factory->define(Compound::class, function (Faker $faker) {
+    $user = auth()->user() ?: factory('App\User')->create();
 
     return [
         'user_id'               => $user->id, 
         'project_id'            => function() use ($user) {
-            return factory('App\Project')->create(['user_id' => $user->id])->id;
+            return factory(Project::class)->create(['user_id' => $user->id])->id;
         },
         'label'                 => $faker->word,
         'formula'               => 'C6H12O6',

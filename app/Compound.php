@@ -46,6 +46,15 @@ class Compound extends Model
         return storage_path() . "/app/public/svg/{$this->id}.svg";
     }
 
+    public function svgPath()
+    {
+        if (! $this->molfile) {
+         return "storage/svg/unknown.svg";
+        }
+
+        return "storage/svg/{$this->id}.svg?".time();   
+    }
+
     public function getSVGPathAttribute()
     {
         if (! $this->molfile) {

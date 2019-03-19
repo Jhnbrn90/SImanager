@@ -2,9 +2,9 @@
     <div>
         <div v-if="showAlphaD">
             <div class="form-group">
-              <label for="rotation_sign" class="col-sm-2 control-label">Specific Rotation</label>
+              <label for="alpha_sign" class="col-sm-2 control-label">Specific Rotation</label>
               <div class="col-sm-1">
-                  <select name="rotation_sign" id="rotation_sign" class="form-control">
+                  <select name="alpha_sign" id="alpha_sign" class="form-control">
                     <option value="+">&plus;</option>
                     <option value="-">&minus;</option>
                   </select>
@@ -13,21 +13,21 @@
               <div class="col-sm-2">
                   <div class="input-group">
                       <div class="input-group-addon">[&alpha;]<sup>20</sup><sub>D</sub> = </div>
-                      <input type="text" class="form-control" name="rotation_value" placeholder="19.65">
+                      <input type="text" class="form-control" name="alpha_value" placeholder="19.65">
                   </div>
               </div>
 
               <div class="col-sm-2">
                   <div class="input-group">
                       <div class="input-group-addon">conc. = </div>
-                      <input type="text" class="form-control" name="rotation_concentration" placeholder="1.05">
+                      <input type="text" class="form-control" name="alpha_concentration" placeholder="1.05">
                   </div>
               </div>
 
               <div class="col-sm-3">
                   <div class="input-group">
                       <div class="input-group-addon">solvent</div>
-                      <input type="text" class="form-control" id="rotation_solvent" name="rotation_solvent" placeholder="CHCl3">
+                      <input type="text" class="form-control" id="rotation_solvent" name="alpha_solvent" placeholder="CHCl3">
                   </div>
               </div>
             </div>
@@ -54,10 +54,10 @@
           <div class="form-group">
                 <label class="col-sm-2 control-label">Specific Rotation</label>
                 <div class="col-sm-10">
-                    <input type="hidden" id="rotation_sign" name="rotation_sign" value="@">
-                    <input type="hidden" id="rotation_value" name="rotation_value" value="@">
-                    <input type="hidden" id="rotation_concentration" name="rotation_concentration" value="@">
-                    <input type="hidden" id="rotation_solvent" name="rotation_solvent" value="@">
+                    <input type="hidden" id="alpha_sign" name="alpha_sign" value="@">
+                    <input type="hidden" id="alpha_value" name="alpha_value" value="@">
+                    <input type="hidden" id="alpha_concentration" name="alpha_concentration" value="@">
+                    <input type="hidden" id="alpha_solvent" name="alpha_solvent" value="@">
                     <input type="text" class="form-control" placeholder="Unobtainable" disabled>
                     <a href="#" @click.prevent="markUnobtainable = false">undo</a>
                 </div>

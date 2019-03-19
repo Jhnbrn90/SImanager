@@ -3,9 +3,9 @@
         <div v-if="showHRMS" tabindex="7">
 
           <div class="form-group">
-            <label for="mass_ion" class="col-sm-2 control-label">Mass Ion</label>
+            <label for="mass_adduct" class="col-sm-2 control-label">Mass Ion</label>
             <div class="col-sm-1">
-                <select name="mass_ion" ref="ion" id="mass_ion" class="form-control">
+                <select name="mass_adduct" ref="ion" id="mass_adduct" class="form-control">
                     <option value="H+">H+</option>
                     <option value="Na+">Na+</option>
                     <option value="H-">Negative mode (H-)</option>
@@ -22,7 +22,7 @@
             <div class="col-sm-3">
                 <div class="input-group">
                     <div class="input-group-addon">found:</div>
-                    <input type="text" class="form-control" id="mass_found" name="mass_found" placeholder="221.0291">
+                    <input type="text" class="form-control" id="mass_measured" name="mass_measured" placeholder="221.0291">
                 </div>
             </div>
           </div>
@@ -49,8 +49,8 @@
             <div class="form-group">
                 <label for="mass_calculated" class="col-sm-2 control-label">HRMS data</label>
                 <div class="col-sm-10">
-                    <input type="hidden" id="mass_ion" name="mass_ion" value="@">
-                    <input type="hidden" id="mass_found" name="mass_found" value="@">
+                    <input type="hidden" id="mass_ion" name="mass_adduct" value="@">
+                    <input type="hidden" id="mass_found" name="mass_measured" value="@">
                     <input type="hidden" id="mass_calculated" name="mass_calculated" value="@">
                     <input type="text" class="form-control" placeholder="Unobtainable" disabled>
                     <a href="#" @click.prevent="markUnobtainable = false">undo</a>
