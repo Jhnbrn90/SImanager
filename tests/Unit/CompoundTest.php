@@ -135,4 +135,66 @@ class CompoundTest extends TestCase
        
        $this->assertTrue($compound->checkCarbonNMR());   
     }
+
+    /** @test **/
+    public function a_compound_can_format_its_formula()
+    {
+       $compound = factory('App\Compound')->create(['formula' => 'C2H6O']);
+       $this->assertEquals('C<sub>2</sub>H<sub>6</sub>O', $compound->formattedFormula);
+
+       $compound = factory('App\Compound')->create(['formula' => 'CHCl3']);
+       $this->assertEquals('CHCl<sub>3</sub>', $compound->formattedFormula);   
+    }
+
+    /** @test **/
+    public function a_compound_can_format_the_molecular_formula_for_the_rotation_solvent()
+    {
+        $compound = factory('App\Compound')->create(['alpha_solvent' => 'C2H6O']);
+        $this->assertEquals('C<sub>2</sub>H<sub>6</sub>O', $compound->formattedAlphaSolvent());
+
+        $compound = factory('App\Compound')->create(['alpha_solvent' => 'CHCl3']);
+        $this->assertEquals('CHCl<sub>3</sub>', $compound->formattedAlphaSolvent());
+    }
+
+    /** @test **/
+    public function a_compound_can_format_its_formula_with_sodium_mass_adduct()
+    {
+        $compound = factory('App\Compound')->create([
+          'mass_adduct' => 'Na+',
+          'formula' => 'C6H12O6',
+        ]);
+
+        $this->assertEquals(
+          'C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>Na [M+Na]<sup>+</sup>', 
+          $compound->formattedFormulaForHRMS()
+        );
+    }
+
+    /** @test **/
+    public function a_compound_can_format_its_formula_with_proton_mass_adduct()
+    {
+        $compound = factory('App\Compound')->create([
+          'mass_adduct' => 'H+',
+          'formula' => 'C6H12O6',
+        ]);
+
+        $this->assertEquals(
+          'C<sub>6</sub>H<sub>13</sub>O<sub>6</sub> [M+H]<sup>+</sup>', 
+          $compound->formattedFormulaForHRMS()
+        );
+    }
+
+    /** @test **/
+    public function a_compound_can_format_its_formula_with_hydride_mass_adduct()
+    {
+        $compound = factory('App\Compound')->create([
+          'mass_adduct' => 'H-',
+          'formula' => 'C6H12O6',
+        ]);
+
+        $this->assertEquals(
+          'C<sub>6</sub>H<sub>11</sub>O<sub>6</sub> [M-H]<sup>+</sup>', 
+          $compound->formattedFormulaForHRMS()
+        );
+    }
 }

@@ -102,72 +102,32 @@ class Compound extends Model
 
     public function formattedAlphaSolvent()
     {
-        $formula = '';
-
-        preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->alpha_solvent, $matches, PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
-            $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
-        }
-
-        return $formula;
+        return $this->formatFormula($this->alpha_solvent);
     }
 
     public function getFormattedFormulaAttribute()
     {
-        $formula = '';
-
-        preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
-            $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
-        }
-
-        return $formula;
+        return $this->formatFormula($this->formula);
     }
 
     public function formattedFormulaForHRMS()
     {
-        // C12H5SO3
-        $formula = '';
-
         switch ($this->mass_adduct) {
             case 'Na+':
-                preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
-                
-                foreach ($matches as $match) {
-                    $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
-                }
-
-                $formula .= 'Na';
-
-                $formula .= ' [M+Na]<sup>+</sup>';
+                $formula = $this->formatFormula($this->formula);
+                $formula .= 'Na [M+Na]<sup>+</sup>';
             break;
 
             case 'H+':
-                preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
-                foreach ($matches as $match) {
-                    if ($match[1] == "H") {
-                        $formula .= $match[1] . '<sub>' . ($match[2] + 1) . '</sub>';                       
-                    } else {
-                        $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
-                    }
-                }
-
+                $formulaPlusProton = $this->modifyFormula($this->formula, 'add', 1, 'H');
+                $formula = $this->formatFormula($formulaPlusProton);
                 $formula .= ' [M+H]<sup>+</sup>';
             break;
 
             case 'H-':
-                preg_match_all('/([A-Z][a-z]?)(\d*)/', $this->formula, $matches, PREG_SET_ORDER);
-                foreach ($matches as $match) {
-                    if ($match[1] == "H") {
-                        $formula .= $match[1] . '<sub>' . ($match[2] - 1) . '</sub>';                       
-                    } else {
-                        $formula .= $match[1] . '<sub>' . $match[2] . '</sub>';                       
-                    }
-                }
-
-                $formula .= '[M-H]<sup>+</sup>';
+                $formulaMinusProton = $this->modifyFormula($this->formula, 'subtract', 1, 'H');
+                $formula = $this->formatFormula($formulaMinusProton);
+                $formula .= ' [M-H]<sup>+</sup>';
             break;
             default:
                 $formula = $this->formula;
@@ -261,4 +221,41 @@ class Compound extends Model
         return $this->formulaCarbons == $this->nmrCarbons;
     }
 
+    protected function formatFormula($formula)
+    {
+        $formattedFormula = '';
+        preg_match_all('/([A-Z][a-z]?)(\d*)/', $formula, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            $formattedFormula .= $match[1];
+
+            if ($match[2] !== "" && $match[2] !== "1") {
+                $formattedFormula .= '<sub>' . $match[2] . '</sub>';
+            }
+        }
+
+        return $formattedFormula;
+    }
+
+    protected function modifyFormula($formula, $operation, $count, $atom)
+    {
+        preg_match_all('/([A-Z][a-z]?)(\d*)/', $formula, $matches, PREG_SET_ORDER);
+        
+        $modifiedFormula = '';
+
+        foreach ($matches as $match) {
+            if ($match[1] == $atom) {
+                if ($operation == 'add') {
+                    $modifiedFormula .= $match[1] . ($match[2] + $count);
+                } 
+                if ($operation == 'subtract') {
+                    $modifiedFormula .= $match[1] . ($match[2] - $count);  
+                }
+            } else {
+                $modifiedFormula .= $match[1] . $match[2];                       
+            }
+        }
+
+        return $modifiedFormula;
+    }
 }
