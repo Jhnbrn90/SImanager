@@ -102,6 +102,19 @@ class ProjectTest extends TestCase
     }
 
     /** @test **/
+    public function a_new_project_can_only_be_added_to_a_bundle_the_user_owns()
+    {
+        $notOwnedBundle = BundleFactory::create();
+
+        $this->signIn($user = create('App\User'));
+        
+        $project = factory('App\Project')->raw(['bundle_id' => $notOwnedBundle->id]);
+        
+        $this->post('/projects', $project)->assertStatus(403);   
+        $this->assertDatabaseMissing('projects', $project);
+    }
+
+    /** @test **/
     public function guests_can_not_add_projects()
     {
         $project = factory('App\Project')->raw();
@@ -213,23 +226,5 @@ class ProjectTest extends TestCase
         $this->actingAs($user)->delete($project->path())->assertStatus(422);
 
         $this->assertDatabaseHas('projects', $project->toArray());
-    }
-
-    /** @test **/
-    public function a_user_can_move_all_projects_to_another_bundle()
-    {
-        $user = create('App\User');
-
-        $firstBundle = BundleFactory::ownedBy($user)->withProjects(2)->create();
-        $secondBundle = BundleFactory::ownedBy($user)->withProjects(1)->create();
-
-        $this->actingAs($user)->get("/bundle-projects/{$firstBundle->id}/edit")->assertStatus(200);
-        
-        $this->actingAs($user)->patch("/bundle-projects/{$firstBundle->id}", [
-            'toBundle' => $secondBundle->id,
-        ]);
-
-        $this->assertcount(0, $firstBundle->fresh()->projects);
-        $this->assertcount(3, $secondBundle->fresh()->projects);
     }
 }

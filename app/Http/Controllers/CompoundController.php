@@ -113,6 +113,8 @@ class CompoundController extends Controller
 
         $project = Project::findOrFail($request->project);
 
+        $this->authorize('interact-with-project', $project);
+
         $compound = Compound::create([
             'project_id'            => $project->id,
             'label'                 => $request->label ?? '(unkown)',

@@ -18,7 +18,6 @@ class ProjectController extends Controller
     public function index()
     {
         $bundles = auth()->user()->bundles()->with('projects')->get();
-        
         $students = auth()->user()->students()->with('bundles.projects')->get();
 
         return view('projects.index', compact('bundles', 'students'));
@@ -42,10 +41,14 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name'      => 'required',
             'bundle_id' => 'required|exists:bundles,id'
         ]);
+
+        $bundle = Bundle::findOrFail($validated['bundle_id']);
+
+        $this->authorize('interact-with-bundle', $bundle);
 
         $project = Project::create([
             'name'          =>  $request->name,
