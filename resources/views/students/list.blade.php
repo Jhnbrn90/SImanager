@@ -12,7 +12,7 @@
             <ul class="list-group">
                 @forelse ($students as $student)
                     <li class="list-group-item">
-                        <a href="/students/view/data/{{ $student->id }}">
+                        <a href="/users/{{ $student->id }}/impersonate">
                             {{ $student->name }}
                         </a>
                     </li>

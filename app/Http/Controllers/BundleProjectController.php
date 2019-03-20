@@ -10,7 +10,7 @@ class BundleProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'impersonate']);
     }
 
     public function edit(Bundle $bundle)

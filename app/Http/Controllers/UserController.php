@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,5 +15,23 @@ class UserController extends Controller
         auth()->user()->update(['prefix' => $request->prefix]);
 
         return redirect()->back();
+    }
+
+    public function impersonate($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $this->authorize('can-impersonate-user', $user);
+
+        Auth::user()->setImpersonating($user->id);
+
+        return redirect('/');
+    }
+
+    public function stopImpersonate()
+    {
+        Auth::user()->stopImpersonating();
+
+        return redirect('/');
     }
 }

@@ -34,8 +34,6 @@ Route::resource('compounds', 'CompoundController',
 Route::get('/supervisor/add', 'SharingDataController@addSupervisor');
 Route::post('/supervisor', 'SharingDataController@store');
 Route::get('/students', 'SharingDataController@listStudents');
-// View compounds of students 
-Route::get('/students/view/data/{user}', 'CompoundController@studentIndex');
 
 /**
  * Projects
@@ -68,3 +66,9 @@ Route::patch('/reactions/{reaction}', 'ReactionController@update');
  */
 Route::get('/bundles/new', 'BundleController@create');
 Route::post('/bundles', 'BundleController@store');
+
+/**
+ * Impersonation Routes
+ */
+Route::get('/users/{id}/impersonate', 'UserController@impersonate');
+Route::get('/users/stop', 'UserController@stopImpersonate');

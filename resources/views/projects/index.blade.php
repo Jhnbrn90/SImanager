@@ -38,31 +38,6 @@
         @endforeach
       </div>
 
-      @if ($students->count() > 0)
-      <h1>Students</h1>
-        @forelse ($students as $student)
-        <div class="list-group">
-          <h3>{{ $student->name }}</h3>
-          @foreach ($student->bundles as $bundle)
-          <li class="list-group-item list-group-item-warning">
-              <strong>{{ $bundle->name }}</strong>
-          </li>
-          @foreach ($bundle->projects as $project)
-          <a href="/projects/{{ $project->id }}" class="list-group-item">
-            <div>
-              <strong> {{ $project->name }} </strong>
-            </div>
-            <div>
-              <em> {{ $project->description }} </em>
-            </div>
-          </a>
-          @endforeach
-          @endforeach
-        </div>
-        @empty
-        @endforelse
-      @endif
-
     </div>
 </div>
 @endsection

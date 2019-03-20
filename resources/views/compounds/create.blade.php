@@ -41,12 +41,6 @@
             @foreach (Auth::user()->projects as $project)
                 <option value="{{ $project->id }}"> {{ $project->name }}</option>
             @endforeach
-            @forelse (Auth::user()->students as $student)
-                @foreach($student->projects as $project)
-                  <option value="{{ $project->id }}"> {{ $project->name }} ({{ $student->email }})</option>
-                @endforeach
-            @empty
-            @endforelse
         </select>
       </div>
     </div>

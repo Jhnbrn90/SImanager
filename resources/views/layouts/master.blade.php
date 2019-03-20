@@ -79,6 +79,15 @@
             margin-right: 17px;
             margin-left: 17px;
         }
+        .sticky {
+            z-index: 999;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0px;
+            border-top: 2px dotted black;
+            border-bottom: 2px dotted black;
+        }
+
     </style>
 
     @yield('head')
@@ -86,6 +95,14 @@
 </head>
 <body>
     <div id="app">
+        @if (session()->has('impersonate'))
+            <div class="text-center bg-info sticky" style="padding: 2rem 2rem; width:100%;">
+                You are now acting on behalf of <strong>{{ auth()->user()->name }}</strong> ({{ auth()->user()->email }}). 
+                <br>
+                <a href="/users/stop">Switch to your own account</a>
+            </div>
+        @endif
+
         @yield('content')
     </div>
 

@@ -6,6 +6,7 @@ use App\Bundle;
 use App\Project;
 use App\Events\UserWasCreated;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -81,5 +82,22 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return in_array($this->email, config('app.admins'));
+    }
+
+    public function setImpersonating($id)
+    {
+        Session::put('impersonator', auth()->id());
+        Session::put('impersonate', $id);
+    }
+
+    public function stopImpersonating()
+    {
+        Session::forget('impersonator');
+        Session::forget('impersonate');
+    }
+
+    public function isImpersonating()
+    {
+        return Session::has('impersonate') && Session::has('impersonator');
     }
 }

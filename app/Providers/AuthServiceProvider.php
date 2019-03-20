@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -31,18 +32,6 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        Gate::define('access-compounds', function ($user, $owner) {
-            if (is_int($user)) {
-                $user = User::findOrFail($user);
-            }
-
-            if ($user->id == $owner->id) {
-                return true;
-            }
-
-            return $owner->supervisors->contains($user);
-        });
-
         Gate::define('interact-with-compound', function ($user, $compound) {
             if ($user->is($compound->owner)) {
                 return true;
@@ -67,5 +56,10 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
+        Gate::define('can-impersonate-user', function ($user, User $toBeImpersonatedUser) {
+          if ($toBeImpersonatedUser->supervisors->contains($user)) {
+            return true;
+          }
+        });
     }
 }

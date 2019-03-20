@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-static-top" style="z-index:1">
             <div class="container">
                 <div class="navbar-header">
 
@@ -27,7 +27,34 @@
                             <li><a href="/compounds/new">Add new Compound</a></li>
                             <li><a href="/compounds/import">Import Compound</a></li>
                             @if (Auth::user()->students->count())
-                                <li><a href="/students">View students</a></li>
+                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    Users <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                        @forelse(Auth::user()->students as $student)
+                                            <li>
+                                                <a href="/users/{{ $student->id }}/impersonate"> {{ $student->name }}</a>
+                                            </li>
+                                        @empty
+                                            <li></li>
+                                        @endforelse
+
+                                        @if (in_array(Auth::user()->email, config('app.admins')))
+                                            <hr>
+                                            &nbsp; Users:
+                                            @forelse(\App\User::all() as $user)
+                                                <li>
+                                                    <a href="/users/{{ $user->id }}/impersonate"> {{ $user->name }}</a>
+                                                </li>
+                                            @empty
+                                                <li></li>
+                                            @endforelse
+                                        @endif
+                                </ul>
+                            </li>
+
                             @endif
                         @endauth
                     </ul>
@@ -63,30 +90,6 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
-                                        @if (Auth::user()->students->count())
-                                            <hr>
-                                            &nbsp; Students:
-                                        @endif
-                                        @forelse(Auth::user()->students as $student)
-                                            <li>
-                                                <a href="/students/view/data/{{ $student->id }}"> {{ $student->name }}</a>
-                                            </li>
-                                        @empty
-                                            <li></li>
-                                        @endforelse
-
-                                        @if (in_array(Auth::user()->email, config('app.admins')))
-                                            <hr>
-                                            &nbsp; Users:
-                                            @forelse(\App\User::all() as $user)
-                                                <li>
-                                                    <a href="/students/view/data/{{ $user->id }}"> {{ $user->name }}</a>
-                                                </li>
-                                            @empty
-                                                <li></li>
-                                            @endforelse
-                                        @endif
-                                
                                 </ul>
                             </li>
                         @endguest
