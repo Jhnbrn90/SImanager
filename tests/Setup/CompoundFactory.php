@@ -3,12 +3,15 @@
 namespace Tests\Setup;
 
 use App\User;
+use App\Bundle;
 use App\Project;
 use App\Compound;
 
 class CompoundFactory
 {
     protected $molfile;
+
+    protected $bundle;
 
     protected $project;
 
@@ -17,6 +20,13 @@ class CompoundFactory
     public function ownedBy($user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function inBundle($bundle)
+    {
+        $this->bundle = $bundle;
 
         return $this;
     }
@@ -38,11 +48,14 @@ class CompoundFactory
     public function create($attributes = [])
     {
         $user = $this->user ?? factory(User::class)->create();
-        $project = $this->project ?? factory(Project::class)->create(['user_id' => $user->id]);
+
+        $bundle = $this->bundle ?? factory(Bundle::class)->create(['user_id' => $user->id]);
+
+        $project = $this->project ?? factory(Project::class)->create(['bundle_id' => $bundle->id]);
+
         $molfile = $this->molfile;
 
         $compound = factory(Compound::class)->create(array_merge($attributes, [
-            'user_id'       => $project->user->id,
             'project_id'    => $project->id,
             'molfile'       => $molfile,
         ]));

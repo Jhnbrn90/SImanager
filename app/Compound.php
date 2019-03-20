@@ -12,23 +12,17 @@ class Compound extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'user_id'   => 'int',
         'id'        => 'int',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+    
+    public function owner()
+    {
+        return $this->project->bundle->user();
     }
 
     public function path()

@@ -51,7 +51,6 @@ class ProjectController extends Controller
         $project = Project::create([
             'name'          =>  $request->name,
             'description'   =>  $request->description,
-            'user_id'       =>  auth()->id(),
             'bundle_id'     => $request->bundle_id,
         ]);
 

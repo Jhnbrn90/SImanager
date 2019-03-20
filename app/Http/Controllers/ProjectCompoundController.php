@@ -27,11 +27,11 @@ class ProjectCompoundController extends Controller
 
     public function update(Project $project, Request $request)
     {
-        Gate::authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
         $targetProject = Project::findOrFail($request->toProject);
 
-        if ($targetProject->user->id !== auth()->id()) {
+        if (auth()->user()->isNot($targetProject->owner)) {
             return abort(403, 'You can not add compounds to another user\'s library');
         }
 

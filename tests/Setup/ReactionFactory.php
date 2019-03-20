@@ -5,15 +5,13 @@ namespace Tests\Setup;
 use App\User;
 use App\Bundle;
 use App\Project;
-use App\Compound;
+use App\Reaction;
 
-class ProjectFactory
+class ReactionFactory
 {
-    protected $compoundCount = 0;
-
     protected $user;
-
     protected $bundle;
+    protected $project;
 
     public function ownedBy($user)
     {
@@ -27,11 +25,9 @@ class ProjectFactory
         $this->bundle = $bundle;
     }
 
-    public function withCompounds($count)
+    public function inProject($project)
     {
-        $this->compoundCount = $count;
-
-        return $this;
+        $this->project = $project;
     }
 
     public function create()
@@ -39,11 +35,9 @@ class ProjectFactory
         $user = $this->user ?? factory(User::class)->create();
 
         $bundle = $this->bundle ?? factory(Bundle::class)->create(['user_id' => $user->id]);
-
         $project = factory(Project::class)->create(['bundle_id' => $bundle->id]);
+        $reaction = factory(Reaction::class)->create(['project_id' => $project->id]);
 
-        factory(Compound::class, $this->compoundCount)->create(['project_id' => $project]);
-
-        return $project;
+        return $reaction;
     }
 }

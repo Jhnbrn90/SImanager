@@ -9,9 +9,15 @@ class Reaction extends Model
 {
     protected $guarded = [];
 
-    public function user()
+    protected $casts = [
+        'id'            => 'int',
+        'solvent_id'    => 'int',
+        'project_id'    => 'int',
+    ];
+
+    public function owner()
     {
-        return $this->belongsTo(User::class);        
+        return $this->project->owner();        
     }
 
     public function project()

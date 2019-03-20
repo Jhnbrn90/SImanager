@@ -73,12 +73,9 @@ class CompoundController extends Controller
     {
         $project = Project::findOrFail($request->project_id);
 
-        if (! auth()->user()->is($project->user)) {
-            return abort(403);
-        }
+        $this->authorize('interact-with-project', $project);
 
         $compound = Compound::create([
-            'user_id'               => $project->user->id,
             'project_id'            => $project->id,
             'label'                 => $request->label ?? '(unkown)',
             'H_NMR_data'            => $request->H_NMR_data,
@@ -102,10 +99,6 @@ class CompoundController extends Controller
 
         $compound->toMolfile()->toSVG();
 
-        if ($project->user->id !== auth()->id()) {
-            return redirect('/students/view/data/' . $project->user->id);
-        }
-
         return redirect('/');
     }
 
@@ -121,7 +114,6 @@ class CompoundController extends Controller
         $project = Project::findOrFail($request->project);
 
         $compound = Compound::create([
-            'user_id'               => $project->user->id,
             'project_id'            => $project->id,
             'label'                 => $request->label ?? '(unkown)',
             'H_NMR_data'            => $importer->getProtonNMR(),
@@ -145,10 +137,6 @@ class CompoundController extends Controller
 
         $compound->toMolfile()->toSVG();
 
-        if ($project->user->id !== auth()->id()) {
-            return redirect('/students/view/data/' . $project->user->id);
-        }
-
         return redirect('/');
     }
 
@@ -157,6 +145,7 @@ class CompoundController extends Controller
         $this->authorize('interact-with-compound', $compound);
         
         $compound->update([$request->column => $request->value]);
+        $compound->makeHidden(['owner', 'project']);
         
         return response()->json($compound, 201);
     }
@@ -200,8 +189,6 @@ class CompoundController extends Controller
     public function destroy(Compound $compound)
     {
         $this->authorize('interact-with-compound', $compound);
-
-        $compound = Compound::findOrFail($compound)->first();
 
         $compound->delete();
 

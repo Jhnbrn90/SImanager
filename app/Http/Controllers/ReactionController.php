@@ -27,16 +27,17 @@ class ReactionController extends Controller
 
     public function show(Reaction $reaction)
     {
-        Gate::authorize('interact-with-reaction', $reaction);
+        $this->authorize('interact-with-reaction', $reaction);
 
         return view('reactions.create', compact('reaction'));
     }
 
     public function store(Project $project)
     {
+        // $this->authorize('interact-with-project', $project);
+
         $reaction = Reaction::create([
             'project_id'    => $project->id, 
-            'user_id'       => $project->user->id,
             'label'         => auth()->user()->newReactionLabel,
         ]);
 

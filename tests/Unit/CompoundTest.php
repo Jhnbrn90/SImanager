@@ -19,9 +19,9 @@ class CompoundTest extends TestCase
     }
 
     /** @test **/
-    public function a_compound_has_a_creator()
+    public function a_compound_has_an_owner()
     {
-        $this->assertInstanceOf('App\User', $this->compound->creator);
+        $this->assertInstanceOf('App\User', $this->compound->owner);
     }
 
     /** @test **/

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Facades\Tests\Setup\ReactionFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -19,13 +20,12 @@ class ReactionTest extends TestCase
     }
 
     /** @test **/
-    public function a_reaction_belongs_to_a_user()
+    public function a_reaction_has_an_owner()
     {
-        $user = factory('App\User')->create();
-        $reaction = factory('App\Reaction')->create(['user_id' => $user->id]);
+        $user = create('App\User');
+        $reaction = ReactionFactory::ownedBy($user)->create();
 
-        $this->assertEquals($user->id, $reaction->user_id);
-        $this->assertTrue($reaction->user->is($user));
+        $this->assertTrue($user->is($reaction->owner));
     }
 
     /** @test **/
@@ -113,7 +113,8 @@ class ReactionTest extends TestCase
     public function a_new_reaction_increments_the_label_code()
     {
         $user = create('App\User', ['prefix' => 'JBN']);
-        $reaction = create('App\Reaction', ['user_id' => $user->id]);
+
+        $reaction = ReactionFactory::ownedBy($user)->create();
 
         $this->assertEquals('JBN_2', $user->newReactionLabel);
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Project;
 use Tests\TestCase;
 use Facades\Tests\Setup\BundleFactory;
 use Facades\Tests\Setup\ProjectFactory;

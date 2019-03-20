@@ -15,12 +15,14 @@ class BundleFactory
     public function withProjects($count)
     {
         $this->projectCount = $count;
+
         return $this;
     }
 
     public function ownedBy($user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -31,7 +33,6 @@ class BundleFactory
         $bundle = factory(Bundle::class)->create(['user_id' => $user]);
 
         factory(Project::class, $this->projectCount)->create([
-            'user_id'   => $user,
             'bundle_id' => $bundle,
         ]);
 

@@ -32,13 +32,13 @@ class ProjectTest extends TestCase
     }
 
     /** @test **/
-    public function a_project_belongs_to_a_user()
+    public function a_project_has_an_owner()
     {
         $user = factory(User::class)->create(['name' => 'Project tester']);
         
-        $project = factory(Project::class)->create(['user_id' => $user]);
+        $project = ProjectFactory::ownedBy($user)->create();
 
-        $this->assertEquals('Project tester', $project->user->name);
+        $this->assertTrue($user->is($project->owner));
     }
 
     /** @test **/
@@ -62,6 +62,7 @@ class ProjectTest extends TestCase
     public function a_project_can_move_itself_to_a_different_bundle()
     {
         $user = factory('App\User')->create();
+        
         $firstBundle = BundleFactory::ownedBy($user)->withProjects(1)->create();
         $secondBundle = BundleFactory::ownedBy($user)->withProjects(2)->create();
 

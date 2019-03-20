@@ -37,7 +37,6 @@ class RegisterDefaultBundleWithProject
         $project = Project::create([
             'name'          => 'Default project',
             'description'   => 'Automatically generated project.',
-            'user_id'       => $event->user->id,
             'bundle_id'     => $bundle->id,
         ]);
     }

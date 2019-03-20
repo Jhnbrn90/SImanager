@@ -44,27 +44,21 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('interact-with-compound', function ($user, $compound) {
-            if ($user->id == $compound->user_id) {
+            if ($user->is($compound->owner)) {
                 return true;
             }
-
-            return $compound->user->supervisors->contains($user);
         });
 
         Gate::define('interact-with-project', function ($user, $project) {
-            if ($user->id == $project->user_id) {
+            if ($user->is($project->owner)) {
                 return true;
             }
-
-            return $project->user->supervisors->contains($user);
         });
 
         Gate::define('interact-with-reaction', function ($user, $reaction) {
-            if ($user->id == $reaction->user_id) {
+            if ($user->is($reaction->owner)) {
                 return true;
             }
-
-            return $reaction->user->supervisors->contains($user);
         });
 
         Gate::define('interact-with-bundle', function ($user, $bundle) {

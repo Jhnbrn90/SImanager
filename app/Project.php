@@ -11,10 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $guarded = [];
-    
-    public function user()
+
+    public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->bundle->user();
+    }
+    
+    public function bundle()
+    {
+        return $this->belongsTo(Bundle::class);
     }
 
     public function compounds()
@@ -25,11 +30,6 @@ class Project extends Model
     public function reactions()
     {
         return $this->hasMany(Reaction::class);
-    }
-
-    public function bundle()
-    {
-        return $this->belongsTo(Bundle::class);
     }
 
     public function path()

@@ -40,11 +40,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function compounds()
-    {
-        return $this->hasMany(Compound::class);
-    }
-
     public function bundles()
     {
         return $this->hasMany(Bundle::class)->latest();
@@ -52,12 +47,20 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class)->latest();
+        return $this->hasManyThrough('App\Project', 'App\Bundle')->latest();
     }
     
     public function reactions()
     {
-        return $this->hasMany(Reaction::class)->latest();
+        return $this->projects->flatMap(function ($project) {
+            return $project->reactions;
+        });
+    }
+
+    public function getNewReactionLabelAttribute()
+    {
+        $experimentNumber = $this->reactions()->count() + 1;
+        return "{$this->prefix}_{$experimentNumber}";
     }
 
     public function addSupervisor(User $user)
@@ -78,12 +81,5 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return in_array($this->email, config('app.admins'));
-    }
-
-    public function getNewReactionLabelAttribute()
-    {
-        $experimentNumber = $this->reactions->count() + 1;
-
-        return "{$this->prefix}_{$experimentNumber}";
     }
 }

@@ -16,7 +16,8 @@ class CompoundTest extends TestCase
     /** @test **/
     public function a_user_can_view_his_compounds()
     {
-        $this->signIn($user = create('App\User'));    
+        $this->signIn($user = create('App\User'));
+
         $compound = CompoundFactory::ownedBy($user)->create();
 
         $this->get('/compounds')
@@ -83,7 +84,7 @@ class CompoundTest extends TestCase
         $this->actingAs($frank)->post('/compounds', $compound)->assertStatus(403);
 
         $this->assertDatabaseMissing('compounds', $compound);
-        $this->assertCount(0, $john->compounds);
+        $this->assertCount(0, $project->compounds);
     }
 
     /** @test **/
@@ -196,6 +197,7 @@ class CompoundTest extends TestCase
     public function when_a_single_property_was_updated_it_returns_the_compound_json()
     {
         $this->signIn($user = create('App\User'));
+
         $compound = CompoundFactory::ownedBy($user)->create();
         
         $response = $this->json('PATCH', $compound->path(), [
@@ -238,9 +240,9 @@ class CompoundTest extends TestCase
         $johnsProject = ProjectFactory::ownedBy($john)->withCompounds(3)->create();
         $janesProject = ProjectFactory::ownedBy($jane)->withCompounds(3)->create();
 
-        $this->actingAs($john)->patch("/project-compounds/{$johnsProject->id}", [
-            'toProject' => $janesProject->id,
-        ])->assertStatus(403);
+        $this->actingAs($john)
+            ->patch("/project-compounds/{$johnsProject->id}", ['toProject' => $janesProject->id,])
+            ->assertStatus(403);
 
         $this->assertCount(3, $janesProject->fresh()->compounds);
         $this->assertCount(3, $johnsProject->fresh()->compounds);
@@ -250,6 +252,7 @@ class CompoundTest extends TestCase
     public function a_user_can_import_a_compound()
     {
         $user = create('App\User');
+
         $project = ProjectFactory::ownedBy($user)->withCompounds(1)->create();
 
         $this->actingAs($user)->get('/compounds/import')->assertStatus(200);
@@ -271,6 +274,7 @@ class CompoundTest extends TestCase
     public function a_user_can_delete_a_compound_he_owns()
     {
         $this->signIn($user = create('App\User'));
+
         $compound = CompoundFactory::ownedBy($user)->create();
 
         $this->assertDatabaseHas('compounds', $compound->toArray());

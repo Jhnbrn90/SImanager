@@ -5,13 +5,8 @@ use App\Compound;
 use Faker\Generator as Faker;
 
 $factory->define(Compound::class, function (Faker $faker) {
-    $user = auth()->user() ?: factory('App\User')->create();
-
     return [
-        'user_id'               => $user->id, 
-        'project_id'            => function() use ($user) {
-            return factory(Project::class)->create(['user_id' => $user->id])->id;
-        },
+        'project_id'            => function () { return factory(Project::class); },
         'label'                 => $faker->word,
         'formula'               => 'C6H12O6',
         'molweight'             => 180.16,
