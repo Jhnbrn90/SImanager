@@ -13,6 +13,11 @@ class Bundle extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function owner()
+    {
+        return $this->user();
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class)->latest();

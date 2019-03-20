@@ -22,6 +22,21 @@
           <label for="description">Project description</label>
           <input type="text" id="description" class="form-control" name="description" placeholder="Project description." value="{{ $project->description }}">
         </div>
+
+        <div class="form-group" style="width:50%;">
+          <label for="bundle">Bundle</label>
+          <select name="bundle_id" class="form-control">
+            @foreach (Auth::user()->bundles as $bundle)
+                <option value="{{ $bundle->id }}" {{ $project->bundle->id == $bundle->id ? 'selected' : '' }}> {{ $bundle->name }}</option>
+            @endforeach
+            @forelse (Auth::user()->students as $student)
+                @foreach($student->bundles as $bundle)
+                  <option value="{{ $bundle->id }}" {{ $project->bundle->id == $bundle->id ? 'selected' : '' }}> {{ $bundle->name }} ({{ $student->email }})</option>
+                @endforeach
+            @empty
+            @endforelse
+          </select>
+        </div>
         
         <div class="form-group" style="width:50%">
           <button type="submit" class="btn btn-success btn-block"> Save </button>

@@ -21,13 +21,15 @@ class BundleTest extends TestCase
     /** @test **/
     public function a_new_user_has_a_default_bundle()
     {
-        $this->assertCount(1, $this->user->bundles); // 1 + default bundle
+        $this->assertCount(1, $this->user->bundles);
         $this->assertEquals('Default bundle', $this->user->bundles->first()->name);
     }
 
     /** @test **/
-    public function an_authenticated_user_can_make_a_new_bundle()
+    public function an_authenticated_user_can_add_a_new_bundle()
     {
+        $this->actingAs($this->user)->get('/bundles/new')->assertStatus(200);
+
         $this->actingAs($this->user)->post('/bundles', ['name' => 'Custom Bundle']);
 
         $this->assertDatabaseHas('bundles', ['name' => 'Custom Bundle']);
@@ -36,6 +38,8 @@ class BundleTest extends TestCase
     /** @test **/
     public function guests_can_not_make_new_bundles()
     {
+        $this->get('/bundles/new')->assertRedirect('/login');
+
         $this->post('/bundles', ['name' => 'Custom Bundle'])->assertRedirect('/login');
 
         $this->assertDatabaseMissing('bundles', ['name' => 'Custom Bundle']);

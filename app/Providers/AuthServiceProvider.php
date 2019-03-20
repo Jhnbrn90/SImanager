@@ -62,11 +62,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('interact-with-bundle', function ($user, $bundle) {
-            if ($user->id == $bundle->user_id) {
+          if ($user->is($bundle->owner)) {
                 return true;
             }
-
-            return $bundle->user->supervisors->contains($user);
         });
 
     }

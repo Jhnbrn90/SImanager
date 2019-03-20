@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Facades\Tests\Setup\BundleFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -34,6 +35,15 @@ class BundleTest extends TestCase
 
         $this->assertEquals($user->id, $bundle->user_id);
         $this->assertEquals($user->fresh(), $bundle->user);
+    }
+
+    /** @test **/
+    public function a_bundle_can_get_its_owner()
+    {
+        $user = create('App\User');
+        $bundle = BundleFactory::ownedBy($user)->create();
+
+        $this->assertTrue($user->is($bundle->owner));
     }
 
     /** @test **/

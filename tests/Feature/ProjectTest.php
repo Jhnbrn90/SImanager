@@ -117,9 +117,11 @@ class ProjectTest extends TestCase
         $this->signIn($user = create('App\User'));
 
         $project = ProjectFactory::ownedBy($user)->create();
+
         $projectAttributes = [
             'name'          => 'Updated project',
             'description'   => 'This project was updated.',
+            'bundle_id'     =>  $project->bundle->id,
         ];
 
         $this->get("{$project->path()}/edit")->assertStatus(200);
@@ -136,6 +138,7 @@ class ProjectTest extends TestCase
         $projectAttributes = [
             'name'          => 'Updated project',
             'description'   => 'This project was updated.',
+            'bundle_id'     =>  $project->bundle->id,
         ];
 
         $this->get("{$project->path()}/edit")->assertRedirect('/login');
@@ -154,6 +157,7 @@ class ProjectTest extends TestCase
         $projectAttributes = [
             'name'          => 'Updated project',
             'description'   => 'This project was updated.',
+            'bundle_id'     =>  $project->bundle->id,
         ];
 
         $this->actingAs($frank)->patch($project->path(), $projectAttributes)->assertStatus(403);

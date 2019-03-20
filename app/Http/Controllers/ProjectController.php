@@ -6,7 +6,6 @@ use App\User;
 use App\Bundle;
 use App\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -27,7 +26,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        Gate::authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
         $project->load('compounds');
 
@@ -59,16 +58,27 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        Gate::authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
         return view('projects.edit', compact('project'));
     }
 
     public function update(Project $project, Request $request)
     {
-        Gate::authorize('interact-with-project', $project); 
+        $this->authorize('interact-with-project', $project);
 
-        $request->validate(['name' => 'required']);
+        $validated = $request->validate([
+            'name' => 'required', 
+            'bundle_id' => 'required|exists:bundles,id'
+        ]);
+
+        $bundle = Bundle::findOrFail($validated['bundle_id']);
+
+        if ($request->bundle_id !== $project->bundle_id) {
+            $this->authorize('interact-with-bundle', $bundle);
+
+            $project->moveTo($bundle);
+        }
 
         $project->update($request->only('name', 'description'));
 
@@ -77,7 +87,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-         Gate::authorize('interact-with-project', $project);
+         $this->authorize('interact-with-project', $project);
 
          if (! $project->isEmpty()) {
             return abort(422, 'Only empty projects can be deleted.');
@@ -90,7 +100,7 @@ class ProjectController extends Controller
 
     public function export(Project $project)
     {
-        Gate::authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
         $project->load('compounds');
         $compounds = $project->compounds;
