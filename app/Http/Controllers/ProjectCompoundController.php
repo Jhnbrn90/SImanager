@@ -15,7 +15,7 @@ class ProjectCompoundController extends Controller
 
     public function edit(Project $project)
     {
-        Gate::authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
         $project->load('compounds');
         $compounds = $project->compounds;

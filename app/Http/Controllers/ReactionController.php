@@ -34,7 +34,7 @@ class ReactionController extends Controller
 
     public function store(Project $project)
     {
-        // $this->authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
         $reaction = Reaction::create([
             'project_id'    => $project->id, 
@@ -46,14 +46,11 @@ class ReactionController extends Controller
 
     public function update(Request $request, Reaction $reaction)
     {
-        Gate::authorize('interact-with-reaction', $reaction);
-
-        $project = Project::findOrFail($request->project);
+        $this->authorize('interact-with-reaction', $reaction);
 
         if ($request->type == 'product') { 
             $compound = Compound::create([
-                'user_id'               => $project->user_id,
-                'project_id'            => $project->id,
+                'project_id'            => $reaction->project->id,
                 'label'                 => $reaction->nextProductLabel(),
                 'molfile'               => $request->molfile,
                 'molweight'             => $request->molweight,

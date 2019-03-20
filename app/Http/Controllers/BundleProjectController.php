@@ -15,9 +15,7 @@ class BundleProjectController extends Controller
 
     public function edit(Bundle $bundle)
     {
-        if (Gate::denies('interact-with-bundle', $bundle)) {
-            return abort(403, 'This action is not authorized.');
-        }
+        $this->authorize('interact-with-bundle', $bundle);
 
         $projects = $bundle->projects;
 
@@ -28,14 +26,12 @@ class BundleProjectController extends Controller
 
     public function update(Bundle $bundle, Request $request)
     {
-        if (Gate::denies('interact-with-bundle', $bundle)) {
-            return abort(403, 'This action is not authorized.');
-        }
+        $this->authorize('interact-with-bundle', $bundle);
 
         $targetBundle = Bundle::findOrFail($request->toBundle);
 
-        if ($targetBundle->user->id !== auth()->id()) {
-            return abort(403, 'You can not add projects to another user\'s bundle');
+        if (auth()->user()->isNot($targetBundle->owner)) {
+            return abort(403, 'You can not add projects to another user\'s bundle');   
         }
 
         $bundle->projects()->update(['bundle_id' => $request->toBundle]);
