@@ -72,3 +72,9 @@ Route::post('/bundles', 'BundleController@store');
  */
 Route::get('/users/{id}/impersonate', 'UserController@impersonate');
 Route::get('/users/stop', 'UserController@stopImpersonate');
+
+/**
+ * Database Routes
+ */
+Route::get('/database', 'DatabaseController@index');
+Route::post('database/search', 'DatabaseController@search');

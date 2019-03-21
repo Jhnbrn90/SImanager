@@ -21,16 +21,26 @@
                     <ul class="nav navbar-nav">
                         @auth
                             &nbsp;
-                            <li><a href="/">Compounds</a></li>
-                            <li><a href="/reactions">Reactions</a></li>
-                            <li><a href="/projects">Projects</a></li>
-                            <li><a href="/compounds/new">Add new Compound</a></li>
-                            <li><a href="/compounds/import">Import Compound</a></li>
-                            @if (Auth::user()->students->count())
-                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    Users <span class="caret"></span>
+                                    Compounds <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/compounds">Overview</a></li>
+                                    <li><a href="/compounds/new">Add new compound</a></li>
+                                    <li><a href="/compounds/import">Import Compound</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li><a href="/reactions">Reactions</a></li>
+                            <li><a href="/projects">Projects</a></li>
+
+                            <li><a href="/database">Chemicals Database</a></li>
+
+                            @if (Auth::user()->students->count())                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    Manage users <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                         @forelse(Auth::user()->students as $student)
@@ -54,7 +64,6 @@
                                         @endif
                                 </ul>
                             </li>
-
                             @endif
                         @endauth
                     </ul>
