@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Chemical;
 use Illuminate\Http\Request;
+use App\Helpers\ChemicalFinder;
 
 class DatabaseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'impersonate']);
     }
 
     public function index()
@@ -39,44 +40,42 @@ class DatabaseController extends Controller
         // Did the user enter a string that is shorter than 10 characters? 
         // If so, run the query quickly through to the shorthand table
 
-        // if (strlen($request->search) <= 10) {
+        if (strlen($searchQuery) <= 10) {
+            if($cas = (new ChemicalFinder($searchQuery))->lookupShorthand()) {
+                $chemicals = Chemical::where('cas', $cas)->get();
 
-            // if($cas = (new ChemicalFinder($request->search))->lookupShorthand()) {
-                // $chemicals = Chemical::where('cas', $cas)->get();
-
-        //         if ($chemicals->count() === 0) {
-        //             session()->flash('message', 'No results for: ' . $request->search);
-        //             return redirect()->route('home');
-        //         }
+                if ($chemicals->count() === 0) {
+                    session()->flash('message', 'No results for: ' . $request->search);
+                    return redirect('/database');
+                }
                 
-        //         return view('search.show', compact('chemicals'));
-        //     }
-        // }
+                return view('database.show', compact('chemicals'));
+            }
+        }
 
         // If the shorthand table did not resolve our request
         // We try our longer name version, otherwise after all of this we'll contact 3rd party APi's
         
-        // $chemicals = Chemical::where('name', 'like', $request->search)->get();
+        $chemicals = Chemical::where('name', 'like', $request->search)->get();
 
-        // if($chemicals->count() === 0) {
-        //     // run the name through external API's
-        //     $cas = (new ChemicalFinder($request->search))->getCas();
+        if($chemicals->count() === 0) {
+            // run the name through external API's
+            $cas = (new ChemicalFinder($request->search))->getCas();
 
-        //     // Did the ChemicalFinder class find a hit?
-        //     // If it did not, return early
-        //     if ($cas == null) {
-        //         session()->flash('error', '"' .$request->search. '" is not in the database.');
-        //         return redirect()->route('home');
-        //     }
+            // Did the ChemicalFinder class find a hit?
+            // If it did not, return early
+            if ($cas == null) {
+                session()->flash('error', '"' .$request->search. '" is not in the database.');
+                return redirect('/database');
+            }
 
-        //     // If it did, return the chemicals and perform the redirect
-        //     $chemicals = Chemical::where('cas', $cas)->get();
+            // If it did, return the chemicals and perform the redirect
+            $chemicals = Chemical::where('cas', $cas)->get();
             
-        //     return view('search.show', compact('chemicals'));
-        // }
+            return view('database.show', compact('chemicals'));
+        }
 
         // If it did find some hits in the database, redirect
-
         return view('database.show', compact('chemicals'));
     }
 

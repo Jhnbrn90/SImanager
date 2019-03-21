@@ -78,3 +78,14 @@ Route::get('/users/stop', 'UserController@stopImpersonate');
  */
 Route::get('/database', 'DatabaseController@index');
 Route::post('database/search', 'DatabaseController@search');
+Route::get('/database/substructure', 'SubstructureSearchController@index');
+Route::get('/database/substructure/new', 'SubstructureSearchController@reset');
+Route::post('/database/substructure/search', 'SubstructureSearchController@show');
+
+
+// Database-Shorthand Routes
+Route::get('/database/shorthands', 'ChemicalShorthandsController@index');
+Route::get('/database/shorthands/{shorthand}/edit', 'ChemicalShorthandsController@edit');
+Route::patch('/database/shorthands/{shorthand}', 'ChemicalShorthandsController@update');
+Route::post('/database/shorthands', 'ChemicalShorthandsController@store');
+Route::get('/database/shorthands/{shorthand}/delete', 'ChemicalShorthandsController@destroy');

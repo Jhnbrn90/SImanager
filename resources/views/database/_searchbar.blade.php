@@ -3,6 +3,10 @@
 
         <div class="panel panel-default" style="padding: 20px; background: #D1D1D127;">
             <div class="text-center" style="margin-bottom: 20px;">
+                <small><a href="/database/shorthands" class="btn btn-default btn-sm">Show abbreviations</a></small>
+            </div>
+
+            <div class="text-center" style="margin-bottom: 20px;">
                 Exact name: use
                 <code>%</code> as a wildcard.
                 <br>
@@ -35,12 +39,11 @@
 
                 </form>
 
-                <div class="col-md-12 text-center">
-                    <a href="/shorthands/create" class="btn btn-link">
-                        <strong>&plus;</strong> Add shorthand
+                <div class="col-md-12 text-center" style="padding: 10px;">
+                    <a href="/database/substructure" class="btn btn-primary">
+                        &plus; Substructure Search
                     </a>
                 </div>
-            </div>
 
         </div>
     </div>
