@@ -97,10 +97,10 @@
     <div id="app">
         
         @if (session()->has('impersonate'))
-            <div class="text-center bg-info sticky" style="padding: 2rem 2rem; width:100%;">
+            <div class="text-center bg-grey text-grey-darkest sticky" style="padding: 2rem 2rem; width:100%;">
                 You are now acting on behalf of <strong>{{ auth()->user()->name }}</strong> ({{ auth()->user()->email }}). 
                 <br>
-                <a href="/users/stop">Switch to your own account</a>
+                <a class="font-medium text-blue hover:text-blue-dark" href="/users/stop">Switch to your own account</a>
             </div>
         @endif
 
