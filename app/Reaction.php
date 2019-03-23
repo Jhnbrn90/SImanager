@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Compound;
 use Illuminate\Database\Eloquent\Model;
 
 class Reaction extends Model
@@ -17,7 +16,7 @@ class Reaction extends Model
 
     public function owner()
     {
-        return $this->project->owner();        
+        return $this->project->owner();
     }
 
     public function project()
@@ -34,7 +33,7 @@ class Reaction extends Model
     {
         $this->compounds()
             ->attach($compound, ['type' => 'starting_material']);
-        
+
         return $this;
     }
 
@@ -47,9 +46,9 @@ class Reaction extends Model
 
     public function addReagent(Compound $compound)
     {
-        $this->compounds()  
+        $this->compounds()
             ->attach($compound, ['type' => 'reagent']);
-        
+
         return $this;
     }
 
@@ -64,7 +63,7 @@ class Reaction extends Model
     {
         $this->compounds()
             ->attach($compound, ['type' => 'product']);
-        
+
         return $this;
     }
 
@@ -77,7 +76,7 @@ class Reaction extends Model
 
     public function path()
     {
-        return '/reactions/' . $this->id;
+        return '/reactions/'.$this->id;
     }
 
     public function nextProductLabel()

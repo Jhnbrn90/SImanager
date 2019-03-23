@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Compound;
 use Tests\TestCase;
 use Facades\Tests\Setup\ReactionFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReactionTest extends TestCase
@@ -36,7 +35,7 @@ class ReactionTest extends TestCase
         $user = create('App\User');
         $reaction = ReactionFactory::ownedBy($user)->create();
 
-        $this->actingAs($user)->get('/reactions/' . $reaction->id)->assertStatus(200);
+        $this->actingAs($user)->get('/reactions/'.$reaction->id)->assertStatus(200);
     }
 
     /** @test **/
@@ -45,7 +44,7 @@ class ReactionTest extends TestCase
         $user = create('App\User');
         $reaction = ReactionFactory::ownedBy($user)->create();
 
-        $this->get('/reactions/' . $reaction->id)->assertRedirect('login');
+        $this->get('/reactions/'.$reaction->id)->assertRedirect('login');
     }
 
     /** @test **/
@@ -55,7 +54,7 @@ class ReactionTest extends TestCase
         $frank = create('App\User');
         $reaction = ReactionFactory::ownedBy($john)->create();
 
-        $this->actingAs($frank)->get('/reactions/' . $reaction->id)->assertStatus(403);
+        $this->actingAs($frank)->get('/reactions/'.$reaction->id)->assertStatus(403);
     }
 
     /** @test **/
@@ -68,7 +67,7 @@ class ReactionTest extends TestCase
         $this->assertCount(0, $project->fresh()->reactions);
 
         $this->actingAs($user)
-            ->get('/reactions/new/' . $project->id)
+            ->get('/reactions/new/'.$project->id)
             ->assertStatus(200);
 
         $this->assertDatabaseHas('reactions', ['project_id' => $project->id]);
@@ -87,7 +86,7 @@ class ReactionTest extends TestCase
         $this->assertCount(0, $project->fresh()->reactions);
 
         $this->actingAs($frank)
-            ->get('/reactions/new/' . $project->id)
+            ->get('/reactions/new/'.$project->id)
             ->assertStatus(403);
 
         $this->assertDatabaseMissing('reactions', ['project_id' => $project->id]);
@@ -100,7 +99,7 @@ class ReactionTest extends TestCase
     {
         $user = create('App\User');
         $reaction = ReactionFactory::ownedBy($user)->create();
-        $molfile = file_get_contents(base_path() . '/tests/stubs/structure.php');
+        $molfile = file_get_contents(base_path().'/tests/stubs/structure.php');
 
         $this->assertCount(0, $reaction->fresh()->products);
 
@@ -123,7 +122,7 @@ class ReactionTest extends TestCase
     public function guests_can_not_add_a_product_to_a_reaction()
     {
         $reaction = ReactionFactory::create();
-        $molfile = file_get_contents(base_path() . '/tests/stubs/structure.php');
+        $molfile = file_get_contents(base_path().'/tests/stubs/structure.php');
 
         $this->assertCount(0, $reaction->fresh()->products);
 
@@ -140,7 +139,7 @@ class ReactionTest extends TestCase
 
         $reaction = ReactionFactory::ownedBy($john)->create();
 
-        $molfile = file_get_contents(base_path() . '/tests/stubs/structure.php');
+        $molfile = file_get_contents(base_path().'/tests/stubs/structure.php');
 
         $this->assertCount(0, $reaction->fresh()->products);
 

@@ -15,18 +15,21 @@ class SubstructureSearchController extends Controller
     public function index()
     {
         $molfile = session('substructure_search');
+
         return view('database.substructure.index', compact('molfile'));
     }
 
     public function show(Request $request)
     {
         $queryStructure = Structure::makeFromJSDraw($request->molfile);
-        
+
         session(['substructure_search' => $request->molfile]);
-        
+
         $matches = $request->exact ? $queryStructure->exactMatches : $queryStructure->matches;
 
-        $matches = $matches->map(function ($structure) { return $structure->chemical; });
+        $matches = $matches->map(function ($structure) {
+            return $structure->chemical;
+        });
 
         return view('database.substructure.show', compact('matches'));
     }
@@ -34,7 +37,7 @@ class SubstructureSearchController extends Controller
     public function reset()
     {
         session()->forget('substructure_search');
-        
+
         return redirect('/database/substructure');
     }
 }

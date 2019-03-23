@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Bundle;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class BundleProjectController extends Controller
 {
@@ -21,7 +20,7 @@ class BundleProjectController extends Controller
 
         $bundles = auth()->user()->bundles;
 
-        return view('bundle-projects.edit', compact('bundle', 'projects', 'bundles'));   
+        return view('bundle-projects.edit', compact('bundle', 'projects', 'bundles'));
     }
 
     public function update(Bundle $bundle, Request $request)
@@ -31,12 +30,12 @@ class BundleProjectController extends Controller
         $targetBundle = Bundle::findOrFail($request->toBundle);
 
         if (auth()->user()->isNot($targetBundle->owner)) {
-            return abort(403, 'You can not add projects to another user\'s bundle');   
+            return abort(403, 'You can not add projects to another user\'s bundle');
         }
 
         $bundle->projects()->update(['bundle_id' => $request->toBundle]);
 
-        if ($request->deleteBundle == "on") {
+        if ($request->deleteBundle == 'on') {
             $bundle->delete();
         }
 

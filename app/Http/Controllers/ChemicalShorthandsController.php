@@ -23,10 +23,10 @@ class ChemicalShorthandsController extends Controller
     {
         $shorthand = DB::table('shorthands')->where('id', $shorthandId);
 
-        if($shorthand->count() == 0) {
+        if ($shorthand->count() == 0) {
             return back();
         }
-        
+
         $result = $shorthand->first();
 
         return view('database.shorthands.edit', compact('result'));
@@ -36,12 +36,12 @@ class ChemicalShorthandsController extends Controller
     {
         $request->validate([
             'shorthand' => 'required|unique:shorthands,shorthand',
-            'cas'       => 'required'
+            'cas'       => 'required',
         ]);
 
         DB::table('shorthands')->insert([
             'shorthand' => $request->shorthand,
-            'cas'       => $request->cas
+            'cas'       => $request->cas,
         ]);
 
         session()->flash('message', 'Created the new shorthand.');
@@ -53,17 +53,17 @@ class ChemicalShorthandsController extends Controller
     {
         $request->validate([
             'shorthand' => 'required',
-            'cas'       => 'required'
+            'cas'       => 'required',
         ]);
 
         $shorthand = DB::table('shorthands')->where('id', $shorthandId);
-        if($shorthand->count() == 0) {
+        if ($shorthand->count() == 0) {
             return back();
         }
 
         $shorthand->update([
             'shorthand' => $request->shorthand,
-            'cas'       => $request->cas
+            'cas'       => $request->cas,
         ]);
 
         session()->flash('message', 'Succesfully updated the shortname.');
@@ -75,12 +75,12 @@ class ChemicalShorthandsController extends Controller
     {
         $shorthand = DB::table('shorthands')->where('id', $shorthandId);
 
-        if($shorthand->count() == 0) {
+        if ($shorthand->count() == 0) {
             return back();
         }
 
         $shorthand->delete();
-        
+
         session()->flash('message', 'Succesfully deleted shortname.');
 
         return back();

@@ -2,10 +2,6 @@
 
 namespace App;
 
-use App\User;
-use App\Bundle;
-use App\Compound;
-use App\Reaction;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -16,7 +12,7 @@ class Project extends Model
     {
         return $this->bundle->user();
     }
-    
+
     public function bundle()
     {
         return $this->belongsTo(Bundle::class);
@@ -34,7 +30,7 @@ class Project extends Model
 
     public function path()
     {
-        return '/projects/' . $this->id;
+        return '/projects/'.$this->id;
     }
 
     public function moveTo(Bundle $bundle)

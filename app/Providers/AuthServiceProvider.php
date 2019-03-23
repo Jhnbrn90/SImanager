@@ -51,15 +51,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('interact-with-bundle', function ($user, $bundle) {
-          if ($user->is($bundle->owner)) {
+            if ($user->is($bundle->owner)) {
                 return true;
             }
         });
 
         Gate::define('can-impersonate-user', function ($user, User $toBeImpersonatedUser) {
-          if ($toBeImpersonatedUser->supervisors->contains($user)) {
-            return true;
-          }
+            if ($toBeImpersonatedUser->supervisors->contains($user)) {
+                return true;
+            }
         });
     }
 }

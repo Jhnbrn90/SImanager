@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Facades\Tests\Setup\BundleFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BundleProjectsTest extends TestCase
@@ -20,7 +19,7 @@ class BundleProjectsTest extends TestCase
 
         $movingProject = $bundleOne->projects->first();
 
-        $this->get($movingProject->path() . '/edit')
+        $this->get($movingProject->path().'/edit')
             ->assertStatus(200)
             ->assertSee($bundleTwo->name);
 
@@ -35,8 +34,8 @@ class BundleProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_not_move_a_project_to_a_bundle_they_do_not_own()
     {
-        $john = create('App\User');    
-        $frank = create('App\User');    
+        $john = create('App\User');
+        $frank = create('App\User');
 
         $johnsBundle = BundleFactory::ownedBy($john)->withProjects(1)->create();
         $franksBundle = BundleFactory::ownedBy($frank)->withProjects(1)->create();
@@ -59,7 +58,7 @@ class BundleProjectsTest extends TestCase
         $firstBundle = BundleFactory::ownedBy($user)->withProjects(2)->create();
         $secondBundle = BundleFactory::ownedBy($user)->withProjects(1)->create();
         $this->actingAs($user)->get("/bundle-projects/{$firstBundle->id}/edit")->assertStatus(200);
-        
+
         $this->actingAs($user)->patch("/bundle-projects/{$firstBundle->id}", [
             'toBundle' => $secondBundle->id,
         ]);
@@ -75,7 +74,7 @@ class BundleProjectsTest extends TestCase
 
         $johnsBundle = BundleFactory::ownedBy($john)->withProjects(1)->create();
         $franksBundle = BundleFactory::ownedBy($frank)->withProjects(1)->create();
-        
+
         $this->actingAs($frank)->patch("/bundle-projects/{$franksBundle->id}", [
             'toBundle'  => $johnsBundle->id,
         ])->assertStatus(403);
@@ -92,7 +91,7 @@ class BundleProjectsTest extends TestCase
 
         $johnsBundle = BundleFactory::ownedBy($john)->withProjects(1)->create();
         $franksBundle = BundleFactory::ownedBy($frank)->withProjects(1)->create();
-        
+
         $this->actingAs($frank)->get("/bundle-projects/{$johnsBundle->id}/edit")->assertStatus(403);
 
         $this->actingAs($frank)->patch("/bundle-projects/{$johnsBundle->id}", [

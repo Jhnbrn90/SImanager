@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Bundle;
 use App\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(['auth', 'impersonate']);
@@ -43,7 +41,7 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'name'      => 'required',
-            'bundle_id' => 'required|exists:bundles,id'
+            'bundle_id' => 'required|exists:bundles,id',
         ]);
 
         $bundle = Bundle::findOrFail($validated['bundle_id']);
@@ -71,8 +69,8 @@ class ProjectController extends Controller
         $this->authorize('interact-with-project', $project);
 
         $validated = $request->validate([
-            'name' => 'required', 
-            'bundle_id' => 'required|exists:bundles,id'
+            'name' => 'required',
+            'bundle_id' => 'required|exists:bundles,id',
         ]);
 
         $bundle = Bundle::findOrFail($validated['bundle_id']);
@@ -90,15 +88,15 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-         $this->authorize('interact-with-project', $project);
+        $this->authorize('interact-with-project', $project);
 
-         if (! $project->isEmpty()) {
+        if (! $project->isEmpty()) {
             return abort(422, 'Only empty projects can be deleted.');
-         }
+        }
 
-         $project->delete();
+        $project->delete();
 
-         return redirect('/projects');
+        return redirect('/projects');
     }
 
     public function export(Project $project)

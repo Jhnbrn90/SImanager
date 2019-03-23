@@ -29,7 +29,7 @@ class BundleFactory
     public function create()
     {
         $user = $this->user ?? factory(User::class)->create();
-        
+
         $bundle = factory(Bundle::class)->create(['user_id' => $user]);
 
         factory(Project::class, $this->projectCount)->create([

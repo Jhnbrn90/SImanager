@@ -18,14 +18,14 @@ class CompoundController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        
+
         $orderByColumn = $this->orderByColumn($request);
         $orderByMethod = $this->orderByMethod($request);
 
         $bundles = $user->bundles()
-                ->with(['projects.compounds' => function($query) use ($orderByColumn, $orderByMethod) {
-                        return $query->orderBy($orderByColumn, $orderByMethod);
-                    }])->get();
+                ->with(['projects.compounds' => function ($query) use ($orderByColumn, $orderByMethod) {
+                    return $query->orderBy($orderByColumn, $orderByMethod);
+                }])->get();
 
         return view('compounds.index', compact('user', 'bundles', 'orderByColumn', 'orderByMethod'));
     }
@@ -33,7 +33,7 @@ class CompoundController extends Controller
     public function edit(Compound $compound)
     {
         $this->authorize('interact-with-compound', $compound);
-        
+
         return view('compounds.edit', compact('compound'));
     }
 
@@ -45,9 +45,9 @@ class CompoundController extends Controller
         $orderByMethod = $this->orderByMethod($request);
 
         $bundles = $user->bundles()
-                ->with(['projects.compounds' => function($query) use ($orderByColumn, $orderByMethod) {
-                        return $query->orderBy($orderByColumn, $orderByMethod);
-                    }])->get();
+                ->with(['projects.compounds' => function ($query) use ($orderByColumn, $orderByMethod) {
+                    return $query->orderBy($orderByColumn, $orderByMethod);
+                }])->get();
 
         return view('compounds.index', compact('bundles', 'user', 'orderByColumn', 'orderByMethod'));
     }
@@ -56,7 +56,7 @@ class CompoundController extends Controller
     {
         $this->authorize('interact-with-compound', $compound);
 
-        return view('compounds.show', compact('compound'));    
+        return view('compounds.show', compact('compound'));
     }
 
     public function create()
@@ -145,10 +145,10 @@ class CompoundController extends Controller
     public function update(Compound $compound, Request $request)
     {
         $this->authorize('interact-with-compound', $compound);
-        
+
         $compound->update([$request->column => $request->value]);
         $compound->makeHidden(['owner', 'project']);
-        
+
         return response()->json($compound, 201);
     }
 
@@ -178,7 +178,7 @@ class CompoundController extends Controller
             $compound->formula = $request->formula;
             $compound->exact_mass = $request->exact_mass;
         }
-        
+
         $compound->save();
 
         if ($request->user_updated_molfile == 'true') {
@@ -200,7 +200,7 @@ class CompoundController extends Controller
     public function confirmDelete(Compound $compound)
     {
         $this->authorize('interact-with-compound', $compound);
-        
+
         return view('compounds.confirmdelete', compact('compound'));
     }
 

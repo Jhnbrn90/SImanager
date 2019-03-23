@@ -6,7 +6,6 @@ use App\Compound;
 use Tests\TestCase;
 use Facades\Tests\Setup\ProjectFactory;
 use Facades\Tests\Setup\CompoundFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CompoundTest extends TestCase
@@ -52,7 +51,7 @@ class CompoundTest extends TestCase
     /** @test **/
     public function a_user_can_add_a_new_compound()
     {
-        $this->signIn($user = create('App\User')); 
+        $this->signIn($user = create('App\User'));
         $project = $user->projects->first();
 
         $this->get('/compounds/new')->assertStatus(200);
@@ -77,7 +76,7 @@ class CompoundTest extends TestCase
     {
         $john = create('App\User');
         $frank = create('App\User');
-        
+
         $project = $john->projects->first();
         $compound = factory('App\Compound')->raw(['project_id' => $project->id]);
 
@@ -95,8 +94,7 @@ class CompoundTest extends TestCase
         $compound = CompoundFactory::ownedBy($user)->create();
         $newProject = ProjectFactory::ownedBy($user)->create();
 
-        $this->get($compound->path() . '/edit')->assertStatus(200);
-
+        $this->get($compound->path().'/edit')->assertStatus(200);
 
         $attributes = factory('App\Compound')->raw([
             'label'         => 'newLabel',
@@ -113,7 +111,7 @@ class CompoundTest extends TestCase
     {
         $this->signIn($user = create('App\User'));
         // strip last \n character from the file
-        $molfile = substr(file_get_contents(base_path() . '/tests/stubs/structure.php'), 0, -1);
+        $molfile = substr(file_get_contents(base_path().'/tests/stubs/structure.php'), 0, -1);
 
         $compound = CompoundFactory::ownedBy($user)->create();
 
@@ -128,7 +126,7 @@ class CompoundTest extends TestCase
 
         $postAttributes = factory('App\Compound')->raw($attributes);
 
-        // 'user_updated_molfile' is required for updating mass and formula 
+        // 'user_updated_molfile' is required for updating mass and formula
         $postAttributes['user_updated_molfile'] = 'true';
 
         $this->put($compound->path(), $postAttributes)->assertRedirect($compound->path());
@@ -157,7 +155,7 @@ class CompoundTest extends TestCase
         ];
 
         $postAttributes = factory('App\Compound')->raw($attributes);
-        // 'user_updated_molfile' is required for updating mass and formula 
+        // 'user_updated_molfile' is required for updating mass and formula
         $postAttributes['user_updated_molfile'] = 'false';
 
         $this->put($compound->path(), $postAttributes);
@@ -199,7 +197,7 @@ class CompoundTest extends TestCase
         $this->signIn($user = create('App\User'));
 
         $compound = CompoundFactory::ownedBy($user)->create();
-        
+
         $response = $this->json('PATCH', $compound->path(), [
             'column'    => 'notes',
             'value'     => 'test note',
@@ -241,7 +239,7 @@ class CompoundTest extends TestCase
         $janesProject = ProjectFactory::ownedBy($jane)->withCompounds(3)->create();
 
         $this->actingAs($john)
-            ->patch("/project-compounds/{$johnsProject->id}", ['toProject' => $janesProject->id,])
+            ->patch("/project-compounds/{$johnsProject->id}", ['toProject' => $janesProject->id])
             ->assertStatus(403);
 
         $this->assertCount(3, $janesProject->fresh()->compounds);
@@ -279,7 +277,7 @@ class CompoundTest extends TestCase
 
         $this->assertDatabaseHas('compounds', $compound->toArray());
 
-        $this->get($compound->path() . '/delete')->assertStatus(200);
+        $this->get($compound->path().'/delete')->assertStatus(200);
 
         $this->delete($compound->path())->assertRedirect('/compounds');
 
@@ -294,7 +292,7 @@ class CompoundTest extends TestCase
 
         $compound = CompoundFactory::ownedBy($john)->create();
 
-        $this->actingAs($frank)->get($compound->path() . '/delete')->assertStatus(403);
+        $this->actingAs($frank)->get($compound->path().'/delete')->assertStatus(403);
 
         $this->actingAs($frank)->delete($compound->path())->assertStatus(403);
 
@@ -305,8 +303,8 @@ class CompoundTest extends TestCase
     public function guests_can_not_delete_compounds()
     {
         $compound = CompoundFactory::create();
-        
-        $this->get($compound->path() . '/delete')->assertRedirect('/login');
+
+        $this->get($compound->path().'/delete')->assertRedirect('/login');
 
         $this->delete($compound->path())->assertRedirect('/login');
     }

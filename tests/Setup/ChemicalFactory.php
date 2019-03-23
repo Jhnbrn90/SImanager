@@ -27,7 +27,7 @@ class ChemicalFactory
     public function create()
     {
         $chemical = $this->name ? create('App\Chemical', ['name' => $this->name]) : create('App\Chemical');
-        
+
         $structure = Structure::createFromMolfile($this->molfile);
 
         $chemical->structure_id = $structure->id;

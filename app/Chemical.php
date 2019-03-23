@@ -12,7 +12,7 @@ class Chemical extends Model
     {
         return $this->belongsTo(Structure::class);
     }
-    
+
     public function path()
     {
         return "chemicals/{$this->id}";
@@ -20,6 +20,6 @@ class Chemical extends Model
 
     public function scopeShelf($query, $shelf)
     {
-        $query->whereBetween('number', [100*$shelf, ($shelf*100)+99]);
+        $query->whereBetween('number', [100 * $shelf, ($shelf * 100) + 99]);
     }
 }

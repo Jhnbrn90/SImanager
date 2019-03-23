@@ -38,12 +38,12 @@ class CompoundImporter
 
     public function getIrData()
     {
-        return $this->match('irData');   
+        return $this->match('irData');
     }
 
     public function getMeltingPoint()
     {
-        return $this->match('meltingPoint');   
+        return $this->match('meltingPoint');
     }
 
     public function getHRMS($type)
@@ -83,26 +83,26 @@ class CompoundImporter
     protected function match($lookup)
     {
         $regex = $this->regexLookup[$lookup];
-        
+
         preg_match($regex, $this->experiment, $match);
 
         if (empty($match)) {
-            return null;
+            return;
         }
-        
+
         return $match[1];
     }
 
     protected function matchMultiple($lookup)
     {
         $regex = $this->regexLookup[$lookup];
-        
+
         preg_match($regex, $this->experiment, $matches);
 
         if (empty($matches)) {
-            return null;
+            return;
         }
-        
+
         return $matches;
     }
 
@@ -110,11 +110,11 @@ class CompoundImporter
     {
         $regex = '/([A-Z][a-z]?)(\d*)/';
         preg_match_all($regex, $formula, $matches);
-        
-        if(in_array('Na', $matches[1])) {
+
+        if (in_array('Na', $matches[1])) {
             return 'Na+';
         }
-        
+
         return 'H+';
     }
 }

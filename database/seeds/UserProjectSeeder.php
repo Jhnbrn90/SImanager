@@ -15,18 +15,17 @@ class UserProjectSeeder extends Seeder
     {
         $users = User::all();
 
-        $users->each(function($user) {
+        $users->each(function ($user) {
             $project = factory(Project::class)->create([
-                'user_id' => $user->id, 
+                'user_id' => $user->id,
                 'name' => 'Default project',
-                'description'   => 'Automatically generated project.'
+                'description'   => 'Automatically generated project.',
             ]);
 
-            $user->compounds->each(function($compound) use ($project) {
+            $user->compounds->each(function ($compound) use ($project) {
                 $compound->project_id = $project->id;
                 $compound->save();
             });
         });
-
     }
 }

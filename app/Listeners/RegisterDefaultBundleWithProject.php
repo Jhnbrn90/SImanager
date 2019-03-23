@@ -5,8 +5,6 @@ namespace App\Listeners;
 use App\Bundle;
 use App\Project;
 use App\Events\UserWasCreated;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RegisterDefaultBundleWithProject
 {

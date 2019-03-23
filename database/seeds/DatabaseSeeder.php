@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   
+    {
         $users = User::all();
 
-        $users->each(function($user) {
+        $users->each(function ($user) {
             // Create a default bundle for each user
             $bundle = factory(Bundle::class)->create([
                 'user_id'       => $user->id,
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 'description'   => 'Automatically generated bundle.',
             ]);
 
-            // check if the user already has projects 
+            // check if the user already has projects
             if ($user->projects->count() > 0) {
                 $user->projects->each(function ($project) use ($bundle) {
                     $project->bundle_id = $bundle->id;
@@ -32,13 +32,12 @@ class DatabaseSeeder extends Seeder
                 });
             } else {
                 $project = factory(Project::class)->create([
-                    'user_id'           => $user->id, 
+                    'user_id'           => $user->id,
                     'name'              => 'Default project',
                     'description'       => 'Automatically generated project.',
                     'bundle_id'         => $bundle->id,
                 ]);
             }
-
         });
     }
 }
