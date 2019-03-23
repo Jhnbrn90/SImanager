@@ -16,15 +16,23 @@ However the libraries have been tested on Ubuntu 16.04 and Raspbian (Debian), it
 
 ### Setup
 1. Install Free Pascal
+
 2. Compile checkmol/matchmol:
+
 `fpc checkmol.pas -S2 -O3 -Op3`
 
-3. Copy the compiled checkmol to /usr/local/bin and make a link to matchmol:
-`cp checkmol /usr/local/bin`
-`cd /usr/local/bin`
-`ln checkmol matchmol`
+3. Copy the compiled checkmol to /usr/local/bin
 
-4. Copy mol2svg to /usr/local/bin and give executable rights
+`cp checkmol /usr/local/bin`
+
+4. Add a new symbolic link from checkmol to matchmol:
+
+`ln /usr/local/bin/checkmol /usr/local/bin/matchmol`
+
+5. Copy mol2svg to /usr/local/bin and give executable rights:
+
 `cp mol2svg /usr/local/bin`
+
 `cd /usr/local/bin`
+
 `sudo chmod 755 mol2svg` or `sudo chmod -x mol2svg`
