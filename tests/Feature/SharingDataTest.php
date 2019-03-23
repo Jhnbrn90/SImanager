@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SharingDataTest extends TestCase
@@ -15,7 +14,7 @@ class SharingDataTest extends TestCase
     {
         $supervisor = create('App\User', ['name' => 'Supervisor']);
         $student = create('App\User', ['name'  => 'Student']);
-        
+
         $this->assertCount(0, $student->supervisors);
 
         $student->addSupervisor($supervisor);

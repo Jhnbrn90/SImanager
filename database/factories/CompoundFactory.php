@@ -6,7 +6,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Compound::class, function (Faker $faker) {
     return [
-        'project_id'            => function () { return factory(Project::class); },
+        'project_id'            => function () {
+            return factory(Project::class);
+        },
         'label'                 => $faker->word,
         'formula'               => 'C6H12O6',
         'molweight'             => 180.16,
@@ -22,6 +24,6 @@ $factory->define(Compound::class, function (Faker $faker) {
         'alpha_value'           => 52,
         'alpha_solvent'         => 'H2O',
         'alpha_concentration'   => 10,
-        'notes'                 => 'White crystals'
+        'notes'                 => 'White crystals',
     ];
 });

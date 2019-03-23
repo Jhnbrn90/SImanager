@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Facades\Tests\Setup\ChemicalFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SubstructureSearchTest extends TestCase
@@ -48,6 +47,6 @@ class SubstructureSearchTest extends TestCase
 
     protected function molfile($name)
     {
-        return file_get_contents(base_path() . "/tests/Molfiles/{$name}.mol");
+        return file_get_contents(base_path()."/tests/Molfiles/{$name}.mol");
     }
 }

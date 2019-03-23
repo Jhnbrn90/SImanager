@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class SharingDataController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware(['auth', 'impersonate']);        
+        $this->middleware(['auth', 'impersonate']);
     }
 
     public function addSupervisor()

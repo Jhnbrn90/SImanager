@@ -16,11 +16,10 @@ class Impersonate
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('impersonate'))
-        {
+        if ($request->session()->has('impersonate')) {
             Auth::onceUsingId($request->session()->get('impersonate'));
         }
-        
+
         return $next($request);
     }
 }

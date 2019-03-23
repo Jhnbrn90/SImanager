@@ -6,7 +6,6 @@ use App\Project;
 use App\Compound;
 use App\Reaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ReactionController extends Controller
 {
@@ -37,7 +36,7 @@ class ReactionController extends Controller
         $this->authorize('interact-with-project', $project);
 
         $reaction = Reaction::create([
-            'project_id'    => $project->id, 
+            'project_id'    => $project->id,
             'label'         => auth()->user()->newReactionLabel,
         ]);
 
@@ -48,7 +47,7 @@ class ReactionController extends Controller
     {
         $this->authorize('interact-with-reaction', $reaction);
 
-        if ($request->type == 'product') { 
+        if ($request->type == 'product') {
             $compound = Compound::create([
                 'project_id'            => $reaction->project->id,
                 'label'                 => $reaction->nextProductLabel(),
@@ -63,6 +62,6 @@ class ReactionController extends Controller
             $reaction->compounds()->attach($compound, ['type' => 'product']);
         }
 
-        return redirect('/reactions/' . $reaction->id);
+        return redirect('/reactions/'.$reaction->id);
     }
 }

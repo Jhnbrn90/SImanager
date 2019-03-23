@@ -6,7 +6,6 @@ use App\Project;
 use Tests\TestCase;
 use Facades\Tests\Setup\BundleFactory;
 use Facades\Tests\Setup\ProjectFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
@@ -79,7 +78,7 @@ class ProjectTest extends TestCase
         $this->get('/projects/create')->assertStatus(200);
 
         $project = factory('App\Project')->raw();
-        
+
         $this->post('/projects', $project)->assertRedirect('/projects');
 
         $this->assertDatabaseHas('projects', $project);
@@ -107,10 +106,10 @@ class ProjectTest extends TestCase
         $notOwnedBundle = BundleFactory::create();
 
         $this->signIn($user = create('App\User'));
-        
+
         $project = factory('App\Project')->raw(['bundle_id' => $notOwnedBundle->id]);
-        
-        $this->post('/projects', $project)->assertStatus(403);   
+
+        $this->post('/projects', $project)->assertStatus(403);
         $this->assertDatabaseMissing('projects', $project);
     }
 
@@ -118,7 +117,7 @@ class ProjectTest extends TestCase
     public function guests_can_not_add_projects()
     {
         $project = factory('App\Project')->raw();
-        
+
         $this->post('/projects', $project)->assertRedirect('/login');
 
         $this->assertDatabaseMissing('projects', $project);
@@ -213,7 +212,7 @@ class ProjectTest extends TestCase
         $project = ProjectFactory::ownedBy($john)->create();
 
         $this->actingAs($frank)->delete($project->path())->assertStatus(403);
-        
+
         $this->assertDatabaseHas('projects', $project->toArray());
     }
 

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ImpersonationTest extends TestCase
@@ -19,14 +18,14 @@ class ImpersonationTest extends TestCase
 
         $this->signIn($supervisor);
 
-        $this->get('/compounds')->assertDontSee('Compounds of ' . $student->name);
+        $this->get('/compounds')->assertDontSee('Compounds of '.$student->name);
 
-        $this->get('/users/' . $student->id . '/impersonate')
+        $this->get('/users/'.$student->id.'/impersonate')
             ->assertRedirect('/')
             ->assertSessionHas('impersonate', $student->id)
             ->assertSessionHas('impersonator', $supervisor->id);
 
-        $this->get('/compounds')->assertSee('Compounds of ' . $student->name);
+        $this->get('/compounds')->assertSee('Compounds of '.$student->name);
     }
 
     /** @test **/
@@ -35,17 +34,17 @@ class ImpersonationTest extends TestCase
         $john = create('App\User');
         $frank = create('App\User');
 
-        $this->actingAs($john)->get('/users/' . $frank->id . '/impersonate')->assertStatus(403);
+        $this->actingAs($john)->get('/users/'.$frank->id.'/impersonate')->assertStatus(403);
 
-        $this->actingAs($john)->get('/compounds')->assertDontSee('Compounds of ' . $frank->name);
+        $this->actingAs($john)->get('/compounds')->assertDontSee('Compounds of '.$frank->name);
     }
 
     /** @test **/
     public function guests_can_not_impersonate_anyone()
     {
         $user = create('App\User');
-        
-        $this->get('/users/' . $user->id . '/impersonate')->assertRedirect('/login');
+
+        $this->get('/users/'.$user->id.'/impersonate')->assertRedirect('/login');
         $this->get('/compounds')->assertRedirect('/login');
     }
 }

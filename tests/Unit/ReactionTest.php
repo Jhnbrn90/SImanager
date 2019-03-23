@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Facades\Tests\Setup\ReactionFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReactionTest extends TestCase
@@ -83,7 +82,7 @@ class ReactionTest extends TestCase
     public function a_reaction_can_fetch_its_path()
     {
         $reaction = factory('App\Reaction')->create();
-        $this->assertEquals('/reactions/' . $reaction->id, $reaction->path());
+        $this->assertEquals('/reactions/'.$reaction->id, $reaction->path());
     }
 
     /** @test **/
@@ -102,10 +101,10 @@ class ReactionTest extends TestCase
         $this->assertCount(0, $reaction->products);
 
         $this->assertEquals('JBN_2a', $reaction->nextProductLabel());
-        
+
         $compound = factory('App\Compound')->create();
-        $reaction->addProduct($compound);        
-        
+        $reaction->addProduct($compound);
+
         $this->assertEquals('JBN_2b', $reaction->nextProductLabel());
     }
 

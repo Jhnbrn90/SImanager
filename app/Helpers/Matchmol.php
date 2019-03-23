@@ -4,9 +4,9 @@ namespace App\Helpers;
 
 use App\Structure;
 
-class Matchmol {
-
-    protected $binary = "/usr/local/bin/matchmol";
+class Matchmol
+{
+    protected $binary = '/usr/local/bin/matchmol';
 
     protected $queryStructure;
     protected $candidateIds;
@@ -16,16 +16,16 @@ class Matchmol {
 
     public function __construct($queryStructure, $candidateIds)
     {
-        $this->queryStructure   = $queryStructure;
-        $this->candidateIds     = $candidateIds;
-        $this->candidateCount   = $candidateIds->count();
+        $this->queryStructure = $queryStructure;
+        $this->candidateIds = $candidateIds;
+        $this->candidateCount = $candidateIds->count();
 
         $this->buildCandidatesArray();
     }
 
     public static function match($queryStructure, $candidateIds)
     {
-        return new Matchmol($queryStructure, $candidateIds);   
+        return new self($queryStructure, $candidateIds);
     }
 
     public function substructure()
@@ -35,7 +35,7 @@ class Matchmol {
 
         $matches = [];
 
-        for($i = 1; $i <= $blocks; $i++) {
+        for ($i = 1; $i <= $blocks; $i++) {
             $matchResults = BashCommand::run($this->buildQuery($i), $this->binary, '-');
             $resultsArray = $this->generateResultsArray($matchResults);
 
@@ -58,7 +58,7 @@ class Matchmol {
 
     protected function buildQuery($cycle)
     {
-        $offset = ($cycle-1) * $this->candidatesPerQuery;
+        $offset = ($cycle - 1) * $this->candidatesPerQuery;
 
         // slice the candidates and prepend the target structure
         $candidates = array_slice($this->candidatesArray, $offset, $this->candidatesPerQuery);
@@ -70,10 +70,11 @@ class Matchmol {
 
     protected function trimFormula($molfile)
     {
-        return preg_replace("/^[A-Z]+\d+.*/", "", $molfile);
+        return preg_replace("/^[A-Z]+\d+.*/", '', $molfile);
     }
 
-    protected function formatQuery($molfilesArray) {
+    protected function formatQuery($molfilesArray)
+    {
 
         // remove all present '$$$$' separators
         foreach ($molfilesArray as $molfile) {
@@ -99,20 +100,20 @@ class Matchmol {
         $resultIds = [];
 
         // array filter
-        foreach($resultsArray as $result) {
-            $match = explode(":", trim($result));
-            if($match[1] == "T") {
+        foreach ($resultsArray as $result) {
+            $match = explode(':', trim($result));
+            if ($match[1] == 'T') {
                 $resultIds[] = $match[0];
             }
         }
 
-        $offset = ($cycle-1) * $this->candidatesPerQuery;
+        $offset = ($cycle - 1) * $this->candidatesPerQuery;
 
         $matchingCandidateIds = [];
 
-        foreach($resultIds as $resultId) {
-            $id = $resultId-1;
-            $matchingCandidateIds[] = $this->candidateIds[$id+$offset];
+        foreach ($resultIds as $resultId) {
+            $id = $resultId - 1;
+            $matchingCandidateIds[] = $this->candidateIds[$id + $offset];
         }
 
         return $matchingCandidateIds;

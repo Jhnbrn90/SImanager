@@ -8,7 +8,6 @@ use App\Project;
 use Tests\TestCase;
 use Facades\Tests\Setup\BundleFactory;
 use Facades\Tests\Setup\ProjectFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
@@ -35,7 +34,7 @@ class ProjectTest extends TestCase
     public function a_project_has_an_owner()
     {
         $user = factory(User::class)->create(['name' => 'Project tester']);
-        
+
         $project = ProjectFactory::ownedBy($user)->create();
 
         $this->assertTrue($user->is($project->owner));
@@ -45,7 +44,7 @@ class ProjectTest extends TestCase
     public function a_project_can_make_its_path()
     {
         $project = factory(Project::class)->create();
-        $this->assertEquals('/projects/' . $project->id, $project->path());
+        $this->assertEquals('/projects/'.$project->id, $project->path());
     }
 
     /** @test **/
@@ -62,7 +61,7 @@ class ProjectTest extends TestCase
     public function a_project_can_move_itself_to_a_different_bundle()
     {
         $user = factory('App\User')->create();
-        
+
         $firstBundle = BundleFactory::ownedBy($user)->withProjects(1)->create();
         $secondBundle = BundleFactory::ownedBy($user)->withProjects(2)->create();
 
@@ -87,7 +86,7 @@ class ProjectTest extends TestCase
 
         $this->assertTrue($project->compounds->contains($compounds[0]));
         $this->assertTrue($project->compounds->contains($compounds[1]));
-        
+
         $this->assertFalse($project->compounds->contains($compoundFromDifferentProject));
     }
 
@@ -98,5 +97,4 @@ class ProjectTest extends TestCase
 
         $this->assertFalse($project->isEmpty());
     }
-
 }

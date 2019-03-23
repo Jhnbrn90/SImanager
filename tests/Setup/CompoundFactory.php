@@ -36,13 +36,13 @@ class CompoundFactory
         $this->project = $project;
 
         return $this;
-    }    
+    }
 
     public function withMolfile($molfile)
     {
         $this->molfile = $molfile;
 
-        return $this;   
+        return $this;
     }
 
     public function create($attributes = [])

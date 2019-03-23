@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ProjectCompoundController extends Controller
 {
@@ -22,7 +21,7 @@ class ProjectCompoundController extends Controller
 
         $projects = auth()->user()->projects;
 
-        return view('project-compounds.edit', compact('project', 'projects', 'compounds'));   
+        return view('project-compounds.edit', compact('project', 'projects', 'compounds'));
     }
 
     public function update(Project $project, Request $request)
@@ -37,7 +36,7 @@ class ProjectCompoundController extends Controller
 
         $project->compounds()->update(['project_id' => $request->toProject]);
 
-        if ($request->deleteProject == "on") {
+        if ($request->deleteProject == 'on') {
             $project->delete();
         }
 
