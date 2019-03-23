@@ -32,13 +32,13 @@
                     <h2>Substructure search</h2>
 
                     &bull; <a href="/database"> Back to search by name/cas </a>
-<!-- 
+
                     <div class="form-check" style="margin-top: 12px; margin-bottom: 5px;">
                       <label class="form-check-label">
                         <input class="form-check-input" type="checkbox" name="exact" value="checked" {{ $exact or '' }}>
                         Exact search
                       </label>
-                    </div> -->
+                    </div>
 
                     <div class="form-group" style="padding-top:1rem;">
                         <div class="form-group">

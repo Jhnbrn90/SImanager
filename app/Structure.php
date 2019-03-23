@@ -50,13 +50,13 @@ class Structure extends Model
         );
     }
 
-    public function getCandidates()
+    public function getCandidates($exact = null)
     {
         foreach($this->toArray() as $key => $value) {
             if($key !== 'molfile') {
                 // Build up the query string
                 // Example: n_atoms, '>=', 3
-                $query[] = [$key, '>=', $value];
+                $query[] = $exact ? [$key, '=', $value] : [$key, '>=', $value];
             }
         }
 
@@ -90,7 +90,7 @@ class Structure extends Model
     {
         $queryStructure = $this->molfile;
 
-        $candidateIds = $this->getCandidates()->map(function($candidate) {
+        $candidateIds = $this->getCandidates($exact = true)->map(function($candidate) {
             return $candidate->id;
         });
 

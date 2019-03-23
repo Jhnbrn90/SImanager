@@ -23,8 +23,8 @@ class SubstructureSearchController extends Controller
         $queryStructure = Structure::makeFromJSDraw($request->molfile);
         
         session(['substructure_search' => $request->molfile]);
-
-        $matches = $queryStructure->matches;
+        
+        $matches = $request->exact ? $queryStructure->exactMatches : $queryStructure->matches;
 
         $matches = $matches->map(function ($structure) { return $structure->chemical; });
 
