@@ -3,19 +3,19 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\DataImporter;
+use App\Helpers\CompoundImporter;
 use Tests\utilities\ExperimentBuilder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class DataImporterTest extends TestCase
+class CompoundImporterTest extends TestCase
 {
     /** @test **/
     public function it_returns_null_if_no_matching_proton_nmr_data_is_found()
     {
         $protonNMR = "";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['protonNMR' => $protonNMR])
         );
 
@@ -30,11 +30,11 @@ class DataImporterTest extends TestCase
         $edgeCase = '1H-NMR (400 MHz, DMSO-d6): 7.19 (t, J = 8.0 Hz,
                 2H), 6.90 (t, J = 8.0 Hz, 1H), 6.72 (d, J = 8.0 Hz, 2H), 5.70 (br, 1H), 2.19 (s, 3H), 1.39 (s, 9H) ppm.';
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['protonNMR' => $protonNMR])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['protonNMR' => $edgeCase])
         );
 
@@ -50,11 +50,11 @@ class DataImporterTest extends TestCase
         $edgeCase = '13CNMR
     (100 MHz, DMSO-d6):  150.2, 149.7, 128.5, 121.9, 121.4, 52.5, 28.4, 14.4 ppm.';
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['carbonNMR' => $carbonNMR])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['carbonNMR' => $edgeCase])
         );
 
@@ -69,11 +69,11 @@ class DataImporterTest extends TestCase
         $rfValueText = "Rf = 0.3 (EtOAc/cHex = 3:7)";
         $rfValueTextEdgeCase = "Rf= 0.40 in Heptane / EtOAc (66:33)";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['rf' => $rfValueText])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['rf' => $rfValueTextEdgeCase])
         );
 
@@ -88,11 +88,11 @@ class DataImporterTest extends TestCase
 
         $irDataTextEdgeCase = "IR = 2931,2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['ir' => $irDataText])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['ir' => $irDataTextEdgeCase])
         );
 
@@ -113,11 +113,11 @@ class DataImporterTest extends TestCase
         $meltingPointText = "M.p. = 88 °C";
         $meltingPointTextEdgeCase = "m.p.: 119-120 °C";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['meltingPoint' => $meltingPointText])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['meltingPoint' => $meltingPointTextEdgeCase])
         );
 
@@ -134,11 +134,11 @@ class DataImporterTest extends TestCase
     270.0891,
     found 270.0886.";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['hrms' => $hrmsText])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['hrms' => $hrmsTextEdgeCase])
         );
 
@@ -156,7 +156,7 @@ class DataImporterTest extends TestCase
     {
         $hrmsText = "HRMS (ESI): calculated for C12H19BrNaO2 ([M+Na]+) = 297.0461, found = 297.0462";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['hrms' => $hrmsText])
         );
 
@@ -169,11 +169,11 @@ class DataImporterTest extends TestCase
         $rotationText = "[α]D20 = + 32.29 (c = 1.20, CHCl3).";
         $rotationTextEdgeCase = "alpha-D[20] = - 10.19 (c=1.20, PhMe)";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['rotation' => $rotationText])
         );
 
-        $importerEdgeCase = new DataImporter(
+        $importerEdgeCase = new CompoundImporter(
             ExperimentBuilder::build(['rotation' => $rotationTextEdgeCase])
         );
 
@@ -193,7 +193,7 @@ class DataImporterTest extends TestCase
     {
         $rotationText = "";
 
-        $importer = new DataImporter(
+        $importer = new CompoundImporter(
             ExperimentBuilder::build(['rotation' => $rotationText])
         );
 

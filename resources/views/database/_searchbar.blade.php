@@ -29,8 +29,15 @@
                 <form class="form" action="/database/search#search-results" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="col-md-9 col-md-offset-2" style="display:flex; margin-bottom: 17px;">
-                        <input style="margin-right: 10px;" type="text" class="form-control input-lg text-center typeahead" id="search" name="search"
-                            placeholder='"BnBr" or "benzyl bromide" or "100-39-0" or "remark: homemade"' autofocus>
+                        <input
+                            tabindex="1" 
+                            style="margin-right: 10px;" 
+                            type="text" 
+                            class="form-control input-lg text-center typeahead" 
+                            id="search" 
+                            name="search"
+                            placeholder='"BnBr" or "benzyl bromide" or "100-39-0" or "remark: homemade"' 
+                            autofocus="autofocus">
                         <button type="submit" class="btn btn-lg btn-default">Search</button>
                     </div>
 

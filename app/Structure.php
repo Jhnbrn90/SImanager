@@ -4,8 +4,9 @@ namespace App;
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-use App\Checkmol;
-use App\BashCommand;
+use App\Helpers\Checkmol;
+use App\Helpers\Matchmol;
+use App\Helpers\BashCommand;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;

@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Helpers;
+
+use App\Structure;
 
 class Matchmol {
 

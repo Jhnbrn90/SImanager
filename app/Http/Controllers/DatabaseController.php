@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Chemical;
 use Illuminate\Http\Request;
-use App\Helpers\ChemicalFinder;
+use App\Helpers\ChemicalsDatabase\ChemicalFinder;
 
 class DatabaseController extends Controller
 {

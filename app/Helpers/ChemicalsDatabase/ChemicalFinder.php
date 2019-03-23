@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\ChemicalsDatabase;
 
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Exception\RequestException;
 
-class ChemicalFinder {
-
+class ChemicalFinder 
+{
     protected $name;
     protected $cas;
 
-    public function __construct($name) {
+    public function __construct($name) 
+    {
         $this->name = $name;
     }
 

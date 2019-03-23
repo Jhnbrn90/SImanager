@@ -1,8 +1,6 @@
 <?php
 
-namespace App;
-
-use App\BashCommand;
+namespace App\Helpers;
 
 class Checkmol
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Helpers;
 
-class DataImporter
+class CompoundImporter
 {
     protected $experiment;
 
