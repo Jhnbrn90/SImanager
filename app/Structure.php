@@ -4,7 +4,6 @@ namespace App;
 
 use App\Helpers\Checkmol;
 use App\Helpers\Matchmol;
-use App\Helpers\BashCommand;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
