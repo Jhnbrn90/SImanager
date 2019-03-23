@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Project;
 use App\Compound;
-use App\DataImporter;
 use Illuminate\Http\Request;
+use App\Helpers\CompoundImporter;
 
 class CompoundController extends Controller
 {
@@ -109,7 +109,7 @@ class CompoundController extends Controller
             'experimental'  => 'required',
         ]);
 
-        $importer = new DataImporter($request->experimental);
+        $importer = new CompoundImporter($request->experimental);
 
         $project = Project::findOrFail($request->project);
 
