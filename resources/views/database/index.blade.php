@@ -3,6 +3,10 @@
 @section ('content')
     @include ('layouts.navbar')
 
+    <h1 class="text-center mb-8">Chemicals database</h1>
+    
+    @include('database.partials._message')
+
     @include ('database._searchbar')
 @endsection
 

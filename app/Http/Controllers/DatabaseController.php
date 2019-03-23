@@ -101,7 +101,7 @@ class DatabaseController extends Controller
         $chemicals = Chemical::where('cas', $cas)->get();
 
         if ($chemicals->count() === 0) {
-            session()->flash('message', 'No results for CAS number: '.$request->search);
+            session()->flash('message', 'No results for CAS number: '.$cas);
 
             return redirect('/database');
         }

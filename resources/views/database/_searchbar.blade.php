@@ -1,6 +1,3 @@
-        <h1 class="text-center">Chemicals database</h1>
-        <br>
-
         <div class="panel panel-default" style="padding: 20px; background: #D1D1D127;">
             <div class="text-center" style="margin-bottom: 20px;">
                 <small><a href="/database/shorthands" class="btn btn-default btn-sm">Show abbreviations</a></small>
