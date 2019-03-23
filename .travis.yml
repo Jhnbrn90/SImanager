@@ -8,6 +8,7 @@ php:
 before_script:
   - sudo cp binaries/checkmol /usr/local/bin
   - sudo cp binaries/matchmol /usr/local/bin
+  - sudo cp binaries/mol2svg /usr/local/bin
   - travis_retry composer update
   - cp .env.example .env
   - php artisan key:generate
