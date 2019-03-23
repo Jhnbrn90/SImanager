@@ -2,8 +2,6 @@
 
 namespace App;
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
 use App\Helpers\Checkmol;
 use App\Helpers\Matchmol;
 use App\Helpers\BashCommand;
@@ -145,10 +143,6 @@ class Structure extends Model
         if (! $this->molfile) {
             return;
         }
-
-        BashCommand::run($this->molfile, '/usr/local/bin/mol2svg', '--bgcolor=white --color=colors.conf -');
-
-        $command = "{$mol2svg_path} {$options} {$this->pathToMolfile} > {$this->pathToSVG}";
 
         $output = shell_exec('echo "'.$this->molfile.'" | /usr/local/bin/mol2svg --bgcolor=white --color=colors.conf - > '.$this->pathToSVG);
     }
