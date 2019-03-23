@@ -95,6 +95,7 @@
 </head>
 <body>
     <div id="app">
+        
         @if (session()->has('impersonate'))
             <div class="text-center bg-info sticky" style="padding: 2rem 2rem; width:100%;">
                 You are now acting on behalf of <strong>{{ auth()->user()->name }}</strong> ({{ auth()->user()->email }}). 
@@ -104,10 +105,13 @@
         @endif
 
         @yield('content')
+
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    
     @yield('scripts')
+
 </body>
 </html>

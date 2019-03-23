@@ -1,15 +1,16 @@
-@extends('layouts.master')
+@extends ('layouts.master')
 
-@section('content')
+@section ('content')
     @include ('layouts.navbar')
-    @include('database._searchbar')
+
+    @include ('database._searchbar')
 @endsection
 
-@section('scripts')
-<script type="text/javascript">
-    function revealExamples() {
-        $('#examples-wildcard').fadeIn();
-        $('#show-examples').remove();
-    }
-</script>
+@section ('scripts')
+    <script type="text/javascript">
+        function revealExamples() {
+            $('#examples-wildcard').fadeIn();
+            $('#show-examples').remove();
+        }
+    </script>
 @endsection

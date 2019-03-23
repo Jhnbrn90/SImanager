@@ -2,8 +2,7 @@
 
 @section ('content')
 
-@include ('layouts.navbar')
-
+  @include ('layouts.navbar')
 <div class="container">
     <div class="title">
         <h1> Move every project in <em> {{ $bundle->name }} </em> </h1>
