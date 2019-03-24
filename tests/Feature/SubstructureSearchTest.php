@@ -21,9 +21,10 @@ class SubstructureSearchTest extends TestCase
     public function a_user_finds_all_matches_for_a_queried_substructure()
     {
         $this->signIn();
-
+        
         ChemicalFactory::named('1-benzene')->withStructure($this->molfile('benzene'))->create();
         ChemicalFactory::named('chloro-benzene')->withStructure($this->molfile('chlorobenzene'))->create();
+
 
         $this->post('/database/substructure/search', [
             'molfile'   => $this->molfile('benzene'),

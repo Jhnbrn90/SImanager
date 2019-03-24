@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Helpers\Checkmol;
+use App\Helpers\CheckmolFacade as Checkmol;
 use App\Helpers\Matchmol;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ class Structure extends Model
         $query = "\n"."$query";
 
         return self::make(
-            Checkmol::propertiesFor($query)
+            Checkmol::properties($query)
         );
     }
 
@@ -30,21 +30,21 @@ class Structure extends Model
         $query = "\n"."$query";
 
         return self::create(
-            Checkmol::propertiesFor($query)
+            Checkmol::properties($query)
         );
     }
 
     public static function makeFromMolfile($molfile)
     {
         return self::make(
-            Checkmol::propertiesFor($molfile)
+            Checkmol::properties($molfile)
         );
     }
 
     public static function createFromMolfile($molfile)
     {
         return self::create(
-            Checkmol::propertiesFor($molfile)
+            Checkmol::properties($molfile)
         );
     }
 
