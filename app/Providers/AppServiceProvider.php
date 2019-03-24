@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('checkmol', 'App\Helpers\Checkmol');
-        $this->app->bind('matchmol', 'App\Helpers\Matchmol');        
+        $this->app->bind('matchmol', 'App\Helpers\Matchmol');
     }
 }
