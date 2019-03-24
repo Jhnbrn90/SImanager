@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Helpers\CheckmolFacade as Checkmol;
-use App\Helpers\Matchmol;
+use App\Helpers\Facades\Matchmol;
+use App\Helpers\Facades\Checkmol;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 

@@ -1,13 +1,13 @@
-<?php 
+<?php
 
-namespace App\Helpers;
+namespace App\Helpers\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class CheckMolFacade extends Facade
+class Matchmol extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'checkmol';
+        return 'matchmol';
     }
 }

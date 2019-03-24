@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Helpers\Checkmol;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,8 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('checkmol', function() {
-            return new Checkmol();
-        });
+        $this->app->bind('checkmol', 'App\Helpers\Checkmol');
+        $this->app->bind('matchmol', 'App\Helpers\Matchmol');        
     }
 }

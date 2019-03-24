@@ -227,8 +227,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Checkmol'  => App\Helpers\CheckmolFacade::class,
-
+        'Checkmol'  => App\Helpers\Facades\Checkmol::class,
+        'Matchmol'  => App\Helpers\Facades\Matchmol::class,
     ],
 
 ];

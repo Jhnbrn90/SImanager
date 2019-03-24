@@ -14,18 +14,15 @@ class Matchmol
     protected $candidatesPerQuery = 10;
     protected $candidatesArray;
 
-    public function __construct($queryStructure, $candidateIds)
+    public function match($query, $candidates)
     {
-        $this->queryStructure = $queryStructure;
-        $this->candidateIds = $candidateIds;
-        $this->candidateCount = $candidateIds->count();
+        $this->queryStructure = $query;
+        $this->candidateIds = $candidates;
+        $this->candidateCount = $candidates->count();
 
         $this->buildCandidatesArray();
-    }
 
-    public static function match($queryStructure, $candidateIds)
-    {
-        return new self($queryStructure, $candidateIds);
+        return $this;
     }
 
     public function substructure()
