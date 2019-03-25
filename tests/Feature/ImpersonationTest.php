@@ -13,7 +13,7 @@ class ImpersonationTest extends TestCase
     public function a_supervisor_can_impersonate_one_of_his_students()
     {
         $supervisor = create('App\User');
-        $student = create('App\User');
+        $student = create('App\User', ['name' => 'Johnny Test']);
         $student->addSupervisor($supervisor);
 
         $this->signIn($supervisor);
