@@ -2,7 +2,6 @@
 
 namespace Tests\Setup;
 
-use App\Structure;
 use App\Helpers\Facades\StructureFactory;
 
 class ChemicalFactory
