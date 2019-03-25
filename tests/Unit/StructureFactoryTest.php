@@ -4,8 +4,6 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Helpers\Facades\StructureFactory;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StructureFactoryTest extends TestCase
 {
@@ -14,19 +12,18 @@ class StructureFactoryTest extends TestCase
     {
         $molfile = file_get_contents(base_path().'/tests/Molfiles/benzene.mol');
         $properties = [
-            "n_atoms" => "6",
-            "n_bonds" => "6",
-            "n_rings" => "1",
-            "n_C2" => "6",
-            "n_C" => "6",
-            "n_b2" => "1",
-            "n_bar" => "6",
-            "n_r6" => "1",
-            "n_rar" => "1",
+            'n_atoms' => '6',
+            'n_bonds' => '6',
+            'n_rings' => '1',
+            'n_C2' => '6',
+            'n_C' => '6',
+            'n_b2' => '1',
+            'n_bar' => '6',
+            'n_r6' => '1',
+            'n_rar' => '1',
         ];
 
         $this->assertEquals($properties, StructureFactory::molfile($molfile)->properties());
-
     }
 
     /** @test **/
@@ -34,15 +31,15 @@ class StructureFactoryTest extends TestCase
     {
         $molfile = file_get_contents(base_path().'/tests/Molfiles/jsdraw/benzene.mol');
         $properties = [
-            "n_atoms" => "6",
-            "n_bonds" => "6",
-            "n_rings" => "1",
-            "n_C2" => "6",
-            "n_C" => "6",
-            "n_b2" => "1",
-            "n_bar" => "6",
-            "n_r6" => "1",
-            "n_rar" => "1",
+            'n_atoms' => '6',
+            'n_bonds' => '6',
+            'n_rings' => '1',
+            'n_C2' => '6',
+            'n_C' => '6',
+            'n_b2' => '1',
+            'n_bar' => '6',
+            'n_r6' => '1',
+            'n_rar' => '1',
         ];
 
         $this->assertEquals($properties, StructureFactory::jsdraw($molfile)->properties());
