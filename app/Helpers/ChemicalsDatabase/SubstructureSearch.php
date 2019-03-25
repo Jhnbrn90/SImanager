@@ -21,7 +21,7 @@ class SubstructureSearch
 
     public function molfile($molfile)
     {
-        $this->molfile = $this->prefix($molfile) . $molfile;
+        $this->molfile = $this->prefix($molfile).$molfile;
 
         return $this;
     }
@@ -29,8 +29,8 @@ class SubstructureSearch
     public function candidates()
     {
         if (! $properties = Checkmol::properties($this->molfile)) {
-            $properties = Checkmol::properties("\n" . $this->molfile);
-        };
+            $properties = Checkmol::properties("\n".$this->molfile);
+        }
 
         return Structure::candidates($properties, $exact = $this->exact)->get();
     }
@@ -53,6 +53,6 @@ class SubstructureSearch
 
     protected function prefix($molfile)
     {
-        return ($molfile[0][0] == " " || $molfile[0][0] == "J") ? "\n" : "";
+        return ($molfile[0][0] == ' ' || $molfile[0][0] == 'J') ? "\n" : '';
     }
 }

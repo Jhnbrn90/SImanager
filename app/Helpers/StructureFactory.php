@@ -18,7 +18,7 @@ class StructureFactory
 
     public function jsdraw($molfile)
     {
-        $this->molfile = "\n" . $molfile;
+        $this->molfile = "\n".$molfile;
 
         return $this;
     }
