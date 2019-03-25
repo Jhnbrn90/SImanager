@@ -2,11 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Structure;
 use Tests\TestCase;
 use App\Helpers\Facades\StructureFactory;
 use App\Helpers\Facades\SubstructureSearch;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SubstructureSearchTest extends TestCase

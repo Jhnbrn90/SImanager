@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Helpers\Facades\Checkmol;
-use App\Helpers\Facades\Matchmol;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,9 +22,9 @@ class Structure extends Model
     public function scopeCandidates($query, $properties, $exact = false)
     {
         foreach ($properties as $key => $value) {
-            $attributes[] = $exact ? [$key, '=', $value] : [$key, '>=', $value];    
+            $attributes[] = $exact ? [$key, '=', $value] : [$key, '>=', $value];
         }
-    
+
         $query->where($attributes);
     }
 

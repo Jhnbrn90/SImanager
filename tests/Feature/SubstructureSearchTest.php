@@ -44,7 +44,7 @@ class SubstructureSearchTest extends TestCase
         ChemicalFactory::named('chloro-benzene')->withStructure($this->molfile('chlorobenzene'))->create();
 
         $query = file_get_contents(base_path().'/tests/Molfiles/jsdraw/benzene.mol');
-        
+
         $this->post('/database/substructure/search', [
             'molfile'   => $query,
             'exact'     => 'checked',

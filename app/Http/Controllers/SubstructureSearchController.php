@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Structure;
 use Illuminate\Http\Request;
 use App\Helpers\Facades\SubstructureSearch;
 
