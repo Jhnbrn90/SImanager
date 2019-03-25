@@ -25,8 +25,12 @@ class Matchmol
         return $this;
     }
 
-    public function substructure()
+    public function substructure($exact = false)
     {
+        if ($exact) {
+            return $this->exact();
+        }
+
         // Number of times Matchmol has to be called with the maximum candidatesPerQuery
         $blocks = ceil($this->candidateCount / $this->candidatesPerQuery);
 

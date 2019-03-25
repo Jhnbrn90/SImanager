@@ -20,30 +20,36 @@ class SubstructureSearchTest extends TestCase
     /** @test **/
     public function a_user_finds_all_matches_for_a_queried_substructure()
     {
+        $this->withoutExceptionHandling();
+
         $this->signIn();
 
         ChemicalFactory::named('1-benzene')->withStructure($this->molfile('benzene'))->create();
         ChemicalFactory::named('chloro-benzene')->withStructure($this->molfile('chlorobenzene'))->create();
 
-        $this->post('/database/substructure/search', [
+        $response = $this->post('/database/substructure/search', [
             'molfile'   => $this->molfile('benzene'),
         ])->assertSee('1-benzene')
         ->assertSee('chloro-benzene');
     }
 
-    // /** @test **/
-    // public function a_user_finds_an_exact_match_for_a_queried_substructure()
-    // {
-    //     $this->signIn();
+    /** @test **/
+    public function a_user_finds_an_exact_match_for_a_queried_substructure()
+    {
+        $this->withoutExceptionHandling();
 
-    //     ChemicalFactory::named('1-benzene')->withStructure($this->testMolfile('benzene'))->create();
-    //     ChemicalFactory::named('chloro-benzene')->withStructure($this->testMolfile('chlorobenzene'))->create();
+        $this->signIn();
 
-    //     $this->post('/database/substructure/search', [
-    //         'molfile'   => $this->testMolfile('benzene'),
-    //         'exact'     => 'checked',
-    //     ])->assertSee('1-benzene')->assertDontSee('chloro-benzene');
-    // }
+        ChemicalFactory::named('1-benzene')->withStructure($this->molfile('benzene'))->create();
+        ChemicalFactory::named('chloro-benzene')->withStructure($this->molfile('chlorobenzene'))->create();
+
+        $query = file_get_contents(base_path().'/tests/Molfiles/jsdraw/benzene.mol');
+        
+        $this->post('/database/substructure/search', [
+            'molfile'   => $query,
+            'exact'     => 'checked',
+        ])->assertSee('1-benzene')->assertDontSee('chloro-benzene');
+    }
 
     protected function molfile($name)
     {

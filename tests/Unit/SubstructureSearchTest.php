@@ -4,112 +4,95 @@ namespace Tests\Unit;
 
 use App\Structure;
 use Tests\TestCase;
+use App\Helpers\Facades\StructureFactory;
+use App\Helpers\Facades\SubstructureSearch;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SubstructureSearchTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function a_substructure_search_can_filter_down_all_candidates_for_the_query()
+    /** @test **/
+    public function it_can_filter_down_to_matches_based_on_properties()
     {
-        // Given we have the three structures in the database
-        // chlorobenzene, indole and cyclohexanone
-        $chlorobenzene = Structure::createFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/chlorobenzene.mol')
-        );
+        $structures = collect([
+            'chlorobenzene' => base_path().'/tests/Molfiles/chlorobenzene.mol',
+            'indole'        => base_path().'/tests/Molfiles/indole.mol',
+            'cyclohexanone' => base_path().'/tests/Molfiles/cyclohexanone.mol',
+        ])->map(function ($structure) {
+            return StructureFactory::molfile(file_get_contents($structure))->create();
+        });
 
-        $indole = Structure::createFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/indole.mol')
-        );
+        $query = file_get_contents(base_path().'/tests/Molfiles/benzene.mol');
 
-        $cyclohexanone = Structure::createFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/cyclohexanone.mol')
-        );
+        $candidates = SubstructureSearch::molfile($query)->candidates();
 
-        // When we search for benzene as a substructure
-        $substructureQuery = Structure::makeFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/benzene.mol')
-        );
+        $this->assertCount(2, $candidates);
 
-        // We expect 2 candidates: chlorobenzene and indole
-        $this->assertEquals(2, $substructureQuery->candidates->count());
-        $this->assertTrue($substructureQuery->candidates->contains($chlorobenzene));
-        $this->assertTrue($substructureQuery->candidates->contains($indole));
+        $this->assertTrue($candidates->contains($structures['chlorobenzene']));
+        $this->assertTrue($candidates->contains($structures['indole']));
+        $this->assertFalse($candidates->contains($structures['cyclohexanone']));
 
-        // Assert that cyclohexanone is not a candidate
-        $this->assertFalse($substructureQuery->candidates->contains($cyclohexanone));
+        $structures = collect([
+            'isopropanol'   => base_path().'/tests/Molfiles/2-propanol.mol',
+            'propanol'    => base_path().'/tests/Molfiles/1-propanol.mol',
+            'propanediol'   => base_path().'/tests/Molfiles/propanediol.mol',
+        ])->map(function ($structure) {
+            return StructureFactory::molfile(file_get_contents($structure))->create();
+        });
+
+        $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
+        $candidates = SubstructureSearch::molfile($query)->candidates();
+
+        $this->assertEquals(3, $candidates->count());
+
+        $this->assertTrue($candidates->contains($structures['propanol']));
+        $this->assertTrue($candidates->contains($structures['propanediol']));
+        $this->assertTrue($candidates->contains($structures['isopropanol']));
     }
 
-    /** @test */
-    public function candidates_can_be_filtered_down_to_atom_to_atom_matches()
+    /** @test **/
+    public function it_can_filter_the_candidates_down_to_matches_based_on_2D_structure()
     {
-        // given we the following alcohols in the database:
-        // 2-propanol, 1-propanol, 1,3-propanediol
-        $isopropanol = Structure::createFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/2-propanol.mol')
-        );
-        // 1-propanol
-        $propanol = Structure::createFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/1-propanol.mol')
-        );
-        // 1,3-propanediol
-        $propanediol = Structure::createFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/propanediol.mol')
-        );
+        $structures = collect([
+            'isopropanol'   => base_path().'/tests/Molfiles/2-propanol.mol',
+            'propanol'    => base_path().'/tests/Molfiles/1-propanol.mol',
+            'propanediol'   => base_path().'/tests/Molfiles/propanediol.mol',
+        ])->map(function ($structure) {
+            return StructureFactory::molfile(file_get_contents($structure))->create();
+        });
 
-        // And we search for propanol
-        $substructureQuery = Structure::makeFromMolfile(
-            file_get_contents(__DIR__.'/../Molfiles/1-propanol.mol')
-        );
+        $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
 
-        // when we filter down to the candidates
-        // we expect all three matching
-        $this->assertEquals(3, $substructureQuery->candidates->count());
+        $matches = SubstructureSearch::molfile($query)->matches();
 
-        $this->assertTrue($substructureQuery->candidates->contains($propanol));
-        $this->assertTrue($substructureQuery->candidates->contains($propanediol));
-        $this->assertTrue($substructureQuery->candidates->contains($isopropanol));
+        $this->assertEquals(2, $matches->count());
 
-        // then, when we filter through the exact matches
-        // we only expect propanediol and propanol, not isopropanol
-        $this->assertEquals(2, $substructureQuery->matches->count());
-
-        $this->assertTrue($substructureQuery->matches->contains($propanol));
-        $this->assertTrue($substructureQuery->matches->contains($propanediol));
-        $this->assertFalse($substructureQuery->matches->contains($isopropanol));
+        $this->assertTrue($matches->contains($structures['propanol']));
+        $this->assertTrue($matches->contains($structures['propanediol']));
+        $this->assertFalse($matches->contains($structures['isopropanol']));
     }
 
-    /** @test */
-    public function it_can_return_exact_structure_matches()
+    /** @test **/
+    public function it_can_get_the_exact_match_for_a_given_substructure()
     {
-        // given we the following alcohols in the database:
-        // 2-propanol, 1-propanol, 1,3-propanediol
-        $isopropanol = Structure::createFromMolfile(
-           file_get_contents(__DIR__.'/../Molfiles/2-propanol.mol')
-       );
+        $structures = collect([
+            'isopropanol'   => base_path().'/tests/Molfiles/2-propanol.mol',
+            'propanol'    => base_path().'/tests/Molfiles/1-propanol.mol',
+            'propanediol'   => base_path().'/tests/Molfiles/propanediol.mol',
+        ])->map(function ($structure) {
+            return StructureFactory::molfile(file_get_contents($structure))->create();
+        });
 
-        // 1-propanol
-        $propanol = Structure::createFromMolfile(
-           file_get_contents(__DIR__.'/../Molfiles/1-propanol.mol')
-       );
+        $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
 
-        // 1,3-propanediol
-        $propanediol = Structure::createFromMolfile(
-           file_get_contents(__DIR__.'/../Molfiles/propanediol.mol')
-       );
+        $matches = SubstructureSearch::molfile($query)->exact()->matches();
 
-        // And we search for 1-propanol
-        $substructureQuery = Structure::makeFromMolfile(
-           file_get_contents(__DIR__.'/../Molfiles/1-propanol.mol')
-       );
+        $this->assertEquals(1, $matches->count());
 
-        // then, when we filter through the exact matches
-        // we only expect 1-propanol, not isopropanol or propanediol
-        $this->assertEquals(1, $substructureQuery->exactMatches->count());
-
-        $this->assertTrue($substructureQuery->exactMatches->contains($propanol));
-        $this->assertFalse($substructureQuery->exactMatches->contains($isopropanol));
-        $this->assertFalse($substructureQuery->exactMatches->contains($propanediol));
+        $this->assertTrue($matches->contains($structures['propanol']));
+        $this->assertFalse($matches->contains($structures['propanediol']));
+        $this->assertFalse($matches->contains($structures['isopropanol']));
     }
 }

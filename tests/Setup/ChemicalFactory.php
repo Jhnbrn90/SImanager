@@ -3,6 +3,7 @@
 namespace Tests\Setup;
 
 use App\Structure;
+use App\Helpers\Facades\StructureFactory;
 
 class ChemicalFactory
 {
@@ -28,10 +29,9 @@ class ChemicalFactory
     {
         $chemical = $this->name ? create('App\Chemical', ['name' => $this->name]) : create('App\Chemical');
 
-        $structure = Structure::createFromMolfile($this->molfile);
+        $structure = StructureFactory::molfile($this->molfile)->create(['chemical_id' => $chemical->id]);
 
-        $chemical->structure_id = $structure->id;
-        $structure->chemical_id = $chemical->id;
+        $chemical->update(['structure_id' => $structure->id]);
 
         return $chemical;
     }

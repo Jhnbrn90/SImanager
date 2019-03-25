@@ -25,8 +25,6 @@ class Checkmol
                return [$keyValuePairs[0] => $keyValuePairs[1]];
            })->toArray();
 
-        $propertiesArray['molfile'] = $molfile;
-
         return $propertiesArray;
     }
 }

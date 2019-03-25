@@ -16,85 +16,18 @@ class Structure extends Model
         return $this->belongsTo(Chemical::class);
     }
 
-    public static function makeFromJSDraw($query)
+    public function setMolfile($molfile)
     {
-        $query = "\n"."$query";
-
-        return self::make(
-            Checkmol::properties($query)
-        );
+        $this->update(['molfile' => $molfile]);
     }
 
-    public static function createFromJSDraw($query)
+    public function scopeCandidates($query, $properties, $exact = false)
     {
-        $query = "\n"."$query";
-
-        return self::create(
-            Checkmol::properties($query)
-        );
-    }
-
-    public static function makeFromMolfile($molfile)
-    {
-        return self::make(
-            Checkmol::properties($molfile)
-        );
-    }
-
-    public static function createFromMolfile($molfile)
-    {
-        return self::create(
-            Checkmol::properties($molfile)
-        );
-    }
-
-    public function getCandidates($exact = null)
-    {
-        foreach ($this->toArray() as $key => $value) {
-            if ($key !== 'molfile') {
-                // Build up the query string
-                // Example: n_atoms, '>=', 3
-                $query[] = $exact ? [$key, '=', $value] : [$key, '>=', $value];
-            }
+        foreach ($properties as $key => $value) {
+            $attributes[] = $exact ? [$key, '=', $value] : [$key, '>=', $value];    
         }
-
-        return self::where($query)->get();
-    }
-
-    public function getCandidatesAttribute()
-    {
-        return $this->getCandidates();
-    }
-
-    public function getMatchesAttribute()
-    {
-        $queryStructure = $this->molfile;
-
-        $candidateIds = $this->getCandidates()->map(function ($candidate) {
-            return $candidate->id;
-        });
-
-        $matchingStructureIds = Matchmol::match($queryStructure, $candidateIds)->substructure();
-
-        $matchingStructures = self::with('chemical')
-            ->whereIn('id', $matchingStructureIds)
-            ->orderBy('n_atoms', 'ASC')
-            ->get();
-
-        return $matchingStructures;
-    }
-
-    public function getExactMatchesAttribute()
-    {
-        $queryStructure = $this->molfile;
-
-        $candidateIds = $this->getCandidates($exact = true)->map(function ($candidate) {
-            return $candidate->id;
-        });
-
-        $matchingStructureIds = Matchmol::match($queryStructure, $candidateIds)->exact();
-
-        return self::find($matchingStructureIds);
+    
+        $query->where($attributes);
     }
 
     public function getSVGPathAttribute()
