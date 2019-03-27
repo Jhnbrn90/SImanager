@@ -1,6 +1,5 @@
 <?php
 
-use App\Chemical;
 use Faker\Generator as Faker;
 
 $factory->define(App\Structure::class, function (Faker $faker) {
