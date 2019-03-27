@@ -2,16 +2,14 @@
 
 namespace App;
 
+use App\Traits\SearchableByStructure;
 use Illuminate\Database\Eloquent\Model;
 
 class Chemical extends Model
 {
-    protected $guarded = [];
+    use SearchableByStructure;
 
-    public function structure()
-    {
-        return $this->belongsTo(Structure::class);
-    }
+    protected $guarded = [];
 
     public function path()
     {

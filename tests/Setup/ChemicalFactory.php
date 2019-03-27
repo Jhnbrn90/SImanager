@@ -28,9 +28,11 @@ class ChemicalFactory
     {
         $chemical = $this->name ? create('App\Chemical', ['name' => $this->name]) : create('App\Chemical');
 
-        $structure = StructureFactory::molfile($this->molfile)->create(['chemical_id' => $chemical->id]);
+        $structure = StructureFactory::molfile($this->molfile)->create();
 
-        $chemical->update(['structure_id' => $structure->id]);
+        $chemical->structure()->save($structure);
+
+        // $chemical->update(['structure_id' => $structure->id]);
 
         return $chemical;
     }

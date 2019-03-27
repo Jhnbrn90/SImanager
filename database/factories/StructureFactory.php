@@ -1,5 +1,6 @@
 <?php
 
+use App\Chemical;
 use Faker\Generator as Faker;
 
 $factory->define(App\Structure::class, function (Faker $faker) {
@@ -59,6 +60,5 @@ $factory->define(App\Structure::class, function (Faker $faker) {
         'n_rX'         => $faker->numberBetween(0, 10),
         'n_rar'        => $faker->numberBetween(0, 10),
         'molfile'      => 'fake molfile',
-        'chemical_id'   => $faker->unique()->numberBetween(0, 999),
     ];
 });

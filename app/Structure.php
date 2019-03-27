@@ -9,9 +9,9 @@ class Structure extends Model
 {
     protected $guarded = [];
 
-    public function chemical()
+    public function structurable()
     {
-        return $this->belongsTo(Chemical::class);
+        return $this->morphTo();
     }
 
     public function setMolfile($molfile)

@@ -12,14 +12,16 @@ class SubstructureSearchTest extends TestCase
     use RefreshDatabase;
 
     /** @test **/
-    public function it_can_filter_down_to_matches_based_on_properties()
+    public function it_can_determine_candidates_for_cyclic_structures()
     {
         $structures = collect([
             'chlorobenzene' => base_path().'/tests/Molfiles/chlorobenzene.mol',
             'indole'        => base_path().'/tests/Molfiles/indole.mol',
             'cyclohexanone' => base_path().'/tests/Molfiles/cyclohexanone.mol',
         ])->map(function ($structure) {
-            return StructureFactory::molfile(file_get_contents($structure))->create();
+            return StructureFactory::molfile(file_get_contents($structure))
+                ->belongingTo('App\Chemical')
+                ->create();
         });
 
         $query = file_get_contents(base_path().'/tests/Molfiles/benzene.mol');
@@ -31,19 +33,26 @@ class SubstructureSearchTest extends TestCase
         $this->assertTrue($candidates->contains($structures['chlorobenzene']));
         $this->assertTrue($candidates->contains($structures['indole']));
         $this->assertFalse($candidates->contains($structures['cyclohexanone']));
+    }
 
+    /** @test **/
+    public function it_can_determine_candidates_for_related_alcohols()
+    {
         $structures = collect([
             'isopropanol'   => base_path().'/tests/Molfiles/2-propanol.mol',
             'propanol'    => base_path().'/tests/Molfiles/1-propanol.mol',
             'propanediol'   => base_path().'/tests/Molfiles/propanediol.mol',
         ])->map(function ($structure) {
-            return StructureFactory::molfile(file_get_contents($structure))->create();
+            return StructureFactory::molfile(file_get_contents($structure))
+                ->belongingTo('App\Chemical')
+                ->create();
         });
 
         $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
+
         $candidates = SubstructureSearch::molfile($query)->candidates();
 
-        $this->assertEquals(3, $candidates->count());
+        $this->assertCount(3, $candidates->fresh());
 
         $this->assertTrue($candidates->contains($structures['propanol']));
         $this->assertTrue($candidates->contains($structures['propanediol']));
@@ -58,7 +67,9 @@ class SubstructureSearchTest extends TestCase
             'propanol'    => base_path().'/tests/Molfiles/1-propanol.mol',
             'propanediol'   => base_path().'/tests/Molfiles/propanediol.mol',
         ])->map(function ($structure) {
-            return StructureFactory::molfile(file_get_contents($structure))->create();
+            return StructureFactory::molfile(file_get_contents($structure))
+                ->belongingTo('App\Chemical')
+                ->create();
         });
 
         $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');

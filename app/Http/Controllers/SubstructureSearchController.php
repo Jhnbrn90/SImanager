@@ -29,7 +29,7 @@ class SubstructureSearchController extends Controller
         $matches = $request->exact ? $substructureSearch->exact()->matches() : $substructureSearch->matches();
 
         $matches = $matches->map(function ($structure) {
-            return $structure->chemical;
+            return $structure->structurable;
         });
 
         return view('database.substructure.show', compact('matches'));

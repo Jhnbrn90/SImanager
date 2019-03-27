@@ -396,12 +396,15 @@ class StructureTest extends TestCase
     }
 
     /** @test */
-    public function a_structure_belongs_to_a_chemical()
+    public function a_structure_can_belong_to_a_chemical()
     {
         $chemical = factory('App\Chemical')->create(['name' => '2-fake-formaldehyde']);
-        $structure = factory('App\Structure')->create(['chemical_id' => $chemical->id]);
+        $structure = factory('App\Structure')->create();
 
-        $this->assertEquals('2-fake-formaldehyde', $structure->chemical->name);
+        $chemical->structure()->save($structure);
+
+        $this->assertEquals('2-fake-formaldehyde', $structure->structurable->name);
+        $this->assertEquals($structure->id, $chemical->structure->id);
     }
 
     /** @test **/

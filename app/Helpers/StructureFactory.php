@@ -8,6 +8,7 @@ use App\Helpers\Facades\Checkmol;
 class StructureFactory
 {
     protected $molfile;
+    protected $model = 'App\Chemical';
 
     public function molfile($molfile)
     {
@@ -19,6 +20,15 @@ class StructureFactory
     public function jsdraw($molfile)
     {
         $this->molfile = "\n".$molfile;
+
+        return $this;
+    }
+
+    public function belongingTo($model = null)
+    {
+        if ($model) {
+            $this->model = $model;
+        }
 
         return $this;
     }
@@ -38,7 +48,14 @@ class StructureFactory
     public function create($attributes = [])
     {
         $attributes = array_merge($this->properties(), $attributes);
+
         $structure = tap(Structure::create($attributes))->setMolfile($this->molfile);
+
+        $model = factory($this->model)->create();
+
+        $model->structure()->save($structure);
+
+        $model->save();
 
         return $structure;
     }

@@ -17,10 +17,13 @@ class ChemicalTest extends TestCase
     }
 
     /** @test **/
-    public function a_chemical_has_a_structure_id()
+    public function a_chemical_has_a_structure()
     {
-        $chemical = factory('App\Chemical')->create(['structure_id' => 33]);
-        $this->assertEquals(33, $chemical->structure_id);
+        $chemical = factory('App\Chemical')->create();
+        $structure = factory('App\Structure')->create();
+        $chemical->structure()->save($structure);
+
+        $this->assertEquals($structure->fresh(), $chemical->structure);
     }
 
     /** @test **/

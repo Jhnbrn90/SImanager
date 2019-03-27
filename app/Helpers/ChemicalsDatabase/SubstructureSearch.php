@@ -43,7 +43,8 @@ class SubstructureSearch
 
         $matchingStructureIds = Matchmol::match($this->molfile, $structureIds)->substructure($this->exact);
 
-        $matches = Structure::with('chemical')
+        $matches = Structure::where('structurable_type', 'App\Chemical')
+            ->with('structurable')
             ->whereIn('id', $matchingStructureIds)
             ->orderBy('n_atoms', 'ASC')
             ->get();
