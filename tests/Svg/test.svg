@@ -1,0 +1,46 @@
+<?xml version="1.0" standalone="no" ?>
+<svg width="174" height="139" viewbox="0 5 174 139" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css"><![CDATA[ circle { stroke: #FFFFFF; fill: #FFFFFF; }
+text { font-family: Helvetica; font-size: 14px; } line { stroke: #000000; stroke-width: 1.0; } ]]> </style>
+<g>
+
+<rect x="0" y="5" width="174" height="139" style="fill: #FFFFFF; stroke-width:0"/>
+
+<g transform="translate(0,-170)">
+<path stroke="#000000" stroke-width="1.0" d="
+M 105.7 246.4 L 105.7 269.5 
+M 109.5 246.4 L 109.5 269.5 
+M 107.6 246.4 L 127.6 234.9 
+M 87.6 211.8 L 67.6 200.2 
+M 87.6 234.9 L 107.6 246.4 
+M 87.6 234.9 L 87.6 211.8 
+M 67.6 246.4 L 87.6 234.9 
+M 67.6 246.4 L 47.6 234.9 
+M 48.2 238.9 L 30.8 249.0 
+M 47.6 234.9 L 27.6 246.4 
+M 63.8 268.0 L 63.8 247.9 
+M 67.6 269.5 L 67.6 246.4 
+M 47.6 281.1 L 67.6 269.5 
+M 27.6 269.5 L 27.6 246.4 
+M 48.2 277.1 L 30.8 267.0 
+M 47.6 281.1 L 27.6 269.5 
+" />
+<circle cx="108.0" cy="270.0" r="6.3" />
+<circle cx="128.0" cy="235.0" r="6.3" />
+<circle cx="68.0" cy="200.0" r="6.3" />
+<text x="62.7" y="205.8"><tspan fill="#000000">C</tspan>
+</text>
+<text text-anchor="end" x="62.7" y="205.8"><tspan>H</tspan><tspan font-size="9" dy="4.5">3</tspan></text>
+<text x="122.7" y="240.5"><tspan fill="#000000">C</tspan><tspan>H</tspan><tspan font-size="9" dy="4.5">3</tspan>
+</text>
+<text x="102.7" y="275.1"><tspan fill="#CC3300">O</tspan>
+</text>
+</g>
+</g>
+</svg>
+
+<!-- found XY values for adjusting width, height and viewbox: -->
+<!-- max_X:  174  -->
+<!-- max_Y:  314  -->
+<!-- min_Y:  175  -->
+<!-- yshift: -170  -->

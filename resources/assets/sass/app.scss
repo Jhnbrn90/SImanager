@@ -72,3 +72,9 @@
 
 // Font Awesome
 @import "node_modules/font-awesome/scss/font-awesome.scss";
+
+.structure circle { stroke: #FFFFFF; fill: #FFFFFF; }
+.structure text { font-family: Helvetica; font-size: 14px; } 
+.structure line { stroke: #000000; stroke-width: 1.0; }
+
+.structure svg { height: 60%; width: auto; border-radius:8px; border: 1px dashed grey; }

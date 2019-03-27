@@ -76,4 +76,17 @@ class Structure extends Model
 
         $output = shell_exec('echo "'.$this->molfile.'" | /usr/local/bin/mol2svg --bgcolor=white --color=colors.conf - > '.$this->pathToSVG);
     }
+
+    public function saveSvg()
+    {
+        if (! $this->molfile) {
+            return;
+        }
+
+        $output = shell_exec(
+            'echo "'.$this->molfile.'" | /usr/local/bin/mol2svg --bgcolor=white --color=colors.conf -'
+        );
+
+        $this->update(['svg' => $output]);
+    }
 }

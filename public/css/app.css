@@ -17676,6 +17676,28 @@ button.close {
   clip: auto;
 }
 
+.structure circle {
+  stroke: #fff;
+  fill: #fff;
+}
+
+.structure text {
+  font-family: Helvetica;
+  font-size: 14px;
+}
+
+.structure line {
+  stroke: #000;
+  stroke-width: 1;
+}
+
+.structure svg {
+  height: 60%;
+  width: auto;
+  border-radius: 8px;
+  border: 1px dashed grey;
+}
+
 @media (min-width: 576px) {
   .sm\:list-reset {
     list-style: none;

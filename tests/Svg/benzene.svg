@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no" ?>
+<svg width="86" height="94" viewbox="0 5 86 94" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css"><![CDATA[ circle { stroke: #FFFFFF; fill: #FFFFFF; }
+text { font-family: Helvetica; font-size: 14px; } line { stroke: #000000; stroke-width: 1.0; } ]]> </style>
+<g>
+
+<rect x="0" y="5" width="86" height="94" style="fill: #FFFFFF; stroke-width:0"/>
+
+<g transform="translate(0,-207)">
+<path stroke="#000000" stroke-width="1.0" d="
+M 30.8 267.6 L 47.2 277.1 
+M 27.6 270.1 L 46.6 281.1 
+M 65.6 270.1 L 46.6 281.1 
+M 61.8 249.7 L 61.8 268.6 
+M 65.6 248.2 L 65.6 270.1 
+M 27.6 248.2 L 27.6 270.1 
+M 46.6 237.2 L 65.6 248.2 
+M 47.2 241.2 L 30.8 250.7 
+M 46.6 237.2 L 27.6 248.2 
+" />
+</g>
+</g>
+</svg>
+
+<!-- found XY values for adjusting width, height and viewbox: -->
+<!-- max_X:  86  -->
+<!-- max_Y:  306  -->
+<!-- min_Y:  212  -->
+<!-- yshift: -207  -->

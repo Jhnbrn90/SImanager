@@ -5,6 +5,6 @@
     <td>{{ $chemical->location }}.{{ $chemical->cabinet }}.{{ $chemical->number }}</td>
     <td>{{ $chemical->remarks }}</td>
     <td style="text-align:left;">
-        <img src="/database/svg/{{ $chemical->id or 'unknown' }}.svg" style="height: 60%; width: auto; border-radius:8px; border: 1px dashed grey;">
+        <picture class="structure"> {!! $chemical->structure->svg ?? '' !!} </picture>
     </td>
 </tr>

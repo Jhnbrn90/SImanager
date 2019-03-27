@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\Helpers\Facades\StructureFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StructureTest extends TestCase
@@ -401,5 +402,29 @@ class StructureTest extends TestCase
         $structure = factory('App\Structure')->create(['chemical_id' => $chemical->id]);
 
         $this->assertEquals('2-fake-formaldehyde', $structure->chemical->name);
+    }
+
+    /** @test **/
+    public function a_structure_has_a_SVG()
+    {
+        $svg = file_get_contents(base_path().'/tests/Svg/test.svg');
+
+        $structure = create('App\Structure', ['svg' => $svg]);
+
+        $this->assertEquals($svg, $structure->svg);
+    }
+
+    /** @test */
+    public function a_structure_can_generate_and_save_its_svg_property()
+    {
+        $molfile = file_get_contents(base_path().'/tests/Molfiles/benzene.mol');
+
+        $structure = StructureFactory::molfile($molfile)->create();
+
+        $structure->saveSvg();
+
+        $svg = file_get_contents(base_path().'/tests/Svg/benzene.svg');
+
+        $this->assertEquals($svg, $structure->fresh()->svg);
     }
 }
