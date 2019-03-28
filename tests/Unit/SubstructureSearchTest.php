@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Structure;
 use Tests\TestCase;
 use App\Helpers\Facades\StructureFactory;
-use App\Helpers\Facades\SubstructureSearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SubstructureSearchTest extends TestCase
@@ -24,9 +24,9 @@ class SubstructureSearchTest extends TestCase
                 ->create();
         });
 
-        $query = file_get_contents(base_path().'/tests/Molfiles/benzene.mol');
+        $molfile = file_get_contents(base_path().'/tests/Molfiles/benzene.mol');
 
-        $candidates = SubstructureSearch::molfile($query)->candidates();
+        $candidates = Structure::chemicals()->candidates($molfile)->get();
 
         $this->assertCount(2, $candidates);
 
@@ -48,9 +48,9 @@ class SubstructureSearchTest extends TestCase
                 ->create();
         });
 
-        $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
+        $molfile = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
 
-        $candidates = SubstructureSearch::molfile($query)->candidates();
+        $candidates = Structure::chemicals()->candidates($molfile)->get();
 
         $this->assertCount(3, $candidates->fresh());
 
@@ -72,9 +72,9 @@ class SubstructureSearchTest extends TestCase
                 ->create();
         });
 
-        $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
+        $molfile = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
 
-        $matches = SubstructureSearch::molfile($query)->matches();
+        $matches = Structure::chemicals()->matches($molfile)->get();
 
         $this->assertEquals(2, $matches->count());
 
@@ -91,12 +91,14 @@ class SubstructureSearchTest extends TestCase
             'propanol'    => base_path().'/tests/Molfiles/1-propanol.mol',
             'propanediol'   => base_path().'/tests/Molfiles/propanediol.mol',
         ])->map(function ($structure) {
-            return StructureFactory::molfile(file_get_contents($structure))->create();
+            return StructureFactory::molfile(file_get_contents($structure))
+                ->belongingTo('App\Chemical')
+                ->create();
         });
 
-        $query = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
+        $molfile = file_get_contents(base_path().'/tests/Molfiles/1-propanol.mol');
 
-        $matches = SubstructureSearch::molfile($query)->exact()->matches();
+        $matches = Structure::chemicals()->matches($molfile, $exact = true)->get();
 
         $this->assertEquals(1, $matches->count());
 

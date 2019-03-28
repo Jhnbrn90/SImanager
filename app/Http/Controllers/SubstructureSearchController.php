@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Structure;
 use Illuminate\Http\Request;
-use App\Helpers\Facades\SubstructureSearch;
 
 class SubstructureSearchController extends Controller
 {
@@ -22,11 +22,10 @@ class SubstructureSearchController extends Controller
     public function show(Request $request)
     {
         $request->validate(['molfile' => 'required']);
+        $exact = $request->exact ? true : false;
         session(['substructure_search' => $request->molfile]);
 
-        $substructureSearch = SubstructureSearch::molfile($request->molfile);
-
-        $matches = $request->exact ? $substructureSearch->exact()->matches() : $substructureSearch->matches();
+        $matches = Structure::chemicals()->matches($request->molfile, $exact)->get();
 
         $matches = $matches->map(function ($structure) {
             return $structure->structurable;
