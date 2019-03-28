@@ -26,7 +26,7 @@ class Structure extends Model
     {
         $molfile = $this->formatMolfile($molfile);
         $properties = Checkmol::properties($molfile);
-        
+
         foreach ($properties as $key => $value) {
             $attributes[] = $exact ? [$key, '=', $value] : [$key, '>=', $value];
         }
@@ -36,7 +36,7 @@ class Structure extends Model
 
     public function scopeMatches($query, $molfile, $exact = false)
     {
-        $molfile = $this->formatMolfile($molfile); 
+        $molfile = $this->formatMolfile($molfile);
         $candidates = self::candidates($molfile, $exact)->get();
 
         $structureIds = collect($candidates)->map(function ($structure) {
