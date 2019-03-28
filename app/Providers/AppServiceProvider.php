@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('checkmol', 'App\Helpers\Checkmol');
         $this->app->bind('matchmol', 'App\Helpers\Matchmol');
-        $this->app->bind('substructure-search', 'App\Helpers\ChemicalsDatabase\SubstructureSearch');
         $this->app->bind('structure-factory', 'App\Helpers\StructureFactory');
     }
 }

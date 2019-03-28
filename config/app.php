@@ -229,7 +229,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Checkmol'  => App\Helpers\Facades\Checkmol::class,
         'Matchmol'  => App\Helpers\Facades\Matchmol::class,
-        'SubstructureSearch'  => App\Helpers\Facades\SubstructureSearch::class,
         'StructureFactory'  => App\Helpers\Facades\StructureFactory::class,
     ],
 
