@@ -25,13 +25,12 @@ class SubstructureSearchController extends Controller
         $exact = $request->exact ? true : false;
         session(['substructure_search' => $request->molfile]);
 
-        $matches = Structure::chemicals()->matches($request->molfile, $exact)->get();
+        $structures = Structure::chemicals()
+            ->matches($request->molfile, $exact)
+            ->with('structurable')
+            ->get();
 
-        $matches = $matches->map(function ($structure) {
-            return $structure->structurable;
-        });
-
-        return view('database.substructure.show', compact('matches'));
+        return view('database.substructure.show', compact('structures'));
     }
 
     public function reset()
