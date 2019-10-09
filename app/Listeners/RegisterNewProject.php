@@ -2,10 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Project;
 use App\Events\UserWasCreated;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Project;
 
 class RegisterNewProject
 {
@@ -22,7 +20,8 @@ class RegisterNewProject
     /**
      * Handle the event.
      *
-     * @param  UserWasCreated  $event
+     * @param UserWasCreated $event
+     *
      * @return void
      */
     public function handle(UserWasCreated $event)

@@ -4,10 +4,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Compound::class, function (Faker $faker) {
     return [
-        'user_id'               => function() {
+        'user_id'               => function () {
             return auth()->id() ?: factory('App\User')->create()->id;
         },
-        'project_id'            => function() {
+        'project_id'            => function () {
             return factory('App\Project')->create()->id;
         },
         'label'                 => 'jbn478',
@@ -25,6 +25,6 @@ $factory->define(App\Compound::class, function (Faker $faker) {
         'alpha_value'           => 52,
         'alpha_solvent'         => 'H2O',
         'alpha_concentration'   => 10,
-        'notes'                 => 'White crystals'
+        'notes'                 => 'White crystals',
     ];
 });

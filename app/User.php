@@ -2,21 +2,20 @@
 
 namespace App;
 
-use App\Project;
 use App\Events\UserWasCreated;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
     /**
-    * The event map for the model.
-    *
-    * @var array 
-    */
+     * The event map for the model.
+     *
+     * @var array
+     */
     protected $dispatchesEvents = [
         'created'   => UserWasCreated::class,
     ];
@@ -49,22 +48,22 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
-    public function addSupervisor(User $user)
+    public function addSupervisor(self $user)
     {
         DB::table('student_supervisor')->insert([
-            'student_id'   => $this->id,
+            'student_id'    => $this->id,
             'supervisor_id' => $user->id,
         ]);
     }
 
     public function supervisors()
     {
-        return $this->belongsToMany(User::class, 'student_supervisor', 'student_id', 'supervisor_id');
+        return $this->belongsToMany(self::class, 'student_supervisor', 'student_id', 'supervisor_id');
     }
 
     public function students()
     {
-        return $this->belongsToMany(User::class, 'student_supervisor', 'supervisor_id', 'student_id');
+        return $this->belongsToMany(self::class, 'student_supervisor', 'supervisor_id', 'student_id');
     }
 
     public function isAdmin()

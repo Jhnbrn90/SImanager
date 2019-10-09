@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class SharingDataTest extends TestCase
 {
@@ -21,10 +20,10 @@ class SharingDataTest extends TestCase
         // By default, the student doesn't have any supervisors
         $this->assertCount(0, $student->supervisors);
 
-        // When this student adds his supervisor to be able to view the data 
+        // When this student adds his supervisor to be able to view the data
         $student->addSupervisor($supervisor);
 
-        // we expect that the associated supervisor can be retrieved 
+        // we expect that the associated supervisor can be retrieved
         $this->assertCount(1, $student->fresh()->supervisors);
         $this->assertEquals('Supervisor', $student->fresh()->supervisors->first()->name);
     }
@@ -39,7 +38,7 @@ class SharingDataTest extends TestCase
         // By default, the supervisor doesn't have any students
         $this->assertCount(0, $supervisor->fresh()->students);
 
-        // When this student adds his supervisor to be able to view the data 
+        // When this student adds his supervisor to be able to view the data
         $student->addSupervisor($supervisor);
 
         // we expect the following student to be retrieved
