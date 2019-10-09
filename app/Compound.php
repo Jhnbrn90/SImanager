@@ -229,7 +229,7 @@ class Compound extends Model
     {
         $regex = '/(\d+\.\d+)\s*,/';
 
-        preg_match_all($regex, $this->C_NMR_data, $matches);
+        preg_match_all($regex, $this->C_NMR_data . ',', $matches);
 
         return collect($matches[1])->count();
     }
