@@ -7,7 +7,7 @@ class DataImporter
     protected $experiment;
 
     protected $regexLookup = [
-        'protonNMR'     =>  '/((?:1H|1-H).*?NMR.*?)(?:\.|\;)\s/s',
+        'protonNMR'     => '/((?:1H|1-H).*?NMR.*?)(?:\.|\;)\s/s',
         'carbonNMR'     => '/((?:13C|13-C).*?NMR.*?)(?:\.|\;)\s/s',
         'rfValue'       => '/(?:Rf|RF|rf|rF)\s*(?:=|\:)\s*(\d*\.\d*.*?)(?:,|\.)/s',
         'irData'        => '/(?:IR|Ir).*?(?:\:|=)\s*(\d.*?)(?:\.|\;)\s/s',
@@ -38,12 +38,12 @@ class DataImporter
 
     public function getIrData()
     {
-        return $this->match('irData');   
+        return $this->match('irData');
     }
 
     public function getMeltingPoint()
     {
-        return $this->match('meltingPoint');   
+        return $this->match('meltingPoint');
     }
 
     public function getHRMS($type)
@@ -83,26 +83,26 @@ class DataImporter
     protected function match($lookup)
     {
         $regex = $this->regexLookup[$lookup];
-        
+
         preg_match($regex, $this->experiment, $match);
 
         if (empty($match)) {
-            return null;
+            return;
         }
-        
+
         return $match[1];
     }
 
     protected function matchMultiple($lookup)
     {
         $regex = $this->regexLookup[$lookup];
-        
+
         preg_match($regex, $this->experiment, $matches);
 
         if (empty($matches)) {
-            return null;
+            return;
         }
-        
+
         return $matches;
     }
 
@@ -110,11 +110,11 @@ class DataImporter
     {
         $regex = '/([A-Z][a-z]?)(\d*)/';
         preg_match_all($regex, $formula, $matches);
-        
-        if(in_array('Na', $matches[1])) {
+
+        if (in_array('Na', $matches[1])) {
             return 'Na+';
         }
-        
+
         return 'H+';
     }
 }

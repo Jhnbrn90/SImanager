@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -18,7 +16,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = auth()->user()->projects;
-        
+
         $students = auth()->user()->students()->with('projects.compounds')->get();
 
         return view('projects.index', compact('projects', 'students'));
@@ -47,9 +45,9 @@ class ProjectController extends Controller
         ]);
 
         $project = Project::create([
-            'name'          =>  $request->name,
-            'description'   =>  $request->description,
-            'user_id'       =>  auth()->id(),
+            'name'          => $request->name,
+            'description'   => $request->description,
+            'user_id'       => auth()->id(),
         ]);
 
         return redirect('/projects');
@@ -79,18 +77,18 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-         if (Gate::denies('interact-with-project', $project)) {
-             return redirect('/');
-         }
+        if (Gate::denies('interact-with-project', $project)) {
+            return redirect('/');
+        }
 
-         // check if the project is empty 
-         if ($project->compounds()->count() > 0) {
+        // check if the project is empty
+        if ($project->compounds()->count() > 0) {
             return redirect('/projects');
-         }
+        }
 
-         $project->delete();
+        $project->delete();
 
-         return redirect('/projects');
+        return redirect('/projects');
     }
 
     public function export(Project $project)
@@ -116,7 +114,7 @@ class ProjectController extends Controller
 
         $projects = auth()->user()->projects;
 
-        return view('projects.move', compact('project', 'projects', 'compounds'));   
+        return view('projects.move', compact('project', 'projects', 'compounds'));
     }
 
     public function moveCompounds(Project $project, Request $request)
@@ -127,11 +125,10 @@ class ProjectController extends Controller
 
         $project->compounds()->update(['project_id' => $request->toProject]);
 
-        if ($request->deleteProject == "on") {
+        if ($request->deleteProject == 'on') {
             $project->delete();
         }
 
         return redirect('/projects');
     }
-    
 }

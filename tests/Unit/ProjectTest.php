@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\User;
 use App\Project;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
@@ -20,7 +19,6 @@ class ProjectTest extends TestCase
         $this->assertEquals('Fake project', $project->name);
     }
 
-
     /** @test **/
     public function a_project_has_a_description()
     {
@@ -33,7 +31,7 @@ class ProjectTest extends TestCase
     public function a_project_belongs_to_a_user()
     {
         $user = factory(User::class)->create(['name' => 'Project tester']);
-        
+
         $project = factory(Project::class)->create(['user_id' => $user]);
 
         $this->assertEquals('Project tester', $project->user->name);

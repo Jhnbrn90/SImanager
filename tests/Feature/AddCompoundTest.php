@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AddCompoundTest extends TestCase
 {
@@ -24,20 +24,19 @@ class AddCompoundTest extends TestCase
     /** @test **/
     public function authenticated_users_can_add_new_compounds()
     {
-      $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
-      $this->signIn();
+        $this->signIn();
 
-      $compound = make('App\Compound');
+        $compound = make('App\Compound');
 
-      $this->post("/compounds", $compound->toArray());
+        $this->post('/compounds', $compound->toArray());
 
-      $this->assertDatabaseHas('compounds', ['label' => $compound->label]);
+        $this->assertDatabaseHas('compounds', ['label' => $compound->label]);
 
-      $compound = \App\Compound::where('label', $compound->label)->first();
+        $compound = \App\Compound::where('label', $compound->label)->first();
 
-      $this->get($compound->path())->assertSee($compound->label);
-
+        $this->get($compound->path())->assertSee($compound->label);
     }
 
     /** @test **/
@@ -45,7 +44,7 @@ class AddCompoundTest extends TestCase
     {
         $compound = create('App\Compound');
 
-        $structure = "C3H6O
+        $structure = 'C3H6O
 APtclcactv12201710073D 0   0.00000     0.00000
 
  10  9  0  0  0  0  0  0  0  0999 V2000
@@ -70,11 +69,11 @@ APtclcactv12201710073D 0   0.00000     0.00000
   4 10  1  0  0  0  0
 M  END
 $$$$
-";
+';
 
         $compound->toMolfile($structure);
 
-        $this->assertFileExists(storage_path() . "/app/public/molfiles/{$compound->id}.mol");
+        $this->assertFileExists(storage_path()."/app/public/molfiles/{$compound->id}.mol");
     }
 
     /** @test **/
@@ -84,7 +83,6 @@ $$$$
 
         $compound->toSVG();
 
-        $this->assertFileExists(storage_path() . "/app/public/svg/{$compound->id}.svg");
+        $this->assertFileExists(storage_path()."/app/public/svg/{$compound->id}.svg");
     }
-
 }
