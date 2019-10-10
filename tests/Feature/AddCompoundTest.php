@@ -30,7 +30,7 @@ class AddCompoundTest extends TestCase
 
         $compound = make('App\Compound');
 
-        $this->post('/compounds', $compound->toArray());
+        $this->post('/compounds', array_merge($compound->toArray(), ['project' => 1]));
 
         $this->assertDatabaseHas('compounds', ['label' => $compound->label]);
 
