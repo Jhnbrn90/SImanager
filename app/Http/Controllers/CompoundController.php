@@ -16,8 +16,11 @@ class CompoundController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($orderByColumn = 'label', $orderByMethod = 'asc', Request $request)
+    public function index(Request $request)
     {
+        $orderByColumn = 'label';
+        $orderByMethod = 'asc';
+
         if ($request->order && $request->by) {
             $orderByColumn = $request->by;
             $orderByMethod = $request->order;
@@ -25,9 +28,13 @@ class CompoundController extends Controller
 
         $user = auth()->user();
 
-        $projects = $user->projects()->orderBy('id', 'desc')->with(['compounds' => function ($query) use ($orderByColumn, $orderByMethod) {
-            return $query->orderBy($orderByColumn, $orderByMethod);
-        }])->get();
+        $projects = $user
+            ->projects()
+            ->orderBy('id', 'desc')
+            ->with(['compounds' => function ($query) use ($orderByColumn, $orderByMethod) {
+                return $query->orderBy($orderByColumn, $orderByMethod);
+            }])
+            ->get();
 
         return view('compounds.index', compact('user', 'projects', 'orderByColumn', 'orderByMethod'));
     }
