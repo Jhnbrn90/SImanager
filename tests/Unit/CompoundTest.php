@@ -11,7 +11,7 @@ class CompoundTest extends TestCase
 
     protected $compound;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->compound = create('App\Compound');
