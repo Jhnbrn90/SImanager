@@ -16,7 +16,7 @@ class CompoundController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($orderByColumn = 'label', $orderByMethod = 'asc', Request $request)
+    public function index($orderByColumn, $orderByMethod, Request $request)
     {
         if ($request->order && $request->by) {
             $orderByColumn = $request->by;
