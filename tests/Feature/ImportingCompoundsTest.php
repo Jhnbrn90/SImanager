@@ -2,18 +2,16 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\DataImporter;
+use Tests\TestCase;
 use Tests\utilities\ExperimentBuilder;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ImportingCompoundsTest extends TestCase
 {
     /** @test **/
     public function it_returns_null_if_no_matching_proton_nmr_data_is_found()
     {
-        $protonNMR = "";
+        $protonNMR = '';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['protonNMR' => $protonNMR])
@@ -66,8 +64,8 @@ class ImportingCompoundsTest extends TestCase
     /** @test **/
     public function it_can_extract_the_rf_value_from_an_experiment()
     {
-        $rfValueText = "Rf = 0.3 (EtOAc/cHex = 3:7)";
-        $rfValueTextEdgeCase = "Rf= 0.40 in Heptane / EtOAc (66:33)";
+        $rfValueText = 'Rf = 0.3 (EtOAc/cHex = 3:7)';
+        $rfValueTextEdgeCase = 'Rf= 0.40 in Heptane / EtOAc (66:33)';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['rf' => $rfValueText])
@@ -77,16 +75,16 @@ class ImportingCompoundsTest extends TestCase
             ExperimentBuilder::build(['rf' => $rfValueTextEdgeCase])
         );
 
-        $this->assertEquals("0.3 (EtOAc/cHex = 3:7)", $importer->getRfValue());
-        $this->assertEquals("0.40 in Heptane / EtOAc (66:33)", $importerEdgeCase->getRfValue());
+        $this->assertEquals('0.3 (EtOAc/cHex = 3:7)', $importer->getRfValue());
+        $this->assertEquals('0.40 in Heptane / EtOAc (66:33)', $importerEdgeCase->getRfValue());
     }
 
     /** @test **/
     public function it_can_extract_the_ir_data_from_an_experiment()
     {
-        $irDataText = "IR (neat): νmax (cm-1): 2931, 2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020";
+        $irDataText = 'IR (neat): νmax (cm-1): 2931, 2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020';
 
-        $irDataTextEdgeCase = "IR = 2931,2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020";
+        $irDataTextEdgeCase = 'IR = 2931,2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['ir' => $irDataText])
@@ -97,12 +95,12 @@ class ImportingCompoundsTest extends TestCase
         );
 
         $this->assertEquals(
-            "2931, 2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020", 
+            '2931, 2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020',
             $importer->getIrData()
         );
 
         $this->assertEquals(
-            "2931,2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020", 
+            '2931,2862, 1672, 1448, 1363, 1332, 1278, 1249, 1230, 1141, 1163, 1099, 1068, 1039, 1020',
             $importerEdgeCase->getIrData()
         );
     }
@@ -110,8 +108,8 @@ class ImportingCompoundsTest extends TestCase
     /** @test **/
     public function it_can_extract_the_melting_point_from_an_experiment()
     {
-        $meltingPointText = "M.p. = 88 °C";
-        $meltingPointTextEdgeCase = "m.p.: 119-120 °C";
+        $meltingPointText = 'M.p. = 88 °C';
+        $meltingPointTextEdgeCase = 'm.p.: 119-120 °C';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['meltingPoint' => $meltingPointText])
@@ -121,18 +119,18 @@ class ImportingCompoundsTest extends TestCase
             ExperimentBuilder::build(['meltingPoint' => $meltingPointTextEdgeCase])
         );
 
-        $this->assertEquals("88", $importer->getMeltingPoint());
-        $this->assertEquals("119-120", $importerEdgeCase->getMeltingPoint());
+        $this->assertEquals('88', $importer->getMeltingPoint());
+        $this->assertEquals('119-120', $importerEdgeCase->getMeltingPoint());
     }
 
     /** @test **/
     public function it_can_extract_the_HRMS_data_from_an_experiment()
     {
-        $hrmsText = "HRMS (ESI): calculated for C12H19BrNaO2 ([M+Na]+) = 297.0461, found = 297.0462";
+        $hrmsText = 'HRMS (ESI): calculated for C12H19BrNaO2 ([M+Na]+) = 297.0461, found = 297.0462';
 
-        $hrmsTextEdgeCase = "HRMS (ESI): m/z calculated for C13H17ClNO3 [M + H]+
+        $hrmsTextEdgeCase = 'HRMS (ESI): m/z calculated for C13H17ClNO3 [M + H]+
 270.0891,
-found 270.0886.";
+found 270.0886.';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['hrms' => $hrmsText])
@@ -154,7 +152,7 @@ found 270.0886.";
     /** @test **/
     public function it_can_extract_the_HRMS_ion()
     {
-        $hrmsText = "HRMS (ESI): calculated for C12H19BrNaO2 ([M+Na]+) = 297.0461, found = 297.0462";
+        $hrmsText = 'HRMS (ESI): calculated for C12H19BrNaO2 ([M+Na]+) = 297.0461, found = 297.0462';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['hrms' => $hrmsText])
@@ -166,8 +164,8 @@ found 270.0886.";
     /** @test **/
     public function it_can_extract_the_optical_rotation_data_from_an_experiment()
     {
-        $rotationText = "[α]D20 = + 32.29 (c = 1.20, CHCl3).";
-        $rotationTextEdgeCase = "alpha-D[20] = - 10.19 (c=1.20, PhMe)";
+        $rotationText = '[α]D20 = + 32.29 (c = 1.20, CHCl3).';
+        $rotationTextEdgeCase = 'alpha-D[20] = - 10.19 (c=1.20, PhMe)';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['rotation' => $rotationText])
@@ -185,13 +183,13 @@ found 270.0886.";
         $this->assertEquals('-', $importerEdgeCase->getRotation('sign'));
         $this->assertEquals('10.19', $importerEdgeCase->getRotation('value'));
         $this->assertEquals('1.20', $importerEdgeCase->getRotation('concentration'));
-        $this->assertEquals('PhMe', $importerEdgeCase->getRotation('solvent'));  
+        $this->assertEquals('PhMe', $importerEdgeCase->getRotation('solvent'));
     }
 
     /** @test **/
     public function it_can_returns_null_if_no_optical_rotation_data_was_found()
     {
-        $rotationText = "";
+        $rotationText = '';
 
         $importer = new DataImporter(
             ExperimentBuilder::build(['rotation' => $rotationText])

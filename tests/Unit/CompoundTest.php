@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CompoundTest extends TestCase
 {
@@ -32,6 +32,4 @@ class CompoundTest extends TestCase
             "/compounds/{$compound->id}",
             $compound->path());
     }
-
-
 }

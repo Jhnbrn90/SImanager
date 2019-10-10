@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class DeleteHNMRCNMRBooleanColumnsFromCompoundsTable extends Migration
 {
@@ -13,11 +13,11 @@ class DeleteHNMRCNMRBooleanColumnsFromCompoundsTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasColumn('proton_nmr', 'carbon_nmr')) {
+        if (Schema::hasColumn('proton_nmr', 'carbon_nmr')) {
             Schema::table('compounds', function (Blueprint $table) {
                 $table->dropColumn('proton_nmr');
                 $table->dropColumn('carbon_nmr');
-            });    
+            });
         }
     }
 

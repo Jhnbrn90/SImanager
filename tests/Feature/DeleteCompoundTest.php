@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DeleteCompoundTest extends TestCase
 {
@@ -26,7 +26,7 @@ class DeleteCompoundTest extends TestCase
         $this->assertDatabaseMissing('compounds', ['id' => $compound->id]);
     }
 
-        /** @test **/
+    /** @test **/
     public function unauthenticated_users_can_not_delete_compounds()
     {
         $this->withExceptionHandling();
@@ -36,5 +36,4 @@ class DeleteCompoundTest extends TestCase
         $this->delete("/compounds/{$compound->id}")
           ->assertRedirect('/login');
     }
-
 }
