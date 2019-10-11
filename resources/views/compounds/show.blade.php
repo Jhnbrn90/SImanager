@@ -57,7 +57,7 @@
         @endif
 
          @if ($compound->melting_point && $compound->melting_point !== "@")
-            <strong>M.p.</strong>: {{ $compound->melting_point }} &deg; C.
+            <strong>M.p.</strong>: {{ $compound->melting_point }} &deg;C.
         @endif
         </div>
 
@@ -166,7 +166,7 @@
                         @elseif($compound->melting_point == "")
                             (not yet determined)
                         @else 
-                            {{ $compound->melting_point }} &deg; C.
+                            {{ $compound->melting_point }} &deg;C.
                         @endif
                     </td>
                 </tr>
