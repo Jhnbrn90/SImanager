@@ -51,7 +51,7 @@
             @endif
 
              @if ($compound->melting_point && $compound->melting_point !== "@")
-                <strong>M.p.</strong>: {{ $compound->melting_point }} &deg; C.
+                <strong>M.p.</strong>: {{ $compound->melting_point }} &deg;C.
             @endif
             <br><br>
         @endforeach
