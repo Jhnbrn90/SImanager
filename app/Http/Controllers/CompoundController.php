@@ -44,7 +44,7 @@ class CompoundController extends Controller
         return view('compounds.edit', compact('compound'));
     }
 
-    public function studentIndex(User $user, $orderByColumn, $orderByMethod, Request $request)
+    public function studentIndex(User $user, $orderByColumn = null, $orderByMethod = null, Request $request)
     {
         if (Gate::denies('access-compounds', $user)) {
             return redirect('/');
