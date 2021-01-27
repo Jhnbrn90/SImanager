@@ -76,7 +76,7 @@ class Compound extends Model
 
         $command = "{$mol2svg_path} {$options} {$this->pathToMolfile} > {$this->pathToSVG}";
 
-        $pipe = popen($command, 'r');
+        $pipe = popen($command, 'w');
 
         return $this;
     }
