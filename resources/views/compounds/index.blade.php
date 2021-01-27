@@ -88,7 +88,7 @@
                         
                         <td><a href="/compounds/{{ $compound->id }}">{{ $compound->label }}</a></td>
                         
-                        <td style="padding:0;">
+                        <td style="padding:0;" class="{{ $compound->H_NMR_data ? 'bg-success' : 'bg-danger' }}">
                             <nmr-data-field
                                 id="{{ $compound->id }}"
                                 data="{{ $compound->H_NMR_data }}"
@@ -96,7 +96,7 @@
                             ></nmr-data-field>
                         </td>
                         
-                        <td style="padding:0;">
+                        <td style="padding:0;" class="{{ $compound->C_NMR_data ? 'bg-success' : 'bg-danger' }}">
                              <nmr-data-field
                                 id="{{ $compound->id }}"
                                 data="{{ $compound->C_NMR_data }}"
@@ -104,7 +104,7 @@
                             ></nmr-data-field>
                         </td>
 
-                        <td style="padding:0;">
+                        <td style="padding:0;" class="{{ $compound->retention ? 'bg-success' : 'bg-danger' }}">
                             <retention-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->retention }}" 
@@ -112,7 +112,7 @@
                             ></retention-field>
                         </td>
 
-                        <td style="padding:0;">
+                        <td style="padding:0;" class="{{ $compound->infrared ? 'bg-success' : 'bg-danger' }}">
                             <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->infrared }}" 
@@ -124,7 +124,7 @@
                         @if ($compound->melting_point == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else
-                            <td style="padding:0;">
+                            <td style="padding:0;" class="{{ $compound->melting_point ? 'bg-success' : 'bg-danger' }}">
                                 <text-field 
                                     id="{{ $compound->id }}" 
                                     data="{{ $compound->melting_point }}" 
@@ -136,7 +136,7 @@
                         @if ($compound->mass_adduct == "@")
                              <td style="background-color: #F8F8F8"></td>
                         @else
-                             <td class="mass" style="padding:0;">
+                             <td class="mass {{ $compound->mass_adduct ? 'bg-success' : 'bg-danger' }}" style="padding:0;">
                                 <dropdown-field 
                                     id="{{ $compound->id }}" 
                                     data="{{ $compound->mass_adduct }}" 
@@ -148,7 +148,7 @@
                         @if ($compound->mass_calculated == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else 
-                            <td class="mass" style="padding:0;">
+                            <td class="mass {{ $compound->mass_calculated ? 'bg-success' : 'bg-danger' }}" style="padding:0;">
                                 <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->mass_calculated }}" 
@@ -160,7 +160,7 @@
                         @if ($compound->mass_measured == "@")
                             <td style="background-color: #F8F8F8"></td>
                         @else 
-                            <td class="mass" style="padding:0;">
+                            <td class="mass {{ $compound->mass_measured ? 'bg-success' : 'bg-danger' }}" style="padding:0;">
                                 <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->mass_measured }}" 
@@ -174,7 +174,7 @@
                             <td style="background-color: #F8F8F8"></td>
                             <td style="background-color: #F8F8F8"></td>
                         @else
-                            <td class="alpha" style="padding:0;">
+                            <td class="alpha {{ $compound->alpha_value ? 'bg-success' : 'bg-danger' }}" style="padding:0;">
                                 <dropdown-text-field
                                     id="{{ $compound->id }}"
                                     dropdown_data="{{ $compound->alpha_sign }}"
@@ -184,7 +184,7 @@
                                 ></dropdown-text-field>
                             </td>
 
-                            <td style="padding:0;">
+                            <td style="padding:0;" class="{{ $compound->alpha_concentration ? 'bg-success' : 'bg-danger' }}">
                                 <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->alpha_concentration }}" 
@@ -192,7 +192,7 @@
                             ></text-field>
                             </td>
 
-                            <td style="padding:0;">
+                            <td style="padding:0;" class="{{ $compound->alpha_solvent ? 'bg-success' : 'bg-danger' }}">
                                 <text-field 
                                 id="{{ $compound->id }}" 
                                 data="{{ $compound->alpha_solvent }}" 
